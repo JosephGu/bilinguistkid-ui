@@ -2,7 +2,7 @@ import https from 'https';
 import fs from 'fs';
 import next from 'next';
 import http from 'http';
-import { IncomingMessage, ServerResponse } from 'http';
+
 
 const app = next({
   dev: false
@@ -17,7 +17,7 @@ const options = {
 
 app.prepare()
   .then(() => {
-    const httpsServer = https.createServer(options, (req: IncomingMessage, res: ServerResponse) => {
+    const httpsServer = https.createServer(options, (req, res) => {
       res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
       res.setHeader('X-Content-Type-Options', 'nosniff');
       res.setHeader('X-Frame-Options', 'DENY');
@@ -26,7 +26,7 @@ app.prepare()
       handle(req, res);
     });
 
-    httpsServer.listen(443, (err?: Error) => {
+    httpsServer.listen(443, (err) => {
       if (err) {
         console.error('HTTPS 服务启动失败:', err);
         process.exit(1);
@@ -34,7 +34,7 @@ app.prepare()
       console.log('✅ 生产环境 HTTPS 服务已启动: https://bilinguistkid.cn');
     });
 
-    const httpServer = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+    const httpServer = http.createServer((req, res) => {
       if (req.headers.host) {
         res.writeHead(301, { 
           Location: `https://${req.headers.host}${req.url || ''}` 
@@ -43,7 +43,7 @@ app.prepare()
       res.end();
     });
 
-    httpServer.listen(80, (err?: Error) => {
+    httpServer.listen(80, (err) => {
       if (err) {
         console.warn('HTTP 重定向服务启动失败:', err);
       } else {
@@ -60,7 +60,7 @@ app.prepare()
       });
     });
   })
-  .catch((err: Error) => {
+  .catch((err) => {
     console.error('应用初始化失败:', err);
     process.exit(1);
   });
