@@ -10,7 +10,10 @@ const handle = app.getRequestHandler();
 
 const options = {
   key: fs.readFileSync('/etc/letsencrypt/live/bilinguistkid.cn/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/bilinguistkid.cn/fullchain.pem')
+  cert: fs.readFileSync('/etc/letsencrypt/live/bilinguistkid.cn/fullchain.pem'),
+  minVersion: 'TLSv1.2',
+  maxVersion: 'TLSv1.3',
+  ciphers: 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384',
 };
 
 app.prepare()
