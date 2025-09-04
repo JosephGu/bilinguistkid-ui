@@ -3,7 +3,6 @@ import fs from 'fs';
 import next from 'next';
 import http from 'http';
 
-
 const app = next({
   dev: false
 });
