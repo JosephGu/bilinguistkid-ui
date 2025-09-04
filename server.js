@@ -1,7 +1,6 @@
 import https from 'https';
 import fs from 'fs';
 import next from 'next';
-import http from 'http';
 
 const app = next({
   dev: false
@@ -33,30 +32,11 @@ app.prepare()
       console.log('✅ 生产环境 HTTPS 服务已启动: https://bilinguistkid.cn');
     });
 
-    const httpServer = http.createServer((req, res) => {
-      if (req.headers.host) {
-        res.writeHead(301, { 
-          Location: `https://${req.headers.host}${req.url || ''}` 
-        });
-      }
-      res.end();
-    });
-
-    httpServer.listen(80, (err) => {
-      if (err) {
-        console.warn('HTTP 重定向服务启动失败:', err);
-      } else {
-        console.log('🔄 HTTP 已重定向到 HTTPS');
-      }
-    });
-
     process.on('SIGTERM', () => {
       console.log('收到 SIGTERM 信号，正在关闭服务器...');
       httpsServer.close();
-      httpServer.close(() => {
-        console.log('服务器已关闭');
-        process.exit(0);
-      });
+      console.log('服务器已关闭');
+      process.exit(0);
     });
   })
   .catch((err) => {
