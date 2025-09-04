@@ -6,7 +6,7 @@ import { select, Selection } from "d3-selection";
 import { drag, DragBehavior } from "d3-drag";
 import { zoom } from "d3-zoom";
 import { Timer, timer } from "d3-timer";
-import { Feature } from "geojson";
+import { Feature, FeatureCollection } from "geojson";
 
 const RotatingEarth = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,7 @@ const RotatingEarth = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const geoJsonData = await response.json();
+      const geoJsonData: FeatureCollection = await response.json();
       return geoJsonData;
     } catch (error) {
       console.error("Failed to load geoJSON data:", error);
@@ -28,9 +28,9 @@ const RotatingEarth = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const COLOR_NO_DATA = "#3441CD";
-    const COLOR_HOVER = "#D3D3D3";
-    const COLOR_CONTINENT = "#0A0E17";
+    const COLOR_NO_DATA = "#1A73E8";
+    const COLOR_HOVER = "#FFCB05";
+    const COLOR_CONTINENT = "#34A853";
     const ROTATION_SENSITIVITY = 60;
     const ZOOM_SENSITIVITY = 0.5;
 
@@ -63,7 +63,7 @@ const RotatingEarth = () => {
       .attr("cx", width ? width / 2 : 0)
       .attr("cy", height ? height / 2 : 0)
       .attr("r", projection.scale())
-      .style("fill", COLOR_CONTINENT)
+      .style("fill", COLOR_NO_DATA)
       .style("stroke", "#000")
       .style("stroke-width", 1);
 
@@ -77,15 +77,19 @@ const RotatingEarth = () => {
         .data(geoData.features)
         .enter()
         .append("path")
-        .attr("d", (d: unknown) => path(d as Feature))
-        .style("fill", COLOR_NO_DATA)
-        .style("stroke", "#666")
-        .style("stroke-width", 0.5)
+        .attr("d", (d: Feature) => path(d as Feature))
+        .style("fill", COLOR_CONTINENT)
+        .style("stroke", "#000")
+        .style("stroke-width", 2)
+        .style("transform", "translateY(-2px)")
         .on("mouseover", function (event, d) {
-          select(this).style("fill", COLOR_HOVER);
+          console.log(d);
+          if (d && d.id) {
+            select(this).style("fill", COLOR_HOVER);
+          }
         })
         .on("mouseout", function () {
-          select(this).style("fill", COLOR_NO_DATA);
+          select(this).style("fill", COLOR_CONTINENT);
         });
 
       initInteractions(svg, projection, path);
@@ -110,7 +114,7 @@ const RotatingEarth = () => {
           })
           .on("drag", (event) => {
             const rotate = projection.rotate();
-            const rotationAdjustmentFactor = 
+            const rotationAdjustmentFactor =
               ROTATION_SENSITIVITY / projection.scale();
 
             projection.rotate([
@@ -127,7 +131,7 @@ const RotatingEarth = () => {
 
       const rotateGlobe = () => {
         if (rotationTimer) rotationTimer.stop();
-        rotationTimer = timer((elapsed) => {
+        rotationTimer = timer(() => {
           const rotate = projection.rotate();
           const rotationAdjustmentFactor =
             ROTATION_SENSITIVITY / projection.scale();
