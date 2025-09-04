@@ -1,4 +1,4 @@
-import LoginModal from "../common/LoginModal";
+import LoginModal from "../../common/LoginModal";
 import Image from "next/image";
 
 function LoginPage() {

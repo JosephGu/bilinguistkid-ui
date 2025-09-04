@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CssBaseline } from "@mui/material";
-import Navigation from "@/app/common/Navigation";
+import Navigation from "@/common/Navigation";
 import { AuthProvider } from "@/app/utils/AuthContect";
-import LoginModal from "@/app/common/LoginModal";
+import LoginModal from "@/common/LoginModal";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 // import StoreProvider from "@/app/StoreProvider";
 
