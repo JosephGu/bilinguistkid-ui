@@ -2,7 +2,7 @@ import Image from "next/image";
 import { buildApiUrl, API_ENDPOINTS } from "./utils/apiConfig";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
-import Profile from "./common/Profile";
+import Profile from "../common/Profile";
 
 async function retrieveProfile() {
   const cookieStore = await cookies();
