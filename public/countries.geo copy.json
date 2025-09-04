@@ -3,6 +3,7 @@
   "features": [
     {
       "type": "Feature",
+      "id": "AFG",
       "properties": { "name": "Afghanistan" },
       "geometry": {
         "type": "Polygon",
@@ -79,11 +80,11 @@
             [61.210817, 35.650072]
           ]
         ]
-      },
-      "id": "AFG"
+      }
     },
     {
       "type": "Feature",
+      "id": "AGO",
       "properties": { "name": "Angola" },
       "geometry": {
         "type": "MultiPolygon",
@@ -172,11 +173,11 @@
             ]
           ]
         ]
-      },
-      "id": "AGO"
+      }
     },
     {
       "type": "Feature",
+      "id": "ALB",
       "properties": { "name": "Albania" },
       "geometry": {
         "type": "Polygon",
@@ -206,11 +207,11 @@
             [20.590247, 41.855404]
           ]
         ]
-      },
-      "id": "ALB"
+      }
     },
     {
       "type": "Feature",
+      "id": "ARE",
       "properties": { "name": "United Arab Emirates" },
       "geometry": {
         "type": "Polygon",
@@ -240,11 +241,11 @@
             [51.579519, 24.245497]
           ]
         ]
-      },
-      "id": "ARE"
+      }
     },
     {
       "type": "Feature",
+      "id": "ARG",
       "properties": { "name": "Argentina" },
       "geometry": {
         "type": "MultiPolygon",
@@ -379,11 +380,11 @@
             ]
           ]
         ]
-      },
-      "id": "ARG"
+      }
     },
     {
       "type": "Feature",
+      "id": "ARM",
       "properties": { "name": "Armenia" },
       "geometry": {
         "type": "Polygon",
@@ -411,11 +412,11 @@
             [43.582746, 41.092143]
           ]
         ]
-      },
-      "id": "ARM"
+      }
     },
     {
       "type": "Feature",
+      "id": "ATA",
       "properties": { "name": "Antarctica" },
       "geometry": {
         "type": "MultiPolygon",
@@ -444,7 +445,6 @@
               [-162.439847, -79.281465],
               [-163.027408, -78.928774],
               [-163.066604, -78.869966],
-              [-163.712896, -78.595667],
               [-163.712896, -78.595667],
               [-163.105801, -78.223338],
               [-161.245113, -78.380176],
@@ -516,7 +516,6 @@
               [-99.432013, -72.442864],
               [-100.783455, -72.50162],
               [-101.801868, -72.305663],
-              [-102.330725, -71.894164],
               [-102.330725, -71.894164],
               [-101.703967, -71.717792],
               [-100.430919, -71.854993],
@@ -1111,11 +1110,32 @@
             ]
           ]
         ]
-      },
-      "id": "ATA"
+      }
     },
     {
       "type": "Feature",
+      "id": "ATF",
+      "properties": { "name": "French Southern and Antarctic Lands" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [68.935, -48.625],
+            [69.58, -48.94],
+            [70.525, -49.065],
+            [70.56, -49.255],
+            [70.28, -49.71],
+            [68.745, -49.775],
+            [68.72, -49.2425],
+            [68.8675, -48.83],
+            [68.935, -48.625]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AUS",
       "properties": { "name": "Australia" },
       "geometry": {
         "type": "MultiPolygon",
@@ -1370,11 +1390,11 @@
             ]
           ]
         ]
-      },
-      "id": "AUS"
+      }
     },
     {
       "type": "Feature",
+      "id": "AUT",
       "properties": { "name": "Austria" },
       "geometry": {
         "type": "Polygon",
@@ -1419,11 +1439,11 @@
             [16.979667, 48.123497]
           ]
         ]
-      },
-      "id": "AUT"
+      }
     },
     {
       "type": "Feature",
+      "id": "AZE",
       "properties": { "name": "Azerbaijan" },
       "geometry": {
         "type": "MultiPolygon",
@@ -1481,11 +1501,11 @@
             ]
           ]
         ]
-      },
-      "id": "AZE"
+      }
     },
     {
       "type": "Feature",
+      "id": "BDI",
       "properties": { "name": "Burundi" },
       "geometry": {
         "type": "Polygon",
@@ -1506,11 +1526,11 @@
             [29.339998, -4.499983]
           ]
         ]
-      },
-      "id": "BDI"
+      }
     },
     {
       "type": "Feature",
+      "id": "BEL",
       "properties": { "name": "Belgium" },
       "geometry": {
         "type": "Polygon",
@@ -1533,11 +1553,11 @@
             [3.314971, 51.345781]
           ]
         ]
-      },
-      "id": "BEL"
+      }
     },
     {
       "type": "Feature",
+      "id": "BEN",
       "properties": { "name": "Benin" },
       "geometry": {
         "type": "Polygon",
@@ -1570,11 +1590,11 @@
             [2.691702, 6.258817]
           ]
         ]
-      },
-      "id": "BEN"
+      }
     },
     {
       "type": "Feature",
+      "id": "BFA",
       "properties": { "name": "Burkina Faso" },
       "geometry": {
         "type": "Polygon",
@@ -1621,11 +1641,11 @@
             [-2.827496, 9.642461]
           ]
         ]
-      },
-      "id": "BFA"
+      }
     },
     {
       "type": "Feature",
+      "id": "BGD",
       "properties": { "name": "Bangladesh" },
       "geometry": {
         "type": "Polygon",
@@ -1669,11 +1689,11 @@
             [92.672721, 22.041239]
           ]
         ]
-      },
-      "id": "BGD"
+      }
     },
     {
       "type": "Feature",
+      "id": "BGR",
       "properties": { "name": "Bulgaria" },
       "geometry": {
         "type": "Polygon",
@@ -1709,11 +1729,11 @@
             [22.65715, 44.234923]
           ]
         ]
-      },
-      "id": "BGR"
+      }
     },
     {
       "type": "Feature",
+      "id": "BHS",
       "properties": { "name": "The Bahamas" },
       "geometry": {
         "type": "MultiPolygon",
@@ -1752,11 +1772,11 @@
             ]
           ]
         ]
-      },
-      "id": "BHS"
+      }
     },
     {
       "type": "Feature",
+      "id": "BIH",
       "properties": { "name": "Bosnia and Herzegovina" },
       "geometry": {
         "type": "Polygon",
@@ -1786,11 +1806,11 @@
             [19.005486, 44.860234]
           ]
         ]
-      },
-      "id": "BIH"
+      }
     },
     {
       "type": "Feature",
+      "id": "BLR",
       "properties": { "name": "Belarus" },
       "geometry": {
         "type": "Polygon",
@@ -1842,11 +1862,11 @@
             [23.484128, 53.912498]
           ]
         ]
-      },
-      "id": "BLR"
+      }
     },
     {
       "type": "Feature",
+      "id": "BLZ",
       "properties": { "name": "Belize" },
       "geometry": {
         "type": "Polygon",
@@ -1874,11 +1894,109 @@
             [-89.14308, 17.808319]
           ]
         ]
-      },
-      "id": "BLZ"
+      }
     },
     {
       "type": "Feature",
+      "id": "BMU",
+      "properties": { "name": "Bermuda" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.7799734332998, 32.3072000581802],
+            [-64.7873319183061, 32.3039237143428],
+            [-64.7946942710173, 32.3032682700388],
+            [-64.8094297981283, 32.3098175728414],
+            [-64.8167896352437, 32.3058845718466],
+            [-64.8101968029642, 32.3022833180511],
+            [-64.7962291465484, 32.2934409732427],
+            [-64.7815086336978, 32.2868973114514],
+            [-64.7997025513437, 32.2796896417328],
+            [-64.8066707691087, 32.2747767569465],
+            [-64.8225587873683, 32.2669111289395],
+            [-64.8287548840306, 32.2669075473817],
+            [-64.8306732143498, 32.2583944840235],
+            [-64.8399924854972, 32.254782282336],
+            [-64.8566090462354, 32.2547740387514],
+            [-64.8682296789446, 32.2616393614322],
+            [-64.8628241459563, 32.2724481933959],
+            [-64.8748651338951, 32.2757120264753],
+            [-64.8717752856644, 32.2819371582026],
+            [-64.8671422127295, 32.2930760547989],
+            [-64.8559068764437, 32.2960321186471],
+            [-64.8597429072279, 32.3015842021933],
+            [-64.8439233486717, 32.3140553852543],
+            [-64.8350242329311, 32.3242161760006],
+            [-64.8338690593672, 32.3294587561557],
+            [-64.8520298651164, 32.3110911879954],
+            [-64.8635922932573, 32.3048469433363],
+            [-64.8686668994079, 32.30910745083],
+            [-64.8721354593415, 32.3041908606301],
+            [-64.8779667328485, 32.3038632800462],
+            [-64.8780046844321, 32.2907757831692],
+            [-64.8849776658292, 32.2819261366004],
+            [-64.8783230004629, 32.2613001418681],
+            [-64.863194968877, 32.2465799485801],
+            [-64.8519819555722, 32.2485519134663],
+            [-64.842311980074, 32.2492123317296],
+            [-64.8388242605209, 32.2475773472534],
+            [-64.8334002575532, 32.2462714714698],
+            [-64.8256389530584, 32.2472637398594],
+            [-64.8205697556026, 32.2531698880328],
+            [-64.8105087275579, 32.2561208974156],
+            [-64.7900177727338, 32.2659446936992],
+            [-64.7745415970416, 32.2718413023427],
+            [-64.7644742436426, 32.2855931353214],
+            [-64.7551803442276, 32.2908326702531],
+            [-64.7423982971436, 32.2996734994024],
+            [-64.7206991797682, 32.3137542201258],
+            [-64.7117851247134, 32.3176823360806],
+            [-64.6962778813133, 32.3275029115532],
+            [-64.6768921127452, 32.3324095397555],
+            [-64.6567136927777, 32.3451776458469],
+            [-64.6532168823499, 32.3494356627941],
+            [-64.6605720384429, 32.3589423487763],
+            [-64.65125819471, 32.3615600906466],
+            [-64.6462011670816, 32.36975169749],
+            [-64.6613227512832, 32.3763135008721],
+            [-64.6690666074397, 32.388444543924],
+            [-64.6834270548595, 32.3854968316788],
+            [-64.6954617672714, 32.3763221285869],
+            [-64.70438689565, 32.3704254760469],
+            [-64.7117569982798, 32.368132600249],
+            [-64.7061764744404, 32.3600110593559],
+            [-64.700531552697, 32.3590601356818],
+            [-64.6940348033967, 32.3640708659835],
+            [-64.6895164826082, 32.3633598579866],
+            [-64.6864150099255, 32.3547797587266],
+            [-64.6824635995504, 32.3540628176846],
+            [-64.6835876652835, 32.3626447677968],
+            [-64.6801998697415, 32.3631199096979],
+            [-64.6672170444687, 32.3597751617473],
+            [-64.6598811264978, 32.3497625771755],
+            [-64.6737331235384, 32.3390281851635],
+            [-64.6887090648183, 32.3342439408053],
+            [-64.706732854446, 32.3429010723036],
+            [-64.7149301576112, 32.3552188753513],
+            [-64.7185967666669, 32.3552239212394],
+            [-64.7214189847314, 32.3518830231342],
+            [-64.7270616067222, 32.3466461715475],
+            [-64.734962460882, 32.3442819830499],
+            [-64.7383521549094, 32.3407216514918],
+            [-64.7411729976333, 32.3311790864627],
+            [-64.7423019216485, 32.323311561213],
+            [-64.7462482354281, 32.318538611581],
+            [-64.7566773739613, 32.3130509130175],
+            [-64.768738200563, 32.3088369816572],
+            [-64.7799734332998, 32.3072000581802]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "BOL",
       "properties": { "name": "Bolivia" },
       "geometry": {
         "type": "Polygon",
@@ -1946,11 +2064,11 @@
             [-62.846468, -22.034985]
           ]
         ]
-      },
-      "id": "BOL"
+      }
     },
     {
       "type": "Feature",
+      "id": "BRA",
       "properties": { "name": "Brazil" },
       "geometry": {
         "type": "Polygon",
@@ -2161,11 +2279,11 @@
             [-57.625133, -30.216295]
           ]
         ]
-      },
-      "id": "BRA"
+      }
     },
     {
       "type": "Feature",
+      "id": "BRN",
       "properties": { "name": "Brunei" },
       "geometry": {
         "type": "Polygon",
@@ -2181,11 +2299,11 @@
             [114.204017, 4.525874]
           ]
         ]
-      },
-      "id": "BRN"
+      }
     },
     {
       "type": "Feature",
+      "id": "BTN",
       "properties": { "name": "Bhutan" },
       "geometry": {
         "type": "Polygon",
@@ -2206,11 +2324,11 @@
             [91.696657, 27.771742]
           ]
         ]
-      },
-      "id": "BTN"
+      }
     },
     {
       "type": "Feature",
+      "id": "BWA",
       "properties": { "name": "Botswana" },
       "geometry": {
         "type": "Polygon",
@@ -2258,11 +2376,11 @@
             [25.649163, -18.536026]
           ]
         ]
-      },
-      "id": "BWA"
+      }
     },
     {
       "type": "Feature",
+      "id": "CAF",
       "properties": { "name": "Central African Republic" },
       "geometry": {
         "type": "Polygon",
@@ -2332,11 +2450,11 @@
             [15.27946, 7.421925]
           ]
         ]
-      },
-      "id": "CAF"
+      }
     },
     {
       "type": "Feature",
+      "id": "CAN",
       "properties": { "name": "Canada" },
       "geometry": {
         "type": "MultiPolygon",
@@ -2425,9 +2543,6 @@
           ],
           [
             [
-              [-132.710008, 54.040009],
-              [-132.710009, 54.040009],
-              [-132.710008, 54.040009],
               [-132.710008, 54.040009],
               [-131.74999, 54.120004],
               [-132.04948, 52.984621],
@@ -3257,11 +3372,11 @@
             ]
           ]
         ]
-      },
-      "id": "CAN"
+      }
     },
     {
       "type": "Feature",
+      "id": "CHE",
       "properties": { "name": "Switzerland" },
       "geometry": {
         "type": "Polygon",
@@ -3293,11 +3408,11 @@
             [9.594226, 47.525058]
           ]
         ]
-      },
-      "id": "CHE"
+      }
     },
     {
       "type": "Feature",
+      "id": "CHL",
       "properties": { "name": "Chile" },
       "geometry": {
         "type": "MultiPolygon",
@@ -3425,11 +3540,11 @@
             ]
           ]
         ]
-      },
-      "id": "CHL"
+      }
     },
     {
       "type": "Feature",
+      "id": "CHN",
       "properties": { "name": "China" },
       "geometry": {
         "type": "MultiPolygon",
@@ -3696,11 +3811,11 @@
             ]
           ]
         ]
-      },
-      "id": "CHN"
+      }
     },
     {
       "type": "Feature",
+      "id": "CIV",
       "properties": { "name": "Ivory Coast" },
       "geometry": {
         "type": "Polygon",
@@ -3754,11 +3869,11 @@
             [-2.856125, 4.994476]
           ]
         ]
-      },
-      "id": "CIV"
+      }
     },
     {
       "type": "Feature",
+      "id": "CMR",
       "properties": { "name": "Cameroon" },
       "geometry": {
         "type": "Polygon",
@@ -3827,11 +3942,11 @@
             [13.075822, 2.267097]
           ]
         ]
-      },
-      "id": "CMR"
+      }
     },
     {
       "type": "Feature",
+      "id": "COD",
       "properties": { "name": "Democratic Republic of the Congo" },
       "geometry": {
         "type": "Polygon",
@@ -3961,11 +4076,11 @@
             [30.83386, 3.509166]
           ]
         ]
-      },
-      "id": "COD"
+      }
     },
     {
       "type": "Feature",
+      "id": "COG",
       "properties": { "name": "Republic of the Congo" },
       "geometry": {
         "type": "Polygon",
@@ -4022,11 +4137,11 @@
             [12.995517, -4.781103]
           ]
         ]
-      },
-      "id": "COG"
+      }
     },
     {
       "type": "Feature",
+      "id": "COL",
       "properties": { "name": "Colombia" },
       "geometry": {
         "type": "Polygon",
@@ -4134,11 +4249,11 @@
             [-75.373223, -0.152032]
           ]
         ]
-      },
-      "id": "COL"
+      }
     },
     {
       "type": "Feature",
+      "id": "CRI",
       "properties": { "name": "Costa Rica" },
       "geometry": {
         "type": "Polygon",
@@ -4182,11 +4297,11 @@
             [-82.965783, 8.225028]
           ]
         ]
-      },
-      "id": "CRI"
+      }
     },
     {
       "type": "Feature",
+      "id": "CUB",
       "properties": { "name": "Cuba" },
       "geometry": {
         "type": "Polygon",
@@ -4236,35 +4351,66 @@
             [-82.268151, 23.188611]
           ]
         ]
-      },
-      "id": "CUB"
+      }
     },
     {
       "type": "Feature",
-      "properties": { "name": "Cyprus" },
+      "id": "-99",
+      "properties": { "name": "Northern Cyprus" },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
+            [32.73178, 35.140026],
             [32.802474, 35.145504],
             [32.946961, 35.386703],
             [33.667227, 35.373216],
             [34.576474, 35.671596],
             [33.900804, 35.245756],
             [33.973617, 35.058506],
+            [33.86644, 35.093595],
+            [33.675392, 35.017863],
+            [33.525685, 35.038688],
+            [33.475817, 35.000345],
+            [33.455922, 35.101424],
+            [33.383833, 35.162712],
+            [33.190977, 35.173125],
+            [32.919572, 35.087833],
+            [32.73178, 35.140026]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "CYP",
+      "properties": { "name": "Cyprus" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [33.973617, 35.058506],
             [34.004881, 34.978098],
             [32.979827, 34.571869],
             [32.490296, 34.701655],
             [32.256667, 35.103232],
             [32.73178, 35.140026],
-            [32.802474, 35.145504]
+            [32.919572, 35.087833],
+            [33.190977, 35.173125],
+            [33.383833, 35.162712],
+            [33.455922, 35.101424],
+            [33.475817, 35.000345],
+            [33.525685, 35.038688],
+            [33.675392, 35.017863],
+            [33.86644, 35.093595],
+            [33.973617, 35.058506]
           ]
         ]
-      },
-      "id": "CYP"
+      }
     },
     {
       "type": "Feature",
+      "id": "CZE",
       "properties": { "name": "Czech Republic" },
       "geometry": {
         "type": "Polygon",
@@ -4307,11 +4453,11 @@
             [16.960288, 48.596982]
           ]
         ]
-      },
-      "id": "CZE"
+      }
     },
     {
       "type": "Feature",
+      "id": "DEU",
       "properties": { "name": "Germany" },
       "geometry": {
         "type": "Polygon",
@@ -4377,11 +4523,11 @@
             [9.921906, 54.983104]
           ]
         ]
-      },
-      "id": "DEU"
+      }
     },
     {
       "type": "Feature",
+      "id": "DJI",
       "properties": { "name": "Djibouti" },
       "geometry": {
         "type": "Polygon",
@@ -4404,11 +4550,11 @@
             [43.081226, 12.699639]
           ]
         ]
-      },
-      "id": "DJI"
+      }
     },
     {
       "type": "Feature",
+      "id": "DNK",
       "properties": { "name": "Denmark" },
       "geometry": {
         "type": "MultiPolygon",
@@ -4446,11 +4592,11 @@
             ]
           ]
         ]
-      },
-      "id": "DNK"
+      }
     },
     {
       "type": "Feature",
+      "id": "DOM",
       "properties": { "name": "Dominican Republic" },
       "geometry": {
         "type": "Polygon",
@@ -4484,11 +4630,11 @@
             [-71.712361, 19.714456]
           ]
         ]
-      },
-      "id": "DOM"
+      }
     },
     {
       "type": "Feature",
+      "id": "DZA",
       "properties": { "name": "Algeria" },
       "geometry": {
         "type": "Polygon",
@@ -4558,11 +4704,11 @@
             [11.999506, 23.471668]
           ]
         ]
-      },
-      "id": "DZA"
+      }
     },
     {
       "type": "Feature",
+      "id": "ECU",
       "properties": { "name": "Ecuador" },
       "geometry": {
         "type": "Polygon",
@@ -4603,11 +4749,11 @@
             [-80.302561, -3.404856]
           ]
         ]
-      },
-      "id": "ECU"
+      }
     },
     {
       "type": "Feature",
+      "id": "EGY",
       "properties": { "name": "Egypt" },
       "geometry": {
         "type": "Polygon",
@@ -4657,11 +4803,11 @@
             [34.9226, 29.50133]
           ]
         ]
-      },
-      "id": "EGY"
+      }
     },
     {
       "type": "Feature",
+      "id": "ERI",
       "properties": { "name": "Eritrea" },
       "geometry": {
         "type": "Polygon",
@@ -4697,11 +4843,11 @@
             [42.35156, 12.54223]
           ]
         ]
-      },
-      "id": "ERI"
+      }
     },
     {
       "type": "Feature",
+      "id": "ESP",
       "properties": { "name": "Spain" },
       "geometry": {
         "type": "Polygon",
@@ -4760,11 +4906,11 @@
             [-9.034818, 41.880571]
           ]
         ]
-      },
-      "id": "ESP"
+      }
     },
     {
       "type": "Feature",
+      "id": "EST",
       "properties": { "name": "Estonia" },
       "geometry": {
         "type": "Polygon",
@@ -4789,11 +4935,11 @@
             [24.312863, 57.793424]
           ]
         ]
-      },
-      "id": "EST"
+      }
     },
     {
       "type": "Feature",
+      "id": "ETH",
       "properties": { "name": "Ethiopia" },
       "geometry": {
         "type": "Polygon",
@@ -4860,11 +5006,11 @@
             [37.90607, 14.95943]
           ]
         ]
-      },
-      "id": "ETH"
+      }
     },
     {
       "type": "Feature",
+      "id": "FIN",
       "properties": { "name": "Finland" },
       "geometry": {
         "type": "Polygon",
@@ -4910,11 +5056,11 @@
             [28.59193, 69.064777]
           ]
         ]
-      },
-      "id": "FIN"
+      }
     },
     {
       "type": "Feature",
+      "id": "FJI",
       "properties": { "name": "Fiji" },
       "geometry": {
         "type": "MultiPolygon",
@@ -4954,38 +5100,37 @@
             ]
           ]
         ]
-      },
-      "id": "FAR"
+      }
     },
     {
       "type": "Feature",
+      "id": "FLK",
+      "properties": { "name": "Falkland Islands" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-61.2, -51.85],
+            [-60, -51.25],
+            [-59.15, -51.5],
+            [-58.55, -51.1],
+            [-57.75, -51.55],
+            [-58.05, -51.9],
+            [-59.4, -52.2],
+            [-59.85, -51.85],
+            [-60.7, -52.3],
+            [-61.2, -51.85]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "FRA",
       "properties": { "name": "France" },
       "geometry": {
         "type": "MultiPolygon",
         "coordinates": [
-          [
-            [
-              [-52.556425, 2.504705],
-              [-52.939657, 2.124858],
-              [-53.418465, 2.053389],
-              [-53.554839, 2.334897],
-              [-53.778521, 2.376703],
-              [-54.088063, 2.105557],
-              [-54.524754, 2.311849],
-              [-54.27123, 2.738748],
-              [-54.184284, 3.194172],
-              [-54.011504, 3.62257],
-              [-54.399542, 4.212611],
-              [-54.478633, 4.896756],
-              [-53.958045, 5.756548],
-              [-53.618453, 5.646529],
-              [-52.882141, 5.409851],
-              [-51.823343, 4.565768],
-              [-51.657797, 4.156232],
-              [-52.249338, 3.241094],
-              [-52.556425, 2.504705]
-            ]
-          ],
           [
             [
               [9.560016, 42.152492],
@@ -5050,11 +5195,11 @@
             ]
           ]
         ]
-      },
-      "id": "FRA"
+      }
     },
     {
       "type": "Feature",
+      "id": "GAB",
       "properties": { "name": "Gabon" },
       "geometry": {
         "type": "Polygon",
@@ -5093,12 +5238,12 @@
             [11.093773, -3.978827]
           ]
         ]
-      },
-      "id": "GAB"
+      }
     },
     {
       "type": "Feature",
-      "properties": { "name": "England" },
+      "id": "GBR",
+      "properties": { "name": "United Kingdom" },
       "geometry": {
         "type": "MultiPolygon",
         "coordinates": [
@@ -5167,11 +5312,11 @@
             ]
           ]
         ]
-      },
-      "id": "GBR"
+      }
     },
     {
       "type": "Feature",
+      "id": "GEO",
       "properties": { "name": "Georgia" },
       "geometry": {
         "type": "Polygon",
@@ -5203,11 +5348,11 @@
             [41.554084, 41.535656]
           ]
         ]
-      },
-      "id": "GEO"
+      }
     },
     {
       "type": "Feature",
+      "id": "GHA",
       "properties": { "name": "Ghana" },
       "geometry": {
         "type": "Polygon",
@@ -5240,11 +5385,11 @@
             [1.060122, 5.928837]
           ]
         ]
-      },
-      "id": "GHA"
+      }
     },
     {
       "type": "Feature",
+      "id": "GIN",
       "properties": { "name": "Guinea" },
       "geometry": {
         "type": "Polygon",
@@ -5322,11 +5467,11 @@
             [-8.439298, 7.686043]
           ]
         ]
-      },
-      "id": "GIN"
+      }
     },
     {
       "type": "Feature",
+      "id": "GMB",
       "properties": { "name": "Gambia" },
       "geometry": {
         "type": "Polygon",
@@ -5350,11 +5495,11 @@
             [-16.841525, 13.151394]
           ]
         ]
-      },
-      "id": "GMB"
+      }
     },
     {
       "type": "Feature",
+      "id": "GNB",
       "properties": { "name": "Guinea Bissau" },
       "geometry": {
         "type": "Polygon",
@@ -5381,11 +5526,11 @@
             [-15.130311, 11.040412]
           ]
         ]
-      },
-      "id": "GNB"
+      }
     },
     {
       "type": "Feature",
+      "id": "GNQ",
       "properties": { "name": "Equatorial Guinea" },
       "geometry": {
         "type": "Polygon",
@@ -5400,11 +5545,11 @@
             [9.492889, 1.01012]
           ]
         ]
-      },
-      "id": "GNQ"
+      }
     },
     {
       "type": "Feature",
+      "id": "GRC",
       "properties": { "name": "Greece" },
       "geometry": {
         "type": "MultiPolygon",
@@ -5472,11 +5617,11 @@
             ]
           ]
         ]
-      },
-      "id": "GRC"
+      }
     },
     {
       "type": "Feature",
+      "id": "GRL",
       "properties": { "name": "Greenland" },
       "geometry": {
         "type": "Polygon",
@@ -5616,11 +5761,11 @@
             [-46.76379, 82.62796]
           ]
         ]
-      },
-      "id": "GRL"
+      }
     },
     {
       "type": "Feature",
+      "id": "GTM",
       "properties": { "name": "Guatemala" },
       "geometry": {
         "type": "Polygon",
@@ -5663,11 +5808,42 @@
             [-90.095555, 13.735338]
           ]
         ]
-      },
-      "id": "GTM"
+      }
     },
     {
       "type": "Feature",
+      "id": "GUF",
+      "properties": { "name": "French Guiana" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-52.556425, 2.504705],
+            [-52.939657, 2.124858],
+            [-53.418465, 2.053389],
+            [-53.554839, 2.334897],
+            [-53.778521, 2.376703],
+            [-54.088063, 2.105557],
+            [-54.524754, 2.311849],
+            [-54.27123, 2.738748],
+            [-54.184284, 3.194172],
+            [-54.011504, 3.62257],
+            [-54.399542, 4.212611],
+            [-54.478633, 4.896756],
+            [-53.958045, 5.756548],
+            [-53.618453, 5.646529],
+            [-52.882141, 5.409851],
+            [-51.823343, 4.565768],
+            [-51.657797, 4.156232],
+            [-52.249338, 3.241094],
+            [-52.556425, 2.504705]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "GUY",
       "properties": { "name": "Guyana" },
       "geometry": {
         "type": "Polygon",
@@ -5715,11 +5891,11 @@
             [-59.758285, 8.367035]
           ]
         ]
-      },
-      "id": "GUY"
+      }
     },
     {
       "type": "Feature",
+      "id": "HND",
       "properties": { "name": "Honduras" },
       "geometry": {
         "type": "Polygon",
@@ -5784,11 +5960,11 @@
             [-87.316654, 12.984686]
           ]
         ]
-      },
-      "id": "HND"
+      }
     },
     {
       "type": "Feature",
+      "id": "HRV",
       "properties": { "name": "Croatia" },
       "geometry": {
         "type": "Polygon",
@@ -5838,11 +6014,11 @@
             [18.829838, 45.908878]
           ]
         ]
-      },
-      "id": "HRV"
+      }
     },
     {
       "type": "Feature",
+      "id": "HTI",
       "properties": { "name": "Haiti" },
       "geometry": {
         "type": "Polygon",
@@ -5871,11 +6047,11 @@
             [-73.189791, 19.915684]
           ]
         ]
-      },
-      "id": "HTI"
+      }
     },
     {
       "type": "Feature",
+      "id": "HUN",
       "properties": { "name": "Hungary" },
       "geometry": {
         "type": "Polygon",
@@ -5914,11 +6090,11 @@
             [16.202298, 46.852386]
           ]
         ]
-      },
-      "id": "HUN"
+      }
     },
     {
       "type": "Feature",
+      "id": "IDN",
       "properties": { "name": "Indonesia" },
       "geometry": {
         "type": "MultiPolygon",
@@ -6226,11 +6402,11 @@
             ]
           ]
         ]
-      },
-      "id": "IDN"
+      }
     },
     {
       "type": "Feature",
+      "id": "IND",
       "properties": { "name": "India" },
       "geometry": {
         "type": "Polygon",
@@ -6374,11 +6550,11 @@
             [77.837451, 35.49401]
           ]
         ]
-      },
-      "id": "IND"
+      }
     },
     {
       "type": "Feature",
+      "id": "IRL",
       "properties": { "name": "Ireland" },
       "geometry": {
         "type": "Polygon",
@@ -6399,11 +6575,11 @@
             [-6.197885, 53.867565]
           ]
         ]
-      },
-      "id": "IRL"
+      }
     },
     {
       "type": "Feature",
+      "id": "IRN",
       "properties": { "name": "Iran" },
       "geometry": {
         "type": "Polygon",
@@ -6486,11 +6662,11 @@
             [53.921598, 37.198918]
           ]
         ]
-      },
-      "id": "IRN"
+      }
     },
     {
       "type": "Feature",
+      "id": "IRQ",
       "properties": { "name": "Iraq" },
       "geometry": {
         "type": "Polygon",
@@ -6528,11 +6704,11 @@
             [45.420618, 35.977546]
           ]
         ]
-      },
-      "id": "IRQ"
+      }
     },
     {
       "type": "Feature",
+      "id": "ISL",
       "properties": { "name": "Iceland" },
       "geometry": {
         "type": "Polygon",
@@ -6560,11 +6736,11 @@
             [-14.508695, 66.455892]
           ]
         ]
-      },
-      "id": "ISL"
+      }
     },
     {
       "type": "Feature",
+      "id": "ISR",
       "properties": { "name": "Israel" },
       "geometry": {
         "type": "Polygon",
@@ -6595,11 +6771,11 @@
             [35.719918, 32.709192]
           ]
         ]
-      },
-      "id": "ISR"
+      }
     },
     {
       "type": "Feature",
+      "id": "ITA",
       "properties": { "name": "Italy" },
       "geometry": {
         "type": "MultiPolygon",
@@ -6704,11 +6880,11 @@
             ]
           ]
         ]
-      },
-      "id": "ITA"
+      }
     },
     {
       "type": "Feature",
+      "id": "JAM",
       "properties": { "name": "Jamaica" },
       "geometry": {
         "type": "Polygon",
@@ -6727,11 +6903,11 @@
             [-77.569601, 18.490525]
           ]
         ]
-      },
-      "id": "JAM"
+      }
     },
     {
       "type": "Feature",
+      "id": "JOR",
       "properties": { "name": "Jordan" },
       "geometry": {
         "type": "Polygon",
@@ -6758,11 +6934,11 @@
             [35.545665, 32.393992]
           ]
         ]
-      },
-      "id": "JOR"
+      }
     },
     {
       "type": "Feature",
+      "id": "JPN",
       "properties": { "name": "Japan" },
       "geometry": {
         "type": "MultiPolygon",
@@ -6845,11 +7021,11 @@
             ]
           ]
         ]
-      },
-      "id": "JPN"
+      }
     },
     {
       "type": "Feature",
+      "id": "KAZ",
       "properties": { "name": "Kazakhstan" },
       "geometry": {
         "type": "Polygon",
@@ -6969,11 +7145,11 @@
             [70.962315, 42.266154]
           ]
         ]
-      },
-      "id": "KAZ"
+      }
     },
     {
       "type": "Feature",
+      "id": "KEN",
       "properties": { "name": "Kenya" },
       "geometry": {
         "type": "Polygon",
@@ -7018,11 +7194,11 @@
             [40.993, -0.85829]
           ]
         ]
-      },
-      "id": "KEN"
+      }
     },
     {
       "type": "Feature",
+      "id": "KGZ",
       "properties": { "name": "Kyrgyzstan" },
       "geometry": {
         "type": "Polygon",
@@ -7065,11 +7241,11 @@
             [70.962315, 42.266154]
           ]
         ]
-      },
-      "id": "KGZ"
+      }
     },
     {
       "type": "Feature",
+      "id": "KHM",
       "properties": { "name": "Cambodia" },
       "geometry": {
         "type": "Polygon",
@@ -7094,11 +7270,11 @@
             [103.49728, 10.632555]
           ]
         ]
-      },
-      "id": "KHM"
+      }
     },
     {
       "type": "Feature",
+      "id": "KOR",
       "properties": { "name": "South Korea" },
       "geometry": {
         "type": "Polygon",
@@ -7125,11 +7301,11 @@
             [128.349716, 38.612243]
           ]
         ]
-      },
-      "id": "KOR"
+      }
     },
     {
       "type": "Feature",
+      "id": "CS-KM",
       "properties": { "name": "Kosovo" },
       "geometry": {
         "type": "Polygon",
@@ -7158,11 +7334,11 @@
             [20.76216, 42.05186]
           ]
         ]
-      },
-      "id": "OSA"
+      }
     },
     {
       "type": "Feature",
+      "id": "KWT",
       "properties": { "name": "Kuwait" },
       "geometry": {
         "type": "Polygon",
@@ -7179,11 +7355,11 @@
             [47.974519, 29.975819]
           ]
         ]
-      },
-      "id": "KWT"
+      }
     },
     {
       "type": "Feature",
+      "id": "LAO",
       "properties": { "name": "Laos" },
       "geometry": {
         "type": "Polygon",
@@ -7228,11 +7404,11 @@
             [105.218777, 14.273212]
           ]
         ]
-      },
-      "id": "LAO"
+      }
     },
     {
       "type": "Feature",
+      "id": "LBN",
       "properties": { "name": "Lebanon" },
       "geometry": {
         "type": "Polygon",
@@ -7251,11 +7427,11 @@
             [35.821101, 33.277426]
           ]
         ]
-      },
-      "id": "LBN"
+      }
     },
     {
       "type": "Feature",
+      "id": "LBR",
       "properties": { "name": "Liberia" },
       "geometry": {
         "type": "Polygon",
@@ -7290,11 +7466,11 @@
             [-7.712159, 4.364566]
           ]
         ]
-      },
-      "id": "LBR"
+      }
     },
     {
       "type": "Feature",
+      "id": "LBY",
       "properties": { "name": "Libya" },
       "geometry": {
         "type": "Polygon",
@@ -7358,11 +7534,11 @@
             [14.8513, 22.86295]
           ]
         ]
-      },
-      "id": "LBY"
+      }
     },
     {
       "type": "Feature",
+      "id": "LKA",
       "properties": { "name": "Sri Lanka" },
       "geometry": {
         "type": "Polygon",
@@ -7380,11 +7556,11 @@
             [81.787959, 7.523055]
           ]
         ]
-      },
-      "id": "LKA"
+      }
     },
     {
       "type": "Feature",
+      "id": "LSO",
       "properties": { "name": "Lesotho" },
       "geometry": {
         "type": "Polygon",
@@ -7404,11 +7580,11 @@
             [28.978263, -28.955597]
           ]
         ]
-      },
-      "id": "LSO"
+      }
     },
     {
       "type": "Feature",
+      "id": "LTU",
       "properties": { "name": "Lithuania" },
       "geometry": {
         "type": "Polygon",
@@ -7435,11 +7611,11 @@
             [22.731099, 54.327537]
           ]
         ]
-      },
-      "id": "LTU"
+      }
     },
     {
       "type": "Feature",
+      "id": "LUX",
       "properties": { "name": "Luxembourg" },
       "geometry": {
         "type": "Polygon",
@@ -7454,11 +7630,11 @@
             [6.043073, 50.128052]
           ]
         ]
-      },
-      "id": "LUX"
+      }
     },
     {
       "type": "Feature",
+      "id": "LVA",
       "properties": { "name": "Latvia" },
       "geometry": {
         "type": "Polygon",
@@ -7488,11 +7664,11 @@
             [21.0558, 56.031076]
           ]
         ]
-      },
-      "id": "LVA"
+      }
     },
     {
       "type": "Feature",
+      "id": "MAR",
       "properties": { "name": "Morocco" },
       "geometry": {
         "type": "Polygon",
@@ -7564,11 +7740,11 @@
             [-5.193863, 35.755182]
           ]
         ]
-      },
-      "id": "MAR"
+      }
     },
     {
       "type": "Feature",
+      "id": "MDA",
       "properties": { "name": "Moldova" },
       "geometry": {
         "type": "Polygon",
@@ -7603,11 +7779,11 @@
             [26.619337, 48.220726]
           ]
         ]
-      },
-      "id": "MDA"
+      }
     },
     {
       "type": "Feature",
+      "id": "MDG",
       "properties": { "name": "Madagascar" },
       "geometry": {
         "type": "Polygon",
@@ -7664,11 +7840,11 @@
             [49.543519, -12.469833]
           ]
         ]
-      },
-      "id": "MDG"
+      }
     },
     {
       "type": "Feature",
+      "id": "MEX",
       "properties": { "name": "Mexico" },
       "geometry": {
         "type": "Polygon",
@@ -7846,11 +8022,11 @@
             [-97.140008, 25.869997]
           ]
         ]
-      },
-      "id": "MEX"
+      }
     },
     {
       "type": "Feature",
+      "id": "MKD",
       "properties": { "name": "Macedonia" },
       "geometry": {
         "type": "Polygon",
@@ -7875,11 +8051,11 @@
             [20.59023, 41.85541]
           ]
         ]
-      },
-      "id": "MKD"
+      }
     },
     {
       "type": "Feature",
+      "id": "MLI",
       "properties": { "name": "Mali" },
       "geometry": {
         "type": "Polygon",
@@ -7963,11 +8139,45 @@
             [-12.17075, 14.616834]
           ]
         ]
-      },
-      "id": "MLI"
+      }
     },
     {
       "type": "Feature",
+      "id": "MLT",
+      "properties": { "name": "Malta" },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [14.566171, 35.852721],
+              [14.532684, 35.820191],
+              [14.436463, 35.821664],
+              [14.352334, 35.872281],
+              [14.3513, 35.978399],
+              [14.448348, 35.957444],
+              [14.537025, 35.886285],
+              [14.566171, 35.852721]
+            ]
+          ],
+          [
+            [
+              [14.313473, 36.027569],
+              [14.253632, 36.012143],
+              [14.194204, 36.042245],
+              [14.180354, 36.060383],
+              [14.263243, 36.075809],
+              [14.303758, 36.062295],
+              [14.320914, 36.03625],
+              [14.313473, 36.027569]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MMR",
       "properties": { "name": "Myanmar" },
       "geometry": {
         "type": "Polygon",
@@ -8045,11 +8255,11 @@
             [99.543309, 20.186598]
           ]
         ]
-      },
-      "id": "MMR"
+      }
     },
     {
       "type": "Feature",
+      "id": "MNE",
       "properties": { "name": "Montenegro" },
       "geometry": {
         "type": "Polygon",
@@ -8075,11 +8285,11 @@
             [19.801613, 42.500093]
           ]
         ]
-      },
-      "id": "MNE"
+      }
     },
     {
       "type": "Feature",
+      "id": "MNG",
       "properties": { "name": "Mongolia" },
       "geometry": {
         "type": "Polygon",
@@ -8162,11 +8372,11 @@
             [87.751264, 49.297198]
           ]
         ]
-      },
-      "id": "MNG"
+      }
     },
     {
       "type": "Feature",
+      "id": "MOZ",
       "properties": { "name": "Mozambique" },
       "geometry": {
         "type": "Polygon",
@@ -8251,11 +8461,11 @@
             [34.559989, -11.52002]
           ]
         ]
-      },
-      "id": "MOZ"
+      }
     },
     {
       "type": "Feature",
+      "id": "MRT",
       "properties": { "name": "Mauritania" },
       "geometry": {
         "type": "Polygon",
@@ -8302,11 +8512,11 @@
             [-12.17075, 14.616834]
           ]
         ]
-      },
-      "id": "MRT"
+      }
     },
     {
       "type": "Feature",
+      "id": "MWI",
       "properties": { "name": "Malawi" },
       "geometry": {
         "type": "Polygon",
@@ -8342,11 +8552,11 @@
             [34.559989, -11.52002]
           ]
         ]
-      },
-      "id": "MWI"
+      }
     },
     {
       "type": "Feature",
+      "id": "MYS",
       "properties": { "name": "Malaysia" },
       "geometry": {
         "type": "MultiPolygon",
@@ -8422,11 +8632,11 @@
             ]
           ]
         ]
-      },
-      "id": "MYS"
+      }
     },
     {
       "type": "Feature",
+      "id": "NAM",
       "properties": { "name": "Namibia" },
       "geometry": {
         "type": "Polygon",
@@ -8478,11 +8688,36 @@
             [16.344977, -28.576705]
           ]
         ]
-      },
-      "id": "NAM"
+      }
     },
     {
       "type": "Feature",
+      "id": "NCL",
+      "properties": { "name": "New Caledonia" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [165.77999, -21.080005],
+            [166.599991, -21.700019],
+            [167.120011, -22.159991],
+            [166.740035, -22.399976],
+            [166.189732, -22.129708],
+            [165.474375, -21.679607],
+            [164.829815, -21.14982],
+            [164.167995, -20.444747],
+            [164.029606, -20.105646],
+            [164.459967, -20.120012],
+            [165.020036, -20.459991],
+            [165.460009, -20.800022],
+            [165.77999, -21.080005]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "NER",
       "properties": { "name": "Niger" },
       "geometry": {
         "type": "Polygon",
@@ -8548,11 +8783,11 @@
             [2.154474, 11.94015]
           ]
         ]
-      },
-      "id": "NER"
+      }
     },
     {
       "type": "Feature",
+      "id": "NGA",
       "properties": { "name": "Nigeria" },
       "geometry": {
         "type": "Polygon",
@@ -8618,11 +8853,11 @@
             [8.500288, 4.771983]
           ]
         ]
-      },
-      "id": "NGA"
+      }
     },
     {
       "type": "Feature",
+      "id": "NIC",
       "properties": { "name": "Nicaragua" },
       "geometry": {
         "type": "Polygon",
@@ -8682,11 +8917,11 @@
             [-85.71254, 11.088445]
           ]
         ]
-      },
-      "id": "NIC"
+      }
     },
     {
       "type": "Feature",
+      "id": "NLD",
       "properties": { "name": "Netherlands" },
       "geometry": {
         "type": "Polygon",
@@ -8708,11 +8943,11 @@
             [6.074183, 53.510403]
           ]
         ]
-      },
-      "id": "NLD"
+      }
     },
     {
       "type": "Feature",
+      "id": "NOR",
       "properties": { "name": "Norway" },
       "geometry": {
         "type": "MultiPolygon",
@@ -8822,11 +9057,11 @@
             ]
           ]
         ]
-      },
-      "id": "NOR"
+      }
     },
     {
       "type": "Feature",
+      "id": "NPL",
       "properties": { "name": "Nepal" },
       "geometry": {
         "type": "Polygon",
@@ -8857,11 +9092,11 @@
             [88.120441, 27.876542]
           ]
         ]
-      },
-      "id": "NPL"
+      }
     },
     {
       "type": "Feature",
+      "id": "NZL",
       "properties": { "name": "New Zealand" },
       "geometry": {
         "type": "MultiPolygon",
@@ -8941,11 +9176,11 @@
             ]
           ]
         ]
-      },
-      "id": "NZL"
+      }
     },
     {
       "type": "Feature",
+      "id": "OMN",
       "properties": { "name": "Oman" },
       "geometry": {
         "type": "MultiPolygon",
@@ -9006,11 +9241,11 @@
             ]
           ]
         ]
-      },
-      "id": "OMN"
+      }
     },
     {
       "type": "Feature",
+      "id": "PAK",
       "properties": { "name": "Pakistan" },
       "geometry": {
         "type": "Polygon",
@@ -9084,11 +9319,11 @@
             [75.158028, 37.133031]
           ]
         ]
-      },
-      "id": "PAK"
+      }
     },
     {
       "type": "Feature",
+      "id": "PAN",
       "properties": { "name": "Panama" },
       "geometry": {
         "type": "Polygon",
@@ -9148,11 +9383,11 @@
             [-77.881571, 7.223771]
           ]
         ]
-      },
-      "id": "PAN"
+      }
     },
     {
       "type": "Feature",
+      "id": "PER",
       "properties": { "name": "Peru" },
       "geometry": {
         "type": "Polygon",
@@ -9236,11 +9471,11 @@
             [-69.590424, -17.580012]
           ]
         ]
-      },
-      "id": "PER"
+      }
     },
     {
       "type": "Feature",
+      "id": "PHL",
       "properties": { "name": "Philippines" },
       "geometry": {
         "type": "MultiPolygon",
@@ -9384,11 +9619,11 @@
             ]
           ]
         ]
-      },
-      "id": "PHL"
+      }
     },
     {
       "type": "Feature",
+      "id": "PNG",
       "properties": { "name": "Papua New Guinea" },
       "geometry": {
         "type": "MultiPolygon",
@@ -9491,11 +9726,11 @@
             ]
           ]
         ]
-      },
-      "id": "PNG"
+      }
     },
     {
       "type": "Feature",
+      "id": "POL",
       "properties": { "name": "Poland" },
       "geometry": {
         "type": "Polygon",
@@ -9548,11 +9783,11 @@
             [15.016996, 51.106674]
           ]
         ]
-      },
-      "id": "POL"
+      }
     },
     {
       "type": "Feature",
+      "id": "PRI",
       "properties": { "name": "Puerto Rico" },
       "geometry": {
         "type": "Polygon",
@@ -9569,11 +9804,11 @@
             [-66.282434, 18.514762]
           ]
         ]
-      },
-      "id": "PRI"
+      }
     },
     {
       "type": "Feature",
+      "id": "PRK",
       "properties": { "name": "North Korea" },
       "geometry": {
         "type": "Polygon",
@@ -9624,11 +9859,11 @@
             [130.640016, 42.395009]
           ]
         ]
-      },
-      "id": "PRK"
+      }
     },
     {
       "type": "Feature",
+      "id": "PRT",
       "properties": { "name": "Portugal" },
       "geometry": {
         "type": "Polygon",
@@ -9669,11 +9904,11 @@
             [-9.034818, 41.880571]
           ]
         ]
-      },
-      "id": "PRT"
+      }
     },
     {
       "type": "Feature",
+      "id": "PRY",
       "properties": { "name": "Paraguay" },
       "geometry": {
         "type": "Polygon",
@@ -9714,11 +9949,11 @@
             [-62.685057, -22.249029]
           ]
         ]
-      },
-      "id": "PRY"
+      }
     },
     {
       "type": "Feature",
+      "id": "QAT",
       "properties": { "name": "Qatar" },
       "geometry": {
         "type": "Polygon",
@@ -9735,11 +9970,11 @@
             [50.810108, 24.754743]
           ]
         ]
-      },
-      "id": "QAT"
+      }
     },
     {
       "type": "Feature",
+      "id": "ROU",
       "properties": { "name": "Romania" },
       "geometry": {
         "type": "Polygon",
@@ -9791,11 +10026,11 @@
             [22.710531, 47.882194]
           ]
         ]
-      },
-      "id": "ROU"
+      }
     },
     {
       "type": "Feature",
+      "id": "RUS",
       "properties": { "name": "Russia" },
       "geometry": {
         "type": "MultiPolygon",
@@ -10451,11 +10686,11 @@
             ]
           ]
         ]
-      },
-      "id": "RUS"
+      }
     },
     {
       "type": "Feature",
+      "id": "RWA",
       "properties": { "name": "Rwanda" },
       "geometry": {
         "type": "Polygon",
@@ -10476,11 +10711,11 @@
             [30.419105, -1.134659]
           ]
         ]
-      },
-      "id": "RWA"
+      }
     },
     {
       "type": "Feature",
+      "id": "ESH",
       "properties": { "name": "Western Sahara" },
       "geometry": {
         "type": "Polygon",
@@ -10516,11 +10751,11 @@
             [-8.794884, 27.120696]
           ]
         ]
-      },
-      "id": "ESH"
+      }
     },
     {
       "type": "Feature",
+      "id": "SAU",
       "properties": { "name": "Saudi Arabia" },
       "geometry": {
         "type": "Polygon",
@@ -10604,11 +10839,11 @@
             [42.779332, 16.347891]
           ]
         ]
-      },
-      "id": "SAU"
+      }
     },
     {
       "type": "Feature",
+      "id": "SDN",
       "properties": { "name": "Sudan" },
       "geometry": {
         "type": "Polygon",
@@ -10695,11 +10930,11 @@
             [33.963393, 9.464285]
           ]
         ]
-      },
-      "id": "SDN"
+      }
     },
     {
       "type": "Feature",
+      "id": "SSD",
       "properties": { "name": "South Sudan" },
       "geometry": {
         "type": "Polygon",
@@ -10770,11 +11005,11 @@
             [33.963393, 9.464285]
           ]
         ]
-      },
-      "id": "SDS"
+      }
     },
     {
       "type": "Feature",
+      "id": "SEN",
       "properties": { "name": "Senegal" },
       "geometry": {
         "type": "Polygon",
@@ -10826,11 +11061,11 @@
             [-16.713729, 13.594959]
           ]
         ]
-      },
-      "id": "SEN"
+      }
     },
     {
       "type": "Feature",
+      "id": "SLB",
       "properties": { "name": "Solomon Islands" },
       "geometry": {
         "type": "MultiPolygon",
@@ -10893,11 +11128,11 @@
             ]
           ]
         ]
-      },
-      "id": "SLB"
+      }
     },
     {
       "type": "Feature",
+      "id": "SLE",
       "properties": { "name": "Sierra Leone" },
       "geometry": {
         "type": "Polygon",
@@ -10927,11 +11162,11 @@
             [-11.438779, 6.785917]
           ]
         ]
-      },
-      "id": "SLE"
+      }
     },
     {
       "type": "Feature",
+      "id": "SLV",
       "properties": { "name": "El Salvador" },
       "geometry": {
         "type": "Polygon",
@@ -10959,16 +11194,19 @@
             [-87.793111, 13.38448]
           ]
         ]
-      },
-      "id": "SLV"
+      }
     },
     {
       "type": "Feature",
-      "properties": { "name": "Somalia" },
+      "id": "-99",
+      "properties": { "name": "Somaliland" },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
+            [48.93813, 9.451749],
+            [48.486736, 8.837626],
+            [47.78942, 8.003],
             [46.948328, 7.996877],
             [43.67875, 9.18358],
             [43.296975, 9.540477],
@@ -10987,8 +11225,21 @@
             [48.378784, 11.375482],
             [48.948206, 11.410622],
             [48.942005, 11.394266],
-            [48.948205, 11.410617],
-            [49.26776, 11.43033],
+            [48.938491, 10.982327],
+            [48.938233, 9.9735],
+            [48.93813, 9.451749]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "SOM",
+      "properties": { "name": "Somalia" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
             [49.72862, 11.5789],
             [50.25878, 11.67957],
             [50.73202, 12.0219],
@@ -11006,6 +11257,10 @@
             [45.56399, 2.04576],
             [44.06815, 1.05283],
             [43.13597, 0.2922],
+            [42.04157, -0.91916],
+            [41.81095, -1.44647],
+            [41.58513, -1.68325],
+            [40.993, -0.85829],
             [40.98105, 2.78452],
             [41.855083, 3.918912],
             [42.12861, 4.23413],
@@ -11013,14 +11268,21 @@
             [43.66087, 4.95755],
             [44.9636, 5.00162],
             [47.78942, 8.003],
-            [46.948328, 7.996877]
+            [48.486736, 8.837626],
+            [48.93813, 9.451749],
+            [48.938233, 9.9735],
+            [48.938491, 10.982327],
+            [48.942005, 11.394266],
+            [48.948205, 11.410617],
+            [49.26776, 11.43033],
+            [49.72862, 11.5789]
           ]
         ]
-      },
-      "id": "SOM"
+      }
     },
     {
       "type": "Feature",
+      "id": "SRB",
       "properties": { "name": "Republic of Serbia" },
       "geometry": {
         "type": "Polygon",
@@ -11074,11 +11336,11 @@
             [20.874313, 45.416375]
           ]
         ]
-      },
-      "id": "SRB"
+      }
     },
     {
       "type": "Feature",
+      "id": "SUR",
       "properties": { "name": "Suriname" },
       "geometry": {
         "type": "Polygon",
@@ -11112,11 +11374,11 @@
             [-57.147436, 5.97315]
           ]
         ]
-      },
-      "id": "SUR"
+      }
     },
     {
       "type": "Feature",
+      "id": "SVK",
       "properties": { "name": "Slovakia" },
       "geometry": {
         "type": "Polygon",
@@ -11157,11 +11419,11 @@
             [18.853144, 49.49623]
           ]
         ]
-      },
-      "id": "SVK"
+      }
     },
     {
       "type": "Feature",
+      "id": "SVN",
       "properties": { "name": "Slovenia" },
       "geometry": {
         "type": "Polygon",
@@ -11187,63 +11449,103 @@
             [13.806475, 46.509306]
           ]
         ]
-      },
-      "id": "SVN"
+      }
     },
     {
       "type": "Feature",
+      "id": "SWE",
       "properties": { "name": "Sweden" },
       "geometry": {
-        "type": "Polygon",
+        "type": "MultiPolygon",
         "coordinates": [
           [
-            [22.183173, 65.723741],
-            [21.213517, 65.026005],
-            [21.369631, 64.413588],
-            [19.778876, 63.609554],
-            [17.847779, 62.7494],
-            [17.119555, 61.341166],
-            [17.831346, 60.636583],
-            [18.787722, 60.081914],
-            [17.869225, 58.953766],
-            [16.829185, 58.719827],
-            [16.44771, 57.041118],
-            [15.879786, 56.104302],
-            [14.666681, 56.200885],
-            [14.100721, 55.407781],
-            [12.942911, 55.361737],
-            [12.625101, 56.30708],
-            [11.787942, 57.441817],
-            [11.027369, 58.856149],
-            [11.468272, 59.432393],
-            [12.300366, 60.117933],
-            [12.631147, 61.293572],
-            [11.992064, 61.800362],
-            [11.930569, 63.128318],
-            [12.579935, 64.066219],
-            [13.571916, 64.049114],
-            [13.919905, 64.445421],
-            [13.55569, 64.787028],
-            [15.108411, 66.193867],
-            [16.108712, 67.302456],
-            [16.768879, 68.013937],
-            [17.729182, 68.010552],
-            [17.993868, 68.567391],
-            [19.87856, 68.407194],
-            [20.025269, 69.065139],
-            [20.645593, 69.106247],
-            [21.978535, 68.616846],
-            [23.539473, 67.936009],
-            [23.56588, 66.396051],
-            [23.903379, 66.006927],
-            [22.183173, 65.723741]
+            [
+              [22.183173, 65.723741],
+              [21.213517, 65.026005],
+              [21.369631, 64.413588],
+              [19.778876, 63.609554],
+              [17.847779, 62.7494],
+              [17.119555, 61.341166],
+              [17.831346, 60.636583],
+              [18.787722, 60.081914],
+              [17.869225, 58.953766],
+              [16.829185, 58.719827],
+              [16.44771, 57.041118],
+              [15.879786, 56.104302],
+              [14.666681, 56.200885],
+              [14.100721, 55.407781],
+              [12.942911, 55.361737],
+              [12.625101, 56.30708],
+              [11.787942, 57.441817],
+              [11.027369, 58.856149],
+              [11.468272, 59.432393],
+              [12.300366, 60.117933],
+              [12.631147, 61.293572],
+              [11.992064, 61.800362],
+              [11.930569, 63.128318],
+              [12.579935, 64.066219],
+              [13.571916, 64.049114],
+              [13.919905, 64.445421],
+              [13.55569, 64.787028],
+              [15.108411, 66.193867],
+              [16.108712, 67.302456],
+              [16.768879, 68.013937],
+              [17.729182, 68.010552],
+              [17.993868, 68.567391],
+              [19.87856, 68.407194],
+              [20.025269, 69.065139],
+              [20.645593, 69.106247],
+              [21.978535, 68.616846],
+              [23.539473, 67.936009],
+              [23.56588, 66.396051],
+              [23.903379, 66.006927],
+              [22.183173, 65.723741]
+            ],
+            [
+              [17.061767, 57.385783],
+              [17.210083, 57.326521],
+              [16.430053, 56.179196],
+              [16.364135, 56.556455],
+              [17.061767, 57.385783]
+            ],
+            [
+              [19.35791, 57.958588],
+              [18.8031, 57.651279],
+              [18.825073, 57.444949],
+              [18.995361, 57.441993],
+              [18.951416, 57.370976],
+              [18.693237, 57.305756],
+              [18.709716, 57.204734],
+              [18.462524, 57.127295],
+              [18.319702, 56.926992],
+              [18.105468, 56.891003],
+              [18.187866, 57.109402],
+              [18.072509, 57.267163],
+              [18.154907, 57.394664],
+              [18.094482, 57.545312],
+              [18.660278, 57.929434],
+              [19.039306, 57.941098],
+              [19.105224, 57.993543],
+              [19.374389, 57.996454],
+              [19.35791, 57.958588]
+            ],
+            [
+              [20.846557, 63.82371],
+              [21.066284, 63.829768],
+              [20.9729, 63.71567],
+              [20.824584, 63.579121],
+              [20.695495, 63.59134],
+              [20.819091, 63.714454],
+              [20.799865, 63.780059],
+              [20.846557, 63.82371]
+            ]
           ]
         ]
-      },
-      "id": "SWE"
+      }
     },
     {
       "type": "Feature",
+      "id": "SWZ",
       "properties": { "name": "Swaziland" },
       "geometry": {
         "type": "Polygon",
@@ -11262,11 +11564,11 @@
             [32.071665, -26.73382]
           ]
         ]
-      },
-      "id": "SWZ"
+      }
     },
     {
       "type": "Feature",
+      "id": "SYR",
       "properties": { "name": "Syria" },
       "geometry": {
         "type": "Polygon",
@@ -11301,11 +11603,11 @@
             [38.792341, 33.378686]
           ]
         ]
-      },
-      "id": "SYR"
+      }
     },
     {
       "type": "Feature",
+      "id": "TCD",
       "properties": { "name": "Chad" },
       "geometry": {
         "type": "Polygon",
@@ -11371,11 +11673,11 @@
             [14.495787, 12.859396]
           ]
         ]
-      },
-      "id": "TCD"
+      }
     },
     {
       "type": "Feature",
+      "id": "TGO",
       "properties": { "name": "Togo" },
       "geometry": {
         "type": "Polygon",
@@ -11402,11 +11704,11 @@
             [1.865241, 6.142158]
           ]
         ]
-      },
-      "id": "TGO"
+      }
     },
     {
       "type": "Feature",
+      "id": "THA",
       "properties": { "name": "Thailand" },
       "geometry": {
         "type": "Polygon",
@@ -11478,11 +11780,11 @@
             [102.584932, 12.186595]
           ]
         ]
-      },
-      "id": "THA"
+      }
     },
     {
       "type": "Feature",
+      "id": "TJK",
       "properties": { "name": "Tajikistan" },
       "geometry": {
         "type": "Polygon",
@@ -11531,11 +11833,11 @@
             [71.014198, 40.244366]
           ]
         ]
-      },
-      "id": "TJK"
+      }
     },
     {
       "type": "Feature",
+      "id": "TKM",
       "properties": { "name": "Turkmenistan" },
       "geometry": {
         "type": "Polygon",
@@ -11597,11 +11899,11 @@
             [61.210817, 35.650072]
           ]
         ]
-      },
-      "id": "TKM"
+      }
     },
     {
       "type": "Feature",
+      "id": "TLS",
       "properties": { "name": "East Timor" },
       "geometry": {
         "type": "Polygon",
@@ -11620,11 +11922,11 @@
             [124.968682, -8.89279]
           ]
         ]
-      },
-      "id": "TLS"
+      }
     },
     {
       "type": "Feature",
+      "id": "TTO",
       "properties": { "name": "Trinidad and Tobago" },
       "geometry": {
         "type": "Polygon",
@@ -11640,11 +11942,11 @@
             [-61.68, 10.76]
           ]
         ]
-      },
-      "id": "TTO"
+      }
     },
     {
       "type": "Feature",
+      "id": "TUN",
       "properties": { "name": "Tunisia" },
       "geometry": {
         "type": "Polygon",
@@ -11683,11 +11985,11 @@
             [9.48214, 30.307556]
           ]
         ]
-      },
-      "id": "TUN"
+      }
     },
     {
       "type": "Feature",
+      "id": "TUR",
       "properties": { "name": "Turkey" },
       "geometry": {
         "type": "MultiPolygon",
@@ -11768,11 +12070,11 @@
             ]
           ]
         ]
-      },
-      "id": "TUR"
+      }
     },
     {
       "type": "Feature",
+      "id": "TZA",
       "properties": { "name": "United Republic of Tanzania" },
       "geometry": {
         "type": "Polygon",
@@ -11829,11 +12131,11 @@
             [33.903711, -0.95]
           ]
         ]
-      },
-      "id": "TZA"
+      }
     },
     {
       "type": "Feature",
+      "id": "UGA",
       "properties": { "name": "Uganda" },
       "geometry": {
         "type": "Polygon",
@@ -11868,11 +12170,11 @@
             [31.86617, -1.02736]
           ]
         ]
-      },
-      "id": "UGA"
+      }
     },
     {
       "type": "Feature",
+      "id": "UKR",
       "properties": { "name": "Ukraine" },
       "geometry": {
         "type": "Polygon",
@@ -11978,11 +12280,11 @@
             [31.785998, 52.101678]
           ]
         ]
-      },
-      "id": "UKR"
+      }
     },
     {
       "type": "Feature",
+      "id": "URY",
       "properties": { "name": "Uruguay" },
       "geometry": {
         "type": "Polygon",
@@ -12011,12 +12313,12 @@
             [-57.625133, -30.216295]
           ]
         ]
-      },
-      "id": "URY"
+      }
     },
     {
       "type": "Feature",
-      "properties": { "name": "United States" },
+      "id": "USA",
+      "properties": { "name": "United States of America" },
       "geometry": {
         "type": "MultiPolygon",
         "coordinates": [
@@ -12379,7 +12681,6 @@
               [-143.589446, 70.152514],
               [-142.07251, 69.851938],
               [-140.985988, 69.711998],
-              [-140.985988, 69.711998],
               [-140.992499, 66.000029],
               [-140.99777, 60.306397],
               [-140.012998, 60.276838],
@@ -12505,11 +12806,11 @@
             ]
           ]
         ]
-      },
-      "id": "USA"
+      }
     },
     {
       "type": "Feature",
+      "id": "UZB",
       "properties": { "name": "Uzbekistan" },
       "geometry": {
         "type": "Polygon",
@@ -12571,11 +12872,11 @@
             [66.518607, 37.362784]
           ]
         ]
-      },
-      "id": "UZB"
+      }
     },
     {
       "type": "Feature",
+      "id": "VEN",
       "properties": { "name": "Venezuela" },
       "geometry": {
         "type": "Polygon",
@@ -12675,11 +12976,11 @@
             [-71.331584, 11.776284]
           ]
         ]
-      },
-      "id": "VEN"
+      }
     },
     {
       "type": "Feature",
+      "id": "VNM",
       "properties": { "name": "Vietnam" },
       "geometry": {
         "type": "Polygon",
@@ -12731,11 +13032,11 @@
             [108.05018, 21.55238]
           ]
         ]
-      },
-      "id": "VNM"
+      }
     },
     {
       "type": "Feature",
+      "id": "VUT",
       "properties": { "name": "Vanuatu" },
       "geometry": {
         "type": "MultiPolygon",
@@ -12761,11 +13062,11 @@
             ]
           ]
         ]
-      },
-      "id": "VUT"
+      }
     },
     {
       "type": "Feature",
+      "id": "PSE",
       "properties": { "name": "West Bank" },
       "geometry": {
         "type": "Polygon",
@@ -12782,11 +13083,11 @@
             [35.545665, 32.393992]
           ]
         ]
-      },
-      "id": "PSE"
+      }
     },
     {
       "type": "Feature",
+      "id": "YEM",
       "properties": { "name": "Yemen" },
       "geometry": {
         "type": "Polygon",
@@ -12838,11 +13139,11 @@
             [53.108573, 16.651051]
           ]
         ]
-      },
-      "id": "YEM"
+      }
     },
     {
       "type": "Feature",
+      "id": "ZAF",
       "properties": { "name": "South Africa" },
       "geometry": {
         "type": "Polygon",
@@ -12946,11 +13247,11 @@
             [28.978263, -28.955597]
           ]
         ]
-      },
-      "id": "ZAF"
+      }
     },
     {
       "type": "Feature",
+      "id": "ZMB",
       "properties": { "name": "Zambia" },
       "geometry": {
         "type": "Polygon",
@@ -13019,11 +13320,11 @@
             [32.759375, -9.230599]
           ]
         ]
-      },
-      "id": "ZMB"
+      }
     },
     {
       "type": "Feature",
+      "id": "ZWE",
       "properties": { "name": "Zimbabwe" },
       "geometry": {
         "type": "Polygon",
@@ -13068,8 +13369,7 @@
             [31.191409, -22.25151]
           ]
         ]
-      },
-      "id": "ZWE"
+      }
     }
   ]
 }
