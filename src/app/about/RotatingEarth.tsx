@@ -100,7 +100,7 @@ const RotatingEarth = () => {
       projection: GeoProjection,
       path: GeoPath
     ) {
-      let rotationTimer: Timer | null = null;
+      // let rotationTimer: Timer | null = null;
       const initialScale = projection.scale();
 
       const createDrag: () => DragBehavior<
@@ -109,9 +109,9 @@ const RotatingEarth = () => {
         unknown
       > = () => {
         return drag<SVGSVGElement, unknown>()
-          .on("start", () => {
-            if (rotationTimer) rotationTimer.stop();
-          })
+          // .on("start", () => {
+            // if (rotationTimer) rotationTimer.stop();
+          // })
           .on("drag", (event) => {
             const rotate = projection.rotate();
             const rotationAdjustmentFactor =
@@ -124,24 +124,24 @@ const RotatingEarth = () => {
 
             svg.selectAll("path").attr("d", (d: unknown) => path(d as Feature));
           })
-          .on("end", () => {
-            rotateGlobe();
-          });
+          // .on("end", () => {
+          //   rotateGlobe();
+          // });
       };
 
-      const rotateGlobe = () => {
-        if (rotationTimer) rotationTimer.stop();
-        rotationTimer = timer(() => {
-          const rotate = projection.rotate();
-          const rotationAdjustmentFactor =
-            ROTATION_SENSITIVITY / projection.scale();
-          projection.rotate([
-            rotate[0] - 1 * rotationAdjustmentFactor,
-            rotate[1],
-          ]);
-          svg.selectAll("path").attr("d", (d: unknown) => path(d as Feature));
-        });
-      };
+      // const rotateGlobe = () => {
+      //   if (rotationTimer) rotationTimer.stop();
+      //   rotationTimer = timer(() => {
+      //     const rotate = projection.rotate();
+      //     const rotationAdjustmentFactor =
+      //       ROTATION_SENSITIVITY / projection.scale();
+      //     projection.rotate([
+      //       rotate[0] - 1 * rotationAdjustmentFactor,
+      //       rotate[1],
+      //     ]);
+      //     svg.selectAll("path").attr("d", (d: unknown) => path(d as Feature));
+      //   });
+      // };
 
       const configureZoom = () => {
         svg.call(
@@ -187,7 +187,7 @@ const RotatingEarth = () => {
       window.addEventListener("resize", handleResize);
 
       return () => {
-        if (rotationTimer) rotationTimer.stop();
+        // if (rotationTimer) rotationTimer.stop();
         window.removeEventListener("resize", handleResize);
       };
     }
