@@ -1,0 +1,17 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 30px;
+  background-color: #fff;
+
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+  }
+
+  img {
+    justify-content: flex-start;
+    align-items: left;
+  }
+}
