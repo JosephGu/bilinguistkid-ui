@@ -1,4 +1,5 @@
-const apps= [{
+module.exports = {
+  apps: [{
     name: 'bilinguistkid-prod',
     script: './server.js', // 指向项目根目录的 JS 文件
     instances: 'max',
@@ -23,5 +24,5 @@ const apps= [{
     // 前置启动命令（编译 TypeScript）
     pre_start: 'npm run build'
   }]
-export default apps;
+};
     
