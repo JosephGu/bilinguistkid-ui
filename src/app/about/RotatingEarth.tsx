@@ -5,7 +5,6 @@ import { geoOrthographic, GeoPath, geoPath, GeoProjection } from "d3-geo";
 import { select, Selection } from "d3-selection";
 import { drag, DragBehavior } from "d3-drag";
 import { zoom } from "d3-zoom";
-import { Timer, timer } from "d3-timer";
 import { Feature, FeatureCollection } from "geojson";
 
 const RotatingEarth = () => {
@@ -55,7 +54,8 @@ const RotatingEarth = () => {
     const svg = container
       .append("svg")
       .attr("width", width || 0)
-      .attr("height", height || 0);
+      .attr("height", height || 0)
+      .attr("display", "block");
 
     svg
       .append("circle")
@@ -108,25 +108,29 @@ const RotatingEarth = () => {
         unknown,
         unknown
       > = () => {
-        return drag<SVGSVGElement, unknown>()
-          // .on("start", () => {
+        return (
+          drag<SVGSVGElement, unknown>()
+            // .on("start", () => {
             // if (rotationTimer) rotationTimer.stop();
-          // })
-          .on("drag", (event) => {
-            const rotate = projection.rotate();
-            const rotationAdjustmentFactor =
-              ROTATION_SENSITIVITY / projection.scale();
+            // })
+            .on("drag", (event) => {
+              const rotate = projection.rotate();
+              const rotationAdjustmentFactor =
+                ROTATION_SENSITIVITY / projection.scale();
 
-            projection.rotate([
-              rotate[0] + event.dx * rotationAdjustmentFactor,
-              rotate[1] - event.dy * rotationAdjustmentFactor,
-            ]);
+              projection.rotate([
+                rotate[0] + event.dx * rotationAdjustmentFactor,
+                rotate[1] - event.dy * rotationAdjustmentFactor,
+              ]);
 
-            svg.selectAll("path").attr("d", (d: unknown) => path(d as Feature));
-          })
-          // .on("end", () => {
-          //   rotateGlobe();
-          // });
+              svg
+                .selectAll("path")
+                .attr("d", (d: unknown) => path(d as Feature));
+            })
+        );
+        // .on("end", () => {
+        //   rotateGlobe();
+        // });
       };
 
       // const rotateGlobe = () => {
@@ -197,7 +201,7 @@ const RotatingEarth = () => {
     <div
       id="globe-container"
       ref={containerRef}
-      style={{ width: "100%", height: "600px" }}
+      style={{ width: "100%", height: "500px" }}
     />
   );
 };

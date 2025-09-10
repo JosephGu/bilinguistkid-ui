@@ -1,11 +1,16 @@
-"use client"
+"use client";
 
 import { Button } from "@mui/material";
 import Image from "next/image";
-import {Face, Face2, Face3, Face4, Face5, Face6} from "@mui/icons-material";
-import "./navigation.scss"
+import { Face, Face2, Face3, Face4, Face5, Face6 } from "@mui/icons-material";
+import "./navigation.scss";
+import { usePathname } from "next/navigation";
 
 function Navigation() {
+  const pathName = usePathname();
+  if (pathName == "/about") {
+    return <></>;
+  }
   return (
     <div className="navigation">
       <div className="logo">
@@ -17,7 +22,9 @@ function Navigation() {
         <Button color="inherit">关于</Button>
         <Button color="inherit">注册</Button>
         <Button color="inherit">登录</Button>
-        <Button color="inherit"><Face4 /></Button>
+        <Button color="inherit">
+          <Face4 />
+        </Button>
       </div>
     </div>
   );

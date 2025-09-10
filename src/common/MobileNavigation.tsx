@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./navigation.scss";
+import { usePathname } from "next/navigation";
 
 const MobileMenu = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -18,7 +19,10 @@ const MobileMenu = () => {
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
+  const pathName = usePathname();
+  if (pathName == "/about") {
+    return <></>;
+  }
   return (
     <div className="mobile-menu">
       <AppBar position="static">

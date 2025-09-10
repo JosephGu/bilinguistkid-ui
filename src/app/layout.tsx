@@ -30,12 +30,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {/* <StoreProvider> */}
-          <AppRouterCacheProvider>
-            <CssBaseline />
-            <Navigation />
-            <MobileMenu />
-              {children}
-          </AppRouterCacheProvider>
+        <AppRouterCacheProvider>
+          <CssBaseline />
+          <Navigation />
+          <MobileMenu />
+          {children}
+        </AppRouterCacheProvider>
         {/* </StoreProvider> */}
       </body>
     </html>
