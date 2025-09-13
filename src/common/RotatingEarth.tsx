@@ -1,14 +1,47 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { geoOrthographic, GeoPath, geoPath, GeoProjection } from "d3-geo";
 import { select, Selection } from "d3-selection";
 import { drag, DragBehavior } from "d3-drag";
 import { zoom } from "d3-zoom";
 import { Feature, FeatureCollection } from "geojson";
+import { Modal, Box, Typography } from "@mui/material";
 
 const RotatingEarth = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // const [modalOpen, setModalOpen] = useState(false);
+  const [selected, setSelected] = useState("");
+  const handleClose = () => {
+    setSelected("");
+    setFunFact("");
+  };
+
+  const retrieveFunFact = async (countryName:string) => {
+    setFunFact("Hey there! Did you know China is home to the world’s longest wall? The Great Wall stretches over 13,000 miles—that’s longer than the distance from New York to Sydney! Also, pandas, those cute black-and-white bears, only live in China. They munch on bamboo all day! Plus, Chinese kids fly kites during festivals for good luck. How cool is that? China has so many fun surprises!")
+    // try {
+    //   const response = await fetch(
+    //     "/api/v1/playground/retrieve-fun-fact?country=" +
+    //       countryName +
+    //       "&age=" +
+    //       10 +
+    //       "&gender=" +
+    //       "Male",
+    //     {
+    //       method: "GET",
+    //     }
+    //   );
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
+    //   const data = await response.json();
+    //   setFunFact(data.message);
+    // } catch (error) {
+    //   console.error("Failed to retrieve fun fact:", error);
+    // }
+  };
+
+  const [funFact, setFunFact] = useState("");
 
   const loadGeoData = async () => {
     try {
@@ -90,8 +123,12 @@ const RotatingEarth = () => {
         .on("mouseout", function () {
           select(this).style("fill", COLOR_CONTINENT);
         })
-        .on("click",function (event, d)  {
+        .on("click", (event, d) => {
           console.log(d);
+          const countryName = d?.properties?.name || "";
+          setSelected(countryName);
+          // setFunFact(countryName + " is a country in Asia.");
+          retrieveFunFact(countryName);
         });
 
       initInteractions(svg, projection, path);
@@ -200,11 +237,40 @@ const RotatingEarth = () => {
   }, []);
 
   return (
-    <div
-      id="globe-container"
-      ref={containerRef}
-      style={{ width: "100%", height: "500px" }}
-    />
+    <>
+      <div
+        id="globe-container"
+        ref={containerRef}
+        style={{ width: "100%", height: "500px" }}
+      />
+      <Modal
+        open={selected !== ""}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {"Fun fact about " + selected}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {funFact}
+          </Typography>
+        </Box>
+      </Modal>
+    </>
   );
 };
 

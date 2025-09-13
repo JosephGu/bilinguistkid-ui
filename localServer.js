@@ -1,4 +1,4 @@
-import https from 'https';
+import http from 'http';
 import fs from 'fs';
 import next from 'next';
 
@@ -8,17 +8,9 @@ const app = next({
 
 const handle = app.getRequestHandler();
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/bilinguistkid.cn/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/bilinguistkid.cn/fullchain.pem'),
-  minVersion: 'TLSv1.2',
-  maxVersion: 'TLSv1.3',
-  ciphers: 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384',
-};
-
 app.prepare()
   .then(() => {
-    const httpsServer = https.createServer(options, (req, res) => {
+    const httpServer = http.createServer((req, res) => {
       res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
       res.setHeader('X-Content-Type-Options', 'nosniff');
       res.setHeader('X-Frame-Options', 'DENY');
@@ -27,17 +19,17 @@ app.prepare()
       handle(req, res);
     });
 
-    httpsServer.listen(3000, (err) => {
+    httpServer.listen(3000, (err) => {
       if (err) {
-        console.error('HTTPS 服务启动失败:', err);
+        console.error('HTTP 服务启动失败:', err);
         process.exit(1);
       }
-      console.log('✅ 生产环境 HTTPS 服务已启动: https://bilinguistkid.cn');
+      console.log('✅ 测试环境 HTTP 服务已启动: http://localhost:3000');
     });
 
     process.on('SIGTERM', () => {
       console.log('收到 SIGTERM 信号，正在关闭服务器...');
-      httpsServer.close();
+      httpServer.close();
       console.log('服务器已关闭');
       process.exit(0);
     });

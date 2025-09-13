@@ -3,10 +3,16 @@ import { buildApiUrl, API_ENDPOINTS } from "./utils/apiConfig";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 import Profile from "../common/Profile";
+import Playgroud from "../common/Playgroud";
 
 async function retrieveProfile() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
+  const defaultProfile = {
+    nickname: "",
+    birthday: "",
+    gender: "",
+  };
   let redirectPath = "";
   try {
     const res = await fetch(buildApiUrl(API_ENDPOINTS.PROFILE.RETRIEVE), {
@@ -24,10 +30,10 @@ async function retrieveProfile() {
 
     const data = await res.json();
     console.log(data);
-    return data;
+    return data?.profile || defaultProfile;
   } catch (error) {
     console.error("Error retrieving profile:", error);
-    return null;
+    return defaultProfile;
   } finally {
     if (redirectPath) {
       redirect(redirectPath, RedirectType.replace);
@@ -37,8 +43,8 @@ async function retrieveProfile() {
 
 async function Home() {
   const profile = await retrieveProfile();
+  console.log(profile,"profile")
   const { nickname = "", birthday = "", gender = "" } = profile;
-
   return (
     <>
       <Image
@@ -48,7 +54,8 @@ async function Home() {
         height={1042}
         layout="responsive"
       />
-      <Profile open={!nickname || !birthday || !gender}  />
+      <Profile open={!nickname || !birthday || !gender} />
+      <Playgroud ></Playgroud>
     </>
   );
 }

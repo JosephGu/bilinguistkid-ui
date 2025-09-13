@@ -28,13 +28,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col`}
+      >
         {/* <StoreProvider> */}
         <AppRouterCacheProvider>
           <CssBaseline />
           <Navigation />
           <MobileMenu />
-          {children}
+          <main className="flex-1">{children}</main>
         </AppRouterCacheProvider>
         {/* </StoreProvider> */}
       </body>
