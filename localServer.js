@@ -19,12 +19,12 @@ app.prepare()
       handle(req, res);
     });
 
-    httpServer.listen(3000, (err) => {
+    httpServer.listen(12998, (err) => {
       if (err) {
         console.error('HTTP 服务启动失败:', err);
         process.exit(1);
       }
-      console.log('✅ 测试环境 HTTP 服务已启动: http://localhost:3000');
+      console.log('✅ 测试环境 HTTP 服务已启动: http://localhost:12998');
     });
 
     process.on('SIGTERM', () => {

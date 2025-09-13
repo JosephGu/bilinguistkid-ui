@@ -27,7 +27,7 @@ app.prepare()
       handle(req, res);
     });
 
-    httpsServer.listen(3000, (err) => {
+    httpsServer.listen(443, (err) => {
       if (err) {
         console.error('HTTPS 服务启动失败:', err);
         process.exit(1);

@@ -6,7 +6,7 @@ module.exports = {
     exec_mode: 'cluster',
     env: {
       NODE_ENV: 'development',
-      PORT: 3000,
+      PORT: 12998,
       NODE_OPTIONS: '--max-old-space-size=2048'
     },
     // 日志配置
