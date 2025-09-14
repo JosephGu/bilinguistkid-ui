@@ -26,8 +26,10 @@ const LoadingModal = (props: { open: boolean }) => {
           component="h2"
           sx={{ textAlign: "center", top: "50%" , height:"100px"}}
         >
-          <CircularProgress />
-          Loading...
+          <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"100%"}}>
+            <CircularProgress />
+            Loading...
+          </div>
         </Typography>
       </Box>
     </Modal>

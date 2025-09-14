@@ -53,14 +53,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex:1;
-}
-.about-me-left-panel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.about-me-right-panel {
+  flex: 1;
+  flex-direction: column;
+  padding:25px;
+
   .about-me-hello {
     font-size: 36px;
     font-weight: 600;
@@ -70,5 +66,8 @@
     font-weight: 600;
     color: navy;
     padding: 0;
+  }
+  .about-me-button {
+    margin-top: 20px;
   }
 }

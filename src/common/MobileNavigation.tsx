@@ -8,10 +8,13 @@ import {
   ListItem,
   ListItemText,
   Toolbar,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./navigation.scss";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 const MobileMenu = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -35,18 +38,31 @@ const MobileMenu = () => {
             onClick={toggleDrawer}
           >
             <MenuIcon />
+             <Image src="/logo3.svg" alt="image" width={120} height={30} />
           </IconButton>
         </Toolbar>
         <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
-          <List>
-            <ListItem component="button" onClick={toggleDrawer}>
-              <ListItemText primary="首页" />
+          <List component="nav">
+            <ListItem onClick={toggleDrawer}>
+              <Link href="/">
+                <Button>
+                  <ListItemText primary="Home" />
+                </Button>
+              </Link>
             </ListItem>
-            <ListItem component="button" onClick={toggleDrawer}>
-              <ListItemText primary="关于" />
+            <ListItem onClick={toggleDrawer}>
+              <Link href="/funEarth">
+                <Button>
+                  <ListItemText primary="Fun Earth" />
+                </Button>
+              </Link>
             </ListItem>
-            <ListItem component="button" onClick={toggleDrawer}>
-              <ListItemText primary="联系" />
+            <ListItem onClick={toggleDrawer}>
+              <Link href="/about">
+                <Button>
+                  <ListItemText primary="About" />
+                </Button>
+              </Link>
             </ListItem>
             {/* 可以继续添加更多菜单项 */}
           </List>
