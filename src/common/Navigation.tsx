@@ -17,11 +17,9 @@ function Navigation() {
         <Image src="/logo2.svg" alt="image" width={200} height={50} />
       </div>
       <div className="nav">
-        <Button color="inherit">主页</Button>
-        <Button color="inherit">案例</Button>
-        <Button color="inherit">关于</Button>
-        <Button color="inherit">注册</Button>
-        <Button color="inherit">登录</Button>
+        <Button color="inherit">Home</Button>
+        <Button color="inherit">Fun Earth</Button>
+        <Button color="inherit">About</Button>
         <Button color="inherit">
           <Face4 />
         </Button>

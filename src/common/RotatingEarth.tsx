@@ -6,42 +6,61 @@ import { select, Selection } from "d3-selection";
 import { drag, DragBehavior } from "d3-drag";
 import { zoom } from "d3-zoom";
 import { Feature, FeatureCollection } from "geojson";
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box, Typography, Button } from "@mui/material";
+import AudioPlayer from "./AudioPlayer";
+import LoadingModal from "./LoadingModal";
+import { useRouter } from "next/navigation";
 
 const RotatingEarth = () => {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   // const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState("");
+  const [funFactAudio, setFunFactAudio] = useState("");
+  const [funFact, setFunFact] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleClose = () => {
     setSelected("");
     setFunFact("");
+    setFunFactAudio("");
   };
 
-  const retrieveFunFact = async (countryName:string) => {
-    setFunFact("Hey there! Did you know China is home to the world’s longest wall? The Great Wall stretches over 13,000 miles—that’s longer than the distance from New York to Sydney! Also, pandas, those cute black-and-white bears, only live in China. They munch on bamboo all day! Plus, Chinese kids fly kites during festivals for good luck. How cool is that? China has so many fun surprises!")
-    // try {
-    //   const response = await fetch(
-    //     "/api/v1/playground/retrieve-fun-fact?country=" +
-    //       countryName +
-    //       "&age=" +
-    //       10 +
-    //       "&gender=" +
-    //       "Male",
-    //     {
-    //       method: "GET",
-    //     }
-    //   );
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
-    //   const data = await response.json();
-    //   setFunFact(data.message);
-    // } catch (error) {
-    //   console.error("Failed to retrieve fun fact:", error);
-    // }
-  };
+  const retrieveFunFact = async (countryName: string) => {
+    let redirectPath = "";
+    try {
+      setLoading(true);
 
-  const [funFact, setFunFact] = useState("");
+      const response = await fetch(
+        "/api/v1/playground/retrieve-fun-fact?country=" +
+          countryName +
+          "&age=" +
+          10 +
+          "&gender=" +
+          "Male",
+        {
+          method: "GET",
+        }
+      );
+      if (!response.ok) {
+        // throw new Error(`HTTP error! status: ${response.status}`);
+        if (response.status === 403) {
+          redirectPath = "/login";
+        }
+      } else {
+        const data = await response.json();
+        setFunFact(data.message);
+        setFunFactAudio(data.audio);
+      }
+    } catch (error) {
+      console.error("Failed to retrieve fun fact:", error);
+    } finally {
+      setLoading(false);
+      if (redirectPath) {
+        router.push(redirectPath);
+      }
+    }
+  };
 
   const loadGeoData = async () => {
     try {
@@ -243,8 +262,9 @@ const RotatingEarth = () => {
         ref={containerRef}
         style={{ width: "100%", height: "500px" }}
       />
+      <LoadingModal open={loading}></LoadingModal>
       <Modal
-        open={selected !== ""}
+        open={funFact !== ""}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -268,6 +288,7 @@ const RotatingEarth = () => {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {funFact}
           </Typography>
+          <AudioPlayer audioBase64={funFactAudio}></AudioPlayer>
         </Box>
       </Modal>
     </>
