@@ -6,20 +6,21 @@ import { select, Selection } from "d3-selection";
 import { drag, DragBehavior } from "d3-drag";
 import { zoom } from "d3-zoom";
 import { Feature, FeatureCollection } from "geojson";
-import { Modal, Box, Typography, Button } from "@mui/material";
+import { Modal, Box, Typography } from "@mui/material";
 import AudioPlayer from "./AudioPlayer";
 import LoadingModal from "./LoadingModal";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/lib/store";
 
 const RotatingEarth = () => {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState("");
   const [funFactAudio, setFunFactAudio] = useState("");
   const [funFact, setFunFact] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const profile = useSelector((state: RootState) => state.profile);
   const handleClose = () => {
     setSelected("");
     setFunFact("");
@@ -30,14 +31,16 @@ const RotatingEarth = () => {
     let redirectPath = "";
     try {
       setLoading(true);
+      const age = profile.age;
+      const gender = profile.gender;
 
       const response = await fetch(
         "/api/v1/playground/retrieve-fun-fact?country=" +
           countryName +
           "&age=" +
-          10 +
+          age +
           "&gender=" +
-          "Male",
+          gender,
         {
           method: "GET",
         }
@@ -89,7 +92,8 @@ const RotatingEarth = () => {
     const container = select(containerRef.current);
     const width = container?.node()?.getBoundingClientRect().width || 0;
     const height = container?.node()?.getBoundingClientRect().height || 0;
-    const radius = height ? height / 2.8 : 0;
+    const radiusMin = Math.min(width, height);
+    const radius = radiusMin ? radiusMin / 2.5 : 0;
     const center: [number, number] = [width / 2, height / 2];
 
     // 投影设置
@@ -260,7 +264,7 @@ const RotatingEarth = () => {
       <div
         id="globe-container"
         ref={containerRef}
-        style={{ width: "100%", height: "500px" }}
+        style={{ width: "100%", height: "100%" }}
       />
       <LoadingModal open={loading}></LoadingModal>
       <Modal
@@ -283,7 +287,7 @@ const RotatingEarth = () => {
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {"Fun fact about " + selected}
+            {"Fun fact in " + selected}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {funFact}

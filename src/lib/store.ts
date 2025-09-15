@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import profileReducer from './profileSlice'
+import profileReducer from '../app/lib/profileSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      profile: profileReducer,
-    },
+      profile: profileReducer
+    }
   })
 }
 

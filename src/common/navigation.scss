@@ -2,11 +2,12 @@
   display: flex;
   justify-content: space-between;
   background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
   .nav {
     display: flex;
     justify-content: flex-end;
-    align-items: right;
+    align-items: center;
   }
 
   img {
@@ -19,7 +20,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900) {
   .navigation {
     display: none;
   }

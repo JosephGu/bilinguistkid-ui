@@ -28,7 +28,7 @@ function LoginModal() {
 
     if (res.status === 200) {
       console.log('redirect to home');
-      redirect("/",RedirectType.push);
+      redirect("/",RedirectType.replace);
     }
     else{
       alert("登录失败");
