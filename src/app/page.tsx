@@ -24,8 +24,9 @@ function Home() {
       <Box
         sx={{
           width: "80%",
-          maxWidth: 1000,
-          mx: "auto",
+          // maxWidth: 1000,
+          // mx: "auto",
+          fontSize: "2rem",
           my: 6,
           p: 4,
           borderRadius: 3,
@@ -38,8 +39,8 @@ function Home() {
           display: { xs: "none", md: "block" },
         }}
       >
-        <Typography variant="h2" gutterBottom color="text.primary">
-          HAPPY ENGLISH LEARNING, EXPLORE THE BIG WORLD!
+        <Typography gutterBottom color="text.primary">
+          Explore, Learn, Grow In Two Languages!
         </Typography>
         <Typography
           variant="body1"
@@ -65,11 +66,11 @@ function Home() {
           </Button>
         </Link>
       </Box>
-      <Box sx={{ display: "flex", gap: "20px", flexDirection: "row" }}>
+      <Box sx={{ display: "flex", gap: "20px", flexDirection: "row", flexWrap: "wrap" }}>
         <Box sx={{ flex: 1 }}>
           <Card variant="outlined">
             <CardMedia
-              sx={{ height: 200 }}
+              sx={{ height: 260 }}
               image="/globalChina.png"
               title="fun earth"
             />
@@ -95,7 +96,7 @@ function Home() {
         <Box sx={{ flex: 1 }}>
           <Card variant="outlined">
             <CardMedia
-              sx={{ height: 200 }}
+              sx={{ height: 260 }}
               image="/topicGen.webp"
               title="Topic Generator"
             />

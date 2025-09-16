@@ -42,10 +42,10 @@ function CreateProfile() {
 
     const data = await res.json();
     if (data.code === 200) {
-      alert("更新成功");
+      alert("Profile updated successfully");
       redirect("/");
     } else {
-      alert("更新失败");
+      alert("Update profile failed" + data.message);
     }
   };
 
@@ -62,7 +62,7 @@ function CreateProfile() {
         <Box component="form" sx={{ padding: "10px 30px" }}>
           <Box sx={{ paddingTop: "10px" }}>
             <TextField
-              label="宝宝昵称"
+              label="Nickname"
               sx={{ width: "100%" }}
               value={nickname}
               onChange={(e) => setnickname(e.target.value)}
@@ -70,13 +70,13 @@ function CreateProfile() {
           </Box>
           <Box sx={{ paddingTop: "10px", display: "flex", gap: "5px" }}>
             <FormControl sx={{ flex: 1 }} variant="outlined">
-              <InputLabel id="year-label">出生年份</InputLabel>
+              <InputLabel id="year-label">Birthday Year</InputLabel>
               <Select
                 labelId="year-label"
                 id="year-select"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                label="出生年份"
+                label="Birthday Year"
               >
                 {[...Array(16).keys()].map((i) => (
                   <MenuItem key={i} value={2010 + i}>
@@ -86,13 +86,13 @@ function CreateProfile() {
               </Select>
             </FormControl>
             <FormControl sx={{ flex: 1 }} variant="outlined">
-              <InputLabel id="month-label">出生月份</InputLabel>
+              <InputLabel id="month-label">Birthday Month</InputLabel>
               <Select
                 labelId="month-label"
                 id="month-select"
                 value={month}
                 onChange={(e) => setMonth(e.target.value)}
-                label="出生月份"
+                label="Birthday Month"
               >
                 {[...Array(12).keys()].map((i) => (
                   <MenuItem key={i} value={i + 1}>
@@ -102,13 +102,13 @@ function CreateProfile() {
               </Select>
             </FormControl>
             <FormControl sx={{ flex: 1 }} variant="outlined">
-              <InputLabel id="date-label">出生日期</InputLabel>
+              <InputLabel id="date-label">Birthday Day</InputLabel>
               <Select
                 labelId="date-label"
                 id="date-select"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                label="出生日期"
+                label="Birthday Day"
               >
                 {[...Array(31).keys()].map((i) => (
                   <MenuItem key={i} value={i + 1}>
@@ -120,16 +120,16 @@ function CreateProfile() {
           </Box>
           <Box sx={{ paddingTop: "10px" }}>
             <FormControl fullWidth variant="outlined">
-              <InputLabel id="gender-label">宝宝性别</InputLabel>
+              <InputLabel id="gender-label">Gender</InputLabel>
               <Select
                 labelId="gender-label"
                 id="gender-select"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                label="宝宝性别"
+                label="Gender"
               >
-                <MenuItem value="Male">男</MenuItem>
-                <MenuItem value="Female">女</MenuItem>
+                <MenuItem value="Male">Boy</MenuItem>
+                <MenuItem value="Female">Girl</MenuItem>
               </Select>
             </FormControl>
           </Box>

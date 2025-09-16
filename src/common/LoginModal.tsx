@@ -4,14 +4,12 @@ import { Box, TextField, Dialog, Tab, Tabs, Button } from "@mui/material";
 import { useState } from "react";
 import { redirect, RedirectType } from "next/navigation";
 
-
 function LoginModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [code, setCode] = useState("");
   const [codeButtonDisabled, setCodeButtonDisabled] = useState(false);
-
 
   const loginClick = async () => {
     const res = await fetch("/api/v1/auth/authenticate", {
@@ -27,35 +25,33 @@ function LoginModal() {
     const data = await res.json();
 
     if (res.status === 200) {
-      console.log('redirect to home');
-      redirect("/",RedirectType.replace);
+      console.log("redirect to home");
+      redirect("/", RedirectType.replace);
+    } else {
+      alert("Login failed");
     }
-    else{
-      alert("登录失败");
-    }
-
   };
 
   const createAccountClick = async () => {
     if (email.length === 0) {
-      alert("请输入邮箱");
+      alert("Please input email");
       return;
     }
     if (code.length === 0) {
-      alert("请输入验证码");
+      alert("Please input verification code");
       return;
     }
     if (password.length === 0) {
-      alert("请输入密码");
+      alert("Please input password");
       return;
     }
     if (confirmPassword.length === 0) {
-      alert("请输入确认密码");
+      alert("Please input confirm password");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("两次密码不一致");
+      alert("Passwords do not match");
       return;
     }
 
@@ -75,20 +71,16 @@ function LoginModal() {
       console.log(data); // 打印响应体数据
 
       if (data?.code === 200) {
-        redirect("/",RedirectType.push);
+        redirect("/", RedirectType.push);
+      } else if (data?.code === 4001) {
+        alert("Verification code error, please try again");
+      } else if (data?.code === 4002) {
+        alert("Email already registered, please sign in");
+      } else {
+        alert("Create account failed");
       }
-      else if(data?.code === 4001){
-        alert("验证码错误，请重试");
-      }
-      else if(data?.code === 4002){
-        alert("邮箱已注册，请登录");
-      }
-      else{
-        alert("创建失败");
-      }
-
     } else {
-      alert("创建失败");
+      alert("Create account failed");
     }
   };
 
@@ -103,15 +95,11 @@ function LoginModal() {
       setTimer(60);
       setCodeButtonDisabled(false);
     }, 60000);
-
   };
 
-
-
   const getVerificationCode = async () => {
-    
     if (email.length === 0) {
-      alert("请输入邮箱");
+      alert("Please input email");
       return;
     }
     setCodeButtonDisabled(true);
@@ -145,8 +133,8 @@ function LoginModal() {
     <Dialog open fullWidth>
       <Box sx={{ width: "100%" }}>
         <Tabs onChange={handleChange} value={tabIndex}>
-          <Tab label="登录" value={0}></Tab>
-          <Tab label="创建账号" value={1}></Tab>
+          <Tab label="Sign In" value={0}></Tab>
+          <Tab label="Sign Up" value={1}></Tab>
         </Tabs>
       </Box>
 
@@ -157,7 +145,7 @@ function LoginModal() {
       >
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="邮箱"
+            label="Email"
             sx={{ width: "100%" }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -165,9 +153,10 @@ function LoginModal() {
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="密码"
+            label="Password"
             sx={{ width: "100%" }}
             value={password}
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </Box>
@@ -179,7 +168,7 @@ function LoginModal() {
       >
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="邮箱"
+            label="Email"
             sx={{ width: "100%" }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -189,7 +178,7 @@ function LoginModal() {
           sx={{ paddingTop: "10px", display: "flex", gap: 2, width: "100%" }}
         >
           <TextField
-            label="验证码"
+            label="Verification Code"
             sx={{ flex: 0.7 }}
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -200,22 +189,24 @@ function LoginModal() {
             onClick={getVerificationCode}
             disabled={codeButtonDisabled}
           >
-            {codeButtonDisabled ? `${timer}秒后重新发送` : "发送验证码"}
+            {codeButtonDisabled ? `Resend after ${timer} seconds` : "Send Code"}
           </Button>
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="密码"
+            label="Password"
             sx={{ width: "100%" }}
             value={password}
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="确认密码"
+            label="Confirm Password"
             sx={{ width: "100%" }}
             value={confirmPassword}
+            type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Box>
@@ -226,9 +217,8 @@ function LoginModal() {
         justifyContent={"center"}
       >
         <Button onClick={() => confirmClick()} variant="contained">
-          {tabIndex === 0 ? "登录" : "创建账号"}
+          {tabIndex === 0 ? "Sign In" : "Sign Up"}
         </Button>
-        <Button>返回</Button>
       </Box>
     </Dialog>
   );

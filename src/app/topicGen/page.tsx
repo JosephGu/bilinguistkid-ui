@@ -13,7 +13,7 @@ const TopicGen = () => {
     },
     {
       id: 1,
-      title: "Natural Science",
+      title: "Science",
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ const TopicGen = () => {
     },
     {
       id: 4,
-      title: "Video Game",
+      title: "Game",
     },
     {
       id: 11,
@@ -45,7 +45,7 @@ const TopicGen = () => {
     },
     {
       id: 5,
-      title: "Festivals ",
+      title: "Festivals",
     },
     {
       id: 10,
@@ -87,7 +87,14 @@ const TopicGen = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, margin: "20px" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        margin: "20px",
+        background: "linear-gradient(45deg, lightyellow 30%, lightblue 90%)",
+        padding: "20px",
+      }}
+    >
       <Grid container spacing={2} columns={{ xs: 5, sm: 5, md: 5 }}>
         {cards.map((card, index) => (
           <Grid
@@ -101,7 +108,7 @@ const TopicGen = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: selectedCard === card.id ? "red" : "",
+                backgroundColor: selectedCard === card.id ? "lightgreen" : "",
               }}
             >
               {card.title}
@@ -109,11 +116,12 @@ const TopicGen = () => {
           </Grid>
         ))}
       </Grid>
-
-      <Button onClick={findaRandomCard} startIcon={<CasinoIcon />}>
-        Generate
-      </Button>
-      <div>Current Card: {selectedCard}</div>
+      <Box sx={{ display: "flex", justifyContent: "center" }} mt={10} color="primary">
+        <Button onClick={findaRandomCard} sx={{ fontSize: "large" }} >
+          <CasinoIcon fontSize="large" />
+          Generate
+        </Button>
+      </Box>
     </Box>
   );
 };

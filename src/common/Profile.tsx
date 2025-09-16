@@ -39,9 +39,9 @@ function Profile({ open }: { open: boolean }) {
 
     const data = await res.json();
     if (data.code === 200) {
-      alert("更新成功");
+      alert("Profile updated successfully");
     } else {
-      alert("更新失败");
+      alert("Update profile failed" + data.message);
     }
   };
 

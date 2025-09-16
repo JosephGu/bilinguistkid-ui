@@ -10,11 +10,15 @@ function Navigation() {
   return (
     <div className="navigation">
       <div className="logo">
-        <Image src="/logo2.svg" alt="image" width={200} height={50} />
+        <Link href="/">
+          <Image src="/logo2.svg" alt="image" width={200} height={50} />
+        </Link>
       </div>
       <div className="nav">
         <Link color="inherit" href="/">
-          <Button sx={{}} color="inherit">Home</Button>
+          <Button sx={{}} color="inherit">
+            Home
+          </Button>
         </Link>
         <Link color="inherit" href="/funEarth">
           <Button color="inherit">Fun Earth</Button>
