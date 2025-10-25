@@ -12,6 +12,7 @@ import LoadingModal from "./LoadingModal";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/lib/store";
+import { getFunFact } from "@/app/actions/earth";
 
 const RotatingEarth = () => {
   const router = useRouter();
@@ -28,40 +29,18 @@ const RotatingEarth = () => {
   };
 
   const retrieveFunFact = async (countryName: string) => {
-    let redirectPath = "";
     try {
       setLoading(true);
       const age = profile.age;
       const gender = profile.gender;
 
-      const response = await fetch(
-        "/api/v1/playground/retrieve-fun-fact?country=" +
-          countryName +
-          "&age=" +
-          age +
-          "&gender=" +
-          gender,
-        {
-          method: "GET",
-        }
-      );
-      if (!response.ok) {
-        // throw new Error(`HTTP error! status: ${response.status}`);
-        if (response.status === 403) {
-          redirectPath = "/login";
-        }
-      } else {
-        const data = await response.json();
-        setFunFact(data.message);
-        setFunFactAudio(data.audio);
-      }
+      const funFactRes = await getFunFact(countryName, age, gender);
+      setFunFact(funFactRes.data.message);
+      setFunFactAudio(funFactRes.data.audio);
     } catch (error) {
       console.error("Failed to retrieve fun fact:", error);
     } finally {
       setLoading(false);
-      if (redirectPath) {
-        router.push(redirectPath);
-      }
     }
   };
 
