@@ -9,13 +9,12 @@ import { Feature, FeatureCollection } from "geojson";
 import { Modal, Box, Typography } from "@mui/material";
 import AudioPlayer from "./AudioPlayer";
 import LoadingModal from "./LoadingModal";
-import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/lib/store";
-import { getFunFact } from "@/app/actions/earth";
+import { getFunFact, getFunFactAudio } from "@/app/actions/earth";
 
 const RotatingEarth = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState("");
   const [funFactAudio, setFunFactAudio] = useState("");
@@ -36,13 +35,29 @@ const RotatingEarth = () => {
 
       const funFactRes = await getFunFact(countryName, age, gender);
       setFunFact(funFactRes.data.message);
-      setFunFactAudio(funFactRes.data.audio);
+      // setFunFactAudio(funFactRes.data.audio);
+      if(funFactRes.data.message){
+       const funFactAudioRes = await getFunFactAudio(funFactRes.data.message);
+       setFunFactAudio(funFactAudioRes.data.audio);
+      }
     } catch (error) {
       console.error("Failed to retrieve fun fact:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  // const retrieveFunFactAudio = async (funFact: string) => {
+  //   if (funFact) {
+  //     try {
+  //       const funFactAudioRes = await getFunFactAudio(funFact);
+  //       setFunFactAudio(funFactAudioRes.data.audio);
+  //     } catch (error) {
+  //       console.error("Failed to retrieve fun fact audio:", error);
+  //     } finally {
+  //     }
+  //   }
+  // };
 
   const loadGeoData = async () => {
     try {

@@ -20,53 +20,44 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
-  // 音频相关状态
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
-  // 音频元素引用
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioSourceRef = useRef<string | null>(null);
 
-  // 创建音频对象
   useEffect(() => {
-    // 清理之前的音频实例
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
     }
 
-    // 验证base64字符串
     if (!audioBase64 || typeof audioBase64 !== "string") {
       setHasError(true);
       return;
     }
 
     try {
-      // 创建音频URL
       const audioUrl = `data:audio/mpeg;base64,${audioBase64}`;
       audioSourceRef.current = audioUrl;
 
-      // 创建音频元素
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
 
-      // 音频加载完成处理
       audio.oncanplaythrough = () => {
         setIsLoading(false);
         setHasError(false);
       };
 
-      // 音频错误处理
       audio.onerror = () => {
         setHasError(true);
         setIsLoading(false);
         setIsPlaying(false);
       };
 
-      // 音频结束处理
       audio.onended = () => {
         setIsPlaying(false);
       };
@@ -80,7 +71,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
       setIsLoading(false);
     }
 
-    // 组件卸载时清理
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -89,7 +79,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
     };
   }, [audioBase64]);
 
-  // 播放/暂停切换
   const togglePlay = () => {
     if (!audioRef.current || hasError) return;
 
@@ -111,7 +100,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
   };
 
 
-  // 切换静音
   const toggleMute = () => {
     if (!audioRef.current) return;
 
@@ -119,7 +107,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
     setIsMuted(!isMuted);
   };
 
-  // 渲染加载状态
   if (isLoading) {
     return (
       <Tooltip title="Loading...">
@@ -130,27 +117,16 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioBase64 }) => {
     );
   }
 
-  // 渲染错误状态
-  if (hasError) {
-    return (
-      <Tooltip title="Loading Failed">
-        <IconButton color="error">
-          <Error />
-        </IconButton>
-      </Tooltip>
-    );
-  }
-
   return (
     <Box display="flex" alignItems="center" gap={1}>
       <Tooltip title={isPlaying ? "Pause" : "Play"}>
-        <IconButton onClick={togglePlay} color="primary" size="large">
+        <IconButton onClick={togglePlay} color="primary" size="large" disabled={hasError}>
           {isPlaying ? <PauseCircleOutline /> : <PlayCircleOutline />}
         </IconButton>
       </Tooltip>
 
       <Tooltip title={isMuted ? "Unmute" : "Mute"}>
-        <IconButton onClick={toggleMute} color="primary" size="large">
+        <IconButton onClick={toggleMute} color="primary" size="large" disabled={hasError}>
           {isMuted ? <VolumeOff /> : <VolumeUp />}
         </IconButton>
       </Tooltip>

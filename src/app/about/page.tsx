@@ -17,12 +17,9 @@ function About() {
       </div>
 
       <div className="about-me-content">
-        <span className="about-me-hello">Hello, I&apos;m</span>
-        <span className="about-me-name"> Joseph Gu</span>
-        <h2>Senior Software Engineer</h2>
-        <p>
-          I built a large-scale web application for a financial institution,
-          which is used by millions of users. <br />
+        <span className="about-me-hello">Hello, I&apos;m Joseph Gu</span>
+        <span className="font-bold">Senior Software Engineer</span>
+        <p className="m-4">
           Deep knowledge of React ecosystem and skilled in performance
           enhancement, troubleshooting and cybersecurity. <br />
           Good at data visualization with D3.js and Highcharts. Adopted
@@ -37,7 +34,7 @@ function About() {
         </p>
         <div className="about-me-button">
           <Button variant="contained">
-            <Link href="/login">Click Me to Exlore My Website</Link>
+            <Link href="/">Click Me to Exlore My Website</Link>
           </Button>
         </div>
       </div>
