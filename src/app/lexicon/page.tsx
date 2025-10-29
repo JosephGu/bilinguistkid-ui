@@ -146,16 +146,15 @@ const LexiconPage = () => {
   const getFontSize = (word: string) => {
     const size =
       word.length < 12 ? "large" : word.length < 18 ? "medium" : "small";
-    const bufferSize = window.innerWidth > 960 ? 12 : 0;
     switch (size) {
       case "large":
-        return initialFontSize + bufferSize;
+        return initialFontSize;
       case "medium":
-        return initialFontSize - 12 + bufferSize;
+        return initialFontSize - 12;
       case "small":
-        return initialFontSize - 36 + bufferSize;
+        return initialFontSize - 36;
       default:
-        return initialFontSize + bufferSize;
+        return initialFontSize;
     }
   };
 
