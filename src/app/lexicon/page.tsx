@@ -236,7 +236,7 @@ const LexiconPage = () => {
               Shuffle
             </Button>
           )}
-          {isRunning && !isPaused && (
+          {isRunning && isPaused && (
             <Button
               onClick={handleReadingWord}
               size="large"
