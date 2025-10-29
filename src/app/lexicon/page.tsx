@@ -7,8 +7,20 @@ import {
   Box,
   Container,
   Button,
+  ButtonGroup,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import {
+  VolumeUp,
+  PlayArrow,
+  StopCircle,
+  Casino,
+  OutlinedFlag,
+  Flag,
+  Stop,
+  Pause,
+  Restore,
+} from "@mui/icons-material";
 
 const LexiconPage = () => {
   const lexiconList = [
@@ -56,6 +68,7 @@ const LexiconPage = () => {
   const [currIdx, setCurrIdx] = useState(0);
   const [shuffledList, setShuffledList] = useState<string[]>(lexiconList);
   const [isRunning, setIsRunning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const listSize = shuffledList.length;
   const initialFontSize = 92;
 
@@ -63,6 +76,10 @@ const LexiconPage = () => {
 
   useEffect(() => {
     if (isRunning && !isFinished) {
+      const word = shuffledList[currIdx] ? shuffledList[currIdx] : "";
+      const timeGap =
+        word.length < 10 ? 1500 : Math.ceil(word.length / 5) * 500 + 500;
+      console.log(currIdx, word, timeGap);
       timeoutRef.current = setTimeout(() => {
         setCurrIdx((prevIdx) => {
           const nextIdx = prevIdx + 1;
@@ -72,7 +89,7 @@ const LexiconPage = () => {
           }
           return nextIdx;
         });
-      }, 1500);
+      }, timeGap);
     }
     return () => {
       if (timeoutRef && timeoutRef.current) {
@@ -88,6 +105,8 @@ const LexiconPage = () => {
       [shuffledList[i], shuffledList[j]] = [shuffledList[j], shuffledList[i]];
     }
     setShuffledList(shuffledList);
+    setCurrIdx(0);
+    setIsPaused(false);
   };
 
   const handleStart = () => {
@@ -96,25 +115,47 @@ const LexiconPage = () => {
     }
     setCurrIdx(0);
     setIsRunning(true);
+    setIsPaused(false);
   };
 
   const handleStop = () => {
     setIsRunning(false);
     setCurrIdx(0);
+    setIsPaused(false);
+  };
+
+  const handlePause = () => {
+    setIsRunning(false);
+    setIsPaused(true);
+  };
+
+  const handleRestore = () => {
+    setIsRunning(true);
+    setIsPaused(false);
+  };
+
+  const handleReadingWord = () => {
+    const word = shuffledList[currIdx];
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-UK";
+    utterance.rate = 0.8;
+    utterance.pitch = 1;
+    window.speechSynthesis.speak(utterance);
   };
 
   const getFontSize = (word: string) => {
-    const size = word.length < 12 ? "large" : word.length < 18 ? "medium" : "small";
-
+    const size =
+      word.length < 12 ? "large" : word.length < 18 ? "medium" : "small";
+    const bufferSize = window.innerWidth > 960 ? 12 : 0;
     switch (size) {
       case "large":
-        return initialFontSize;
+        return initialFontSize + bufferSize;
       case "medium":
-        return initialFontSize - 12;
+        return initialFontSize - 12 + bufferSize;
       case "small":
-        return initialFontSize - 36;
+        return initialFontSize - 36 + bufferSize;
       default:
-        return initialFontSize;
+        return initialFontSize + bufferSize;
     }
   };
 
@@ -132,7 +173,10 @@ const LexiconPage = () => {
           sx={{ height: "60%" }}
         >
           <Typography
-            sx={{ fontSize: getFontSize(shuffledList[currIdx]), fontWeight: "bold" }}
+            sx={{
+              fontSize: getFontSize(shuffledList[currIdx]),
+              fontWeight: "bold",
+            }}
             color="text.primary"
             gutterBottom
           >
@@ -143,19 +187,66 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-start gap-4"
           sx={{ height: "30%" }}
         >
-          <Button onClick={handleStart} variant="contained" size="large">
-            Start
-          </Button>
-          <Button onClick={handleStop} variant="contained" size="large">
-            Stop
-          </Button>
-          <Button
-            onClick={() => shuffleCard(lexiconList)}
-            variant="contained"
-            size="large"
-          >
-            Shuffle
-          </Button>
+          {!isRunning && (
+            <Button
+              onClick={handleStart}
+              variant="contained"
+              size="large"
+              startIcon={<Flag />}
+            >
+              Start
+            </Button>
+          )}
+          {isRunning && (
+            <Button
+              onClick={handleStop}
+              variant="contained"
+              size="large"
+              startIcon={<Stop />}
+            >
+              Stop
+            </Button>
+          )}
+          {isRunning && !isPaused && (
+            <Button
+              onClick={handlePause}
+              variant="contained"
+              size="large"
+              startIcon={<Pause />}
+            >
+              Pause
+            </Button>
+          )}
+          {isPaused && (
+            <Button
+              onClick={handleRestore}
+              variant="contained"
+              startIcon={<Restore />}
+              size="large"
+            >
+              Restore
+            </Button>
+          )}
+          {!isRunning && !isPaused && (
+            <Button
+              onClick={() => shuffleCard(lexiconList)}
+              variant="contained"
+              startIcon={<Casino />}
+              size="large"
+            >
+              Shuffle
+            </Button>
+          )}
+          {isRunning && !isPaused && (
+            <Button
+              onClick={handleReadingWord}
+              size="large"
+              variant="contained"
+              startIcon={<VolumeUp />}
+            >
+              Read
+            </Button>
+          )}
         </Box>
       </Box>
     </Container>
