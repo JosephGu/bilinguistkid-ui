@@ -132,15 +132,15 @@ const LexiconPage = () => {
           sx={{ height: "60%" }}
         >
           <Typography
-            sx={{ fontSize: getFontSize(shuffledList[currIdx]) }}
-            color="text.secondary"
+            sx={{ fontSize: getFontSize(shuffledList[currIdx]), fontWeight: "bold" }}
+            color="text.primary"
             gutterBottom
           >
             {shuffledList[currIdx]}
           </Typography>
         </Box>
         <Box
-          className="w-full flex justify-center items-center gap-4"
+          className="w-full flex justify-center items-start gap-4"
           sx={{ height: "30%" }}
         >
           <Button onClick={handleStart} variant="contained" size="large">
