@@ -35,7 +35,7 @@ const LexiconPage = () => {
     "clean",
     "I'm fine. Thank you.",
     "Clean our classroom",
-    "Let me put the books back",
+    "Let me put the books back.",
     "ruler",
     "goodbye",
     "morning",
@@ -49,7 +49,7 @@ const LexiconPage = () => {
     "Clean our classroom.",
     "schoolbag",
     "blackboard",
-    "Use my ruler"
+    "Use my ruler.",
   ];
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -57,7 +57,7 @@ const LexiconPage = () => {
   const [shuffledList, setShuffledList] = useState<string[]>(lexiconList);
   const [isRunning, setIsRunning] = useState(false);
   const listSize = shuffledList.length;
-  const initialFontSize = 108;
+  const initialFontSize = 92;
 
   const isFinished = currIdx >= listSize;
 
@@ -103,10 +103,25 @@ const LexiconPage = () => {
     setCurrIdx(0);
   };
 
+  const getFontSize = (word: string) => {
+    const size = word.length < 12 ? "large" : word.length < 18 ? "medium" : "small";
+
+    switch (size) {
+      case "large":
+        return initialFontSize;
+      case "medium":
+        return initialFontSize - 12;
+      case "small":
+        return initialFontSize - 36;
+      default:
+        return initialFontSize;
+    }
+  };
+
   return (
     <Container sx={{ height: "100%", width: "100%", position: "relative" }}>
       <Box className="w-full flex justify-center items-center h-full flex-col">
-         <Box
+        <Box
           className="w-full flex justify-center items-center gap-4"
           sx={{ height: "10%" }}
         >
@@ -116,7 +131,11 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-center h-full"
           sx={{ height: "60%" }}
         >
-          <Typography sx={{ fontSize: initialFontSize }} color="text.secondary" gutterBottom>
+          <Typography
+            sx={{ fontSize: getFontSize(shuffledList[currIdx]) }}
+            color="text.secondary"
+            gutterBottom
+          >
             {shuffledList[currIdx]}
           </Typography>
         </Box>
@@ -130,7 +149,11 @@ const LexiconPage = () => {
           <Button onClick={handleStop} variant="contained" size="large">
             Stop
           </Button>
-          <Button onClick={() => shuffleCard(lexiconList)} variant="contained" size="large">
+          <Button
+            onClick={() => shuffleCard(lexiconList)}
+            variant="contained"
+            size="large"
+          >
             Shuffle
           </Button>
         </Box>
