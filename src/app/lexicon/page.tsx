@@ -1,26 +1,23 @@
 "use client";
 
 import {
-  Card,
-  CardContent,
+  LinearProgress,
   Typography,
   Box,
   Container,
   Button,
-  ButtonGroup,
+  Paper,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import {
   VolumeUp,
-  PlayArrow,
-  StopCircle,
   Casino,
-  OutlinedFlag,
   Flag,
   Stop,
   Pause,
   Restore,
 } from "@mui/icons-material";
+import "./page.scss";
 
 const LexiconPage = () => {
   const lexiconList = [
@@ -145,14 +142,12 @@ const LexiconPage = () => {
 
   const getFontSize = (word: string) => {
     const size =
-      word.length < 12 ? "large" : word.length < 18 ? "medium" : "small";
+      word.length < 12 ? "large" : "small";
     switch (size) {
       case "large":
         return initialFontSize;
-      case "medium":
-        return initialFontSize - 12;
       case "small":
-        return initialFontSize - 36;
+        return initialFontSize - 24;
       default:
         return initialFontSize;
     }
@@ -165,12 +160,49 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-center gap-4"
           sx={{ height: "10%" }}
         >
-          {currIdx + 1} / {listSize}
+          {(isRunning || isPaused) && (
+            <Box className="w-full flex justify-center items-center gap-4">
+              <Box className="flex-1"></Box>
+              <Box className="flex-[8]">
+                <LinearProgress
+                  sx={{ width: "100%", height: 10 }}
+                  variant="determinate"
+                  value={((currIdx + 1) / listSize) * 100}
+                />
+              </Box>
+              <Box className="flex-1">
+                {currIdx + 1}/{listSize}
+              </Box>
+            </Box>
+          )}
         </Box>
         <Box
-          className="w-full flex justify-center items-center h-full"
+          className="w-full flex justify-center items-center h-full card-container"
           sx={{ height: "60%" }}
         >
+          {!isRunning && !isPaused && (
+            <Paper
+              className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px]"
+              elevation={3}
+            >
+              <Box className="text-[24px] mb-5 font-bold">Default Lexicon Collection</Box>
+              <Box className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]">
+                {shuffledList.map((word, index) => {
+                  if (index < 5) {
+                    return (
+                      <Box key={word}>
+                        {index + 1}. {word}
+                      </Box>
+                    );
+                  } else if (index === 6) {
+                    return <Box key="ellipsisNoRepeat">...</Box>;
+                  } else {
+                    return null;
+                  }
+                })}
+              </Box>
+            </Paper>
+          )}
           <Typography
             sx={{
               fontSize: getFontSize(shuffledList[currIdx]),
@@ -179,14 +211,15 @@ const LexiconPage = () => {
             color="text.primary"
             gutterBottom
           >
-            {shuffledList[currIdx]}
+            {(isRunning || isPaused) && shuffledList[currIdx]}
           </Typography>
         </Box>
+
         <Box
           className="w-full flex justify-center items-start gap-4"
           sx={{ height: "30%" }}
         >
-          {!isRunning && (
+          {!isRunning && !isPaused && (
             <Button
               onClick={handleStart}
               variant="contained"
@@ -236,7 +269,7 @@ const LexiconPage = () => {
               Shuffle
             </Button>
           )}
-          {isRunning && isPaused && (
+          {isPaused && (
             <Button
               onClick={handleReadingWord}
               size="large"
