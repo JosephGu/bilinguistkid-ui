@@ -59,6 +59,15 @@ const LexiconPage = () => {
     "schoolbag",
     "blackboard",
     "Use my ruler.",
+    "eye",
+    "ear",
+    "nose",
+    "mouth",
+    "face",
+    "two big eyes",
+    "draw a face",
+    "a happy face",
+    "I see a cute face."
   ];
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

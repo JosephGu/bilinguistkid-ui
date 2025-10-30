@@ -1,6 +1,12 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import crypto from "crypto";
+import { sendVerificationCode } from "./emailer";
+import cache from "@/app/lib/localCache";
+import { signIn } from "next-auth/react";
+import { AUTH_COOKIE_NAME, createJWT } from "@/lib/jwt";
+import { cookies } from "next/headers";
 
 export async function login(formData: FormData) {
   const email = formData.get("email") as string;
@@ -22,16 +28,37 @@ export async function login(formData: FormData) {
     if (user.password !== password) {
       return { success: false, msg: "Incorrect password" };
     }
-    return { success: true, msg: null };
+    const token = await createJWT(email);
+    console.log("login token: ", token);
+    (await cookies()).set(AUTH_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+    });
+    return { success: true, msg: "Login success" };
   } catch (error) {
     return { success: false, msg: `Failed to login: ${error}` };
   }
 }
 
-export async function createUser(formData: FormData) {
+const checkVCode = (email: string, vCode: string) => {
+  const cacheVCode = cache.get(email);
+  if (!cacheVCode) {
+    throw new Error("Please get verification code first");
+  }
+  if (cacheVCode !== vCode) {
+    throw new Error("Incorrect verification code");
+  }
+};
+
+export async function register(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const vCode = formData.get("vCode") as string;
 
+  checkVCode(email, vCode);
   if (!email || !password) {
     throw new Error("All fields are required");
   }
@@ -48,8 +75,17 @@ export async function createUser(formData: FormData) {
       },
     });
     console.log("create user success", email);
-    return { data: { email, password }, error: null };
+    const token = await createJWT(email);
+    (await cookies()).set(AUTH_COOKIE_NAME, token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+    });
+    return { success: true, msg: "User created successfully" };
   } catch (error) {
+    console.log("error: ", error);
     if (
       error &&
       typeof error === "object" &&
@@ -61,6 +97,18 @@ export async function createUser(formData: FormData) {
     }
     return { data: null, error: "Failed to create user" };
   }
+}
 
-  // redirect("/login");
+export async function getVCode(formData: FormData) {
+  const email = formData.get("email") as string;
+  if (!email) {
+    throw new Error("Please input email");
+  }
+  const vCode = crypto.randomInt(100000, 999999).toString();
+  cache.set(email, vCode);
+  const { success, msg } = await sendVerificationCode(email, vCode);
+  if (!success) {
+    throw new Error(msg || "Failed to send verification code");
+  }
+  return { success, msg };
 }

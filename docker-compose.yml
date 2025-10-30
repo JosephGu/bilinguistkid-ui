@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: nextjs-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    # 关键步骤 1: 启动时加入副本集参数
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

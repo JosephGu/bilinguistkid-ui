@@ -3,7 +3,7 @@
 import { Box, TextField, Dialog, Tab, Tabs, Button } from "@mui/material";
 import { useState } from "react";
 import { redirect, RedirectType } from "next/navigation";
-import { createUser, login } from "@/app/actions/user";
+import { login, register, getVCode } from "@/app/actions/user";
 
 function LoginModal() {
   const [email, setEmail] = useState("");
@@ -14,25 +14,12 @@ function LoginModal() {
 
   const loginClick = async (formData: FormData) => {
     const response = await login(formData);
+    if (response.success) {
+      redirect("/", RedirectType.replace);
+    } else {
+      alert(response.msg);
+    }
     console.log(response);
-    // const res = await fetch("/api/v1/auth/authenticate", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password,
-    //   }),
-    // });
-    // const data = await res.json();
-
-    // if (res.status === 200) {
-    //   console.log("redirect to home");
-    //   redirect("/", RedirectType.replace);
-    // } else {
-    //   alert("Login failed");
-    // }
   };
 
   const createAccountClick = async () => {
@@ -57,34 +44,13 @@ function LoginModal() {
       alert("Passwords do not match");
       return;
     }
-
-    const res = await fetch("api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        verificationcode: code,
-      }),
-    });
-    if (res.ok) {
-      const data = await res.json(); // 解析JSON响应体
-      console.log(data); // 打印响应体数据
-
-      if (data?.code === 200) {
-        redirect("/", RedirectType.push);
-      } else if (data?.code === 4001) {
-        alert("Verification code error, please try again");
-      } else if (data?.code === 4002) {
-        alert("Email already registered, please sign in");
-      } else {
-        alert("Create account failed");
-      }
-    } else {
-      alert("Create account failed");
-    }
+;
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("vCode", code);
+    const response = await register(formData);
+    console.log(response);
   };
 
   const [timer, setTimer] = useState(60);
@@ -105,17 +71,15 @@ function LoginModal() {
       alert("Please input email");
       return;
     }
+    const formData = new FormData();
+    formData.append("email", email);
     setCodeButtonDisabled(true);
-    startTimer();
 
-    const res = await fetch("/api/v1/auth/verify-code/email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: email,
-    });
-    console.log(res.status);
+    startTimer();
+    const response = await getVCode(formData);
+
+    console.log(response);
+
   };
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -127,8 +91,8 @@ function LoginModal() {
   const confirmClick = async () => {
     if (tabIndex === 0) {
       const formData = new FormData();
-      formData.append("email",email);
-      formData.append("password",password);
+      formData.append("email", email);
+      formData.append("password", password);
       await loginClick(formData);
     } else {
       await createAccountClick();
@@ -137,7 +101,6 @@ function LoginModal() {
 
   return (
     <Dialog open fullWidth>
-      <form action={confirmClick}>
         <Box sx={{ width: "100%" }}>
           <Tabs onChange={handleChange} value={tabIndex}>
             <Tab label="Sign In" value={0}></Tab>
@@ -225,11 +188,10 @@ function LoginModal() {
           display={"flex"}
           justifyContent={"center"}
         >
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" onClick={confirmClick}>
             {tabIndex === 0 ? "Sign In" : "Sign Up"}
           </Button>
         </Box>
-      </form>
     </Dialog>
   );
 }
