@@ -4,9 +4,9 @@ import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { sendVerificationCode } from "./emailer";
 import cache from "@/app/lib/localCache";
-import { signIn } from "next-auth/react";
 import { AUTH_COOKIE_NAME, createJWT } from "@/lib/jwt";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
   const email = formData.get("email") as string;
@@ -37,7 +37,7 @@ export async function login(formData: FormData) {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
-    return { success: true, msg: "Login success" };
+    redirect('/');
   } catch (error) {
     return { success: false, msg: `Failed to login: ${error}` };
   }

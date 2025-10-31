@@ -7,13 +7,13 @@ export async function middleware(req: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   if (!token) {
-    return Response.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   const payload = verifyJWT(token);
 
   if (!payload) {
-    return Response.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   return NextResponse.next();
