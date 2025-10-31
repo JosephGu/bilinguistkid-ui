@@ -45,6 +45,7 @@ export async function login(formData: FormData) {
 
 const checkVCode = (email: string, vCode: string) => {
   const cacheVCode = cache.get(email);
+  console.log("check vcode, cachedVCode,  ", cacheVCode, "vCode:", vCode, "email:", email);
   if (!cacheVCode) {
     throw new Error("Please get verification code first");
   }
@@ -105,6 +106,7 @@ export async function getVCode(formData: FormData) {
     throw new Error("Please input email");
   }
   const vCode = crypto.randomInt(100000, 999999).toString();
+  console.log("get vode:", vCode, email);
   cache.set(email, vCode);
   const { success, msg } = await sendVerificationCode(email, vCode);
   if (!success) {
