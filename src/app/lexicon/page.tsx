@@ -16,65 +16,44 @@ import {
   Stop,
   Pause,
   Restore,
+  ArrowBack,
+  ArrowForward,
 } from "@mui/icons-material";
 import "./page.scss";
+import { LexiconType, lexiconCollection } from "./list";
+import pinyin from "js-pinyin";
+
+type LexiconCollection = {
+  title: string;
+  list: string[];
+  id: number;
+  type: LexiconType;
+};
+
+pinyin.setOptions({ checkPolyphone: false, charCase: 0 });
 
 const LexiconPage = () => {
-  const lexiconList = [
-    "welcome",
-    "door",
-    "good morning",
-    "good afternoon",
-    "good evening",
-    "chair",
-    "classroom",
-    "pencil case",
-    "book",
-    "pack",
-    "desk",
-    "floor",
-    "Let me help you.",
-    "eraser",
-    "Clean your chair.",
-    "My name is Shenshen.",
-    "Nice to meet you, Lily.",
-    "my",
-    "hello",
-    "evening",
-    "clean",
-    "I'm fine. Thank you.",
-    "Clean our classroom",
-    "Let me put the books back.",
-    "ruler",
-    "goodbye",
-    "morning",
-    "How are you?",
-    "pencil",
-    "friend",
-    "afternoon",
-    "Don't worry.",
-    "Pack my schoolbag.",
-    "name",
-    "Clean our classroom.",
-    "schoolbag",
-    "blackboard",
-    "Use my ruler.",
-    "eye",
-    "ear",
-    "nose",
-    "mouth",
-    "face",
-    "two big eyes",
-    "draw a face",
-    "a happy face",
-    "I see a cute face."
-  ];
-
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [currIdx, setCurrIdx] = useState(0);
-  const [shuffledList, setShuffledList] = useState<string[]>(lexiconList);
+  const [shuffledList, setShuffledList] = useState<string[]>(
+    lexiconCollection[0].list
+  );
   const [isRunning, setIsRunning] = useState(false);
+  const [isManualRunning, setIsManualRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(0);
+
+  const getDefaultLexiconType = () => {
+    for (const collection of lexiconCollection) {
+      if (collection.type === LexiconType.Chinese) {
+        return LexiconType.Chinese;
+      }
+    }
+    return LexiconType.English;
+  };
+  const [selectedCollectionType, setSelectedCollectionType] =
+    useState<LexiconType>(getDefaultLexiconType());
+
   const listSize = shuffledList.length;
   const initialFontSize = 92;
 
@@ -84,7 +63,7 @@ const LexiconPage = () => {
     if (isRunning && !isFinished) {
       const word = shuffledList[currIdx] ? shuffledList[currIdx] : "";
       const timeGap =
-        word.length < 10 ? 1500 : Math.ceil(word.length / 5) * 500 + 500;
+        word.length < 10 ? 1500 : Math.ceil(word.length / 5) * 500 + 600;
       console.log(currIdx, word, timeGap);
       timeoutRef.current = setTimeout(() => {
         setCurrIdx((prevIdx) => {
@@ -104,13 +83,45 @@ const LexiconPage = () => {
     };
   }, [isRunning, currIdx, isFinished, listSize]);
 
-  const shuffleCard = (list: string[]) => {
-    const shuffledList = [...list];
-    for (let i = shuffledList.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledList[i], shuffledList[j]] = [shuffledList[j], shuffledList[i]];
+  useEffect(() => {
+    if (isManualRunning) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      window.removeEventListener("keydown", handleKeyDown);
     }
-    setShuffledList(shuffledList);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isManualRunning, currIdx]);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    console.log(pinyin.getFullChars("管理员"));
+    console.log(pinyin.getCamelChars("管理员"));
+    console.log(pinyin.getCamelChars("1234"));
+    console.log(pinyin.getCamelChars("english"));
+    console.log(pinyin.getCamelChars("昕"));
+    console.log(pinyin.getCamelChars("佛"));
+    console.log(pinyin.getFullChars("佛"));
+    console.log(pinyin.getFullChars("凃一二"));
+    console.log(pinyin.getCamelChars("凃一二"));
+    if (e.code === "Space" || e.code === "ArrowRight") {
+      if (isManualRunning) {
+        handleNext();
+      }
+    } else if (e.code === "ArrowLeft") {
+      if (isManualRunning) {
+        handlePrevious();
+      }
+    }
+  };
+
+  const shuffleCard = (list: string[]) => {
+    const tobeShuffled = [...list];
+    for (let i = tobeShuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tobeShuffled[i], tobeShuffled[j]] = [tobeShuffled[j], tobeShuffled[i]];
+    }
+    setShuffledList(tobeShuffled);
     setCurrIdx(0);
     setIsPaused(false);
   };
@@ -126,6 +137,7 @@ const LexiconPage = () => {
 
   const handleStop = () => {
     setIsRunning(false);
+    setIsManualRunning(false);
     setCurrIdx(0);
     setIsPaused(false);
   };
@@ -140,18 +152,57 @@ const LexiconPage = () => {
     setIsPaused(false);
   };
 
-  const handleReadingWord = () => {
+  const handleSelectCollection = (id: number) => {
+    const selectedCollection = lexiconCollection.find((item) => item.id === id);
+    if (selectedCollection) {
+      setShuffledList(selectedCollection.list);
+      setCurrIdx(0);
+      setIsRunning(false);
+      setIsPaused(false);
+      setSelectedCollectionId(id);
+      setSelectedCollectionType(selectedCollection.type);
+    }
+  };
+
+  const handleReadingWord = (type: LexiconType) => {
     const word = shuffledList[currIdx];
     const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = "en-UK";
+    utterance.lang =
+      selectedCollectionType === LexiconType.Chinese ? "zh-CN" : "en-UK";
     utterance.rate = 0.8;
     utterance.pitch = 1;
     window.speechSynthesis.speak(utterance);
   };
 
+  const handleManualStart = () => {
+    if (selectedCollectionId === -1) {
+      return;
+    }
+    setIsManualRunning(true);
+    setCurrIdx(0);
+  };
+
+  const handleNext = () => {
+    if (isManualRunning && !isFinished) {
+      setCurrIdx((prevIdx) => {
+        const nextIdx = prevIdx + 1;
+        if (nextIdx >= listSize) {
+          setIsManualRunning(false);
+          return prevIdx;
+        }
+        return nextIdx;
+      });
+    }
+  };
+
+  const handlePrevious = () => {
+    if (isManualRunning && currIdx > 0) {
+      setCurrIdx((prevIdx) => prevIdx - 1);
+    }
+  };
+
   const getFontSize = (word: string) => {
-    const size =
-      word.length < 12 ? "large" : "small";
+    const size = word.length < 12 ? "large" : "small";
     switch (size) {
       case "large":
         return initialFontSize;
@@ -169,7 +220,7 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-center gap-4"
           sx={{ height: "10%" }}
         >
-          {(isRunning || isPaused) && (
+          {(isRunning || isPaused || isManualRunning) && (
             <Box className="w-full flex justify-center items-center gap-4">
               <Box className="flex-1"></Box>
               <Box className="flex-[8]">
@@ -189,29 +240,45 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-center h-full card-container"
           sx={{ height: "60%" }}
         >
-          {!isRunning && !isPaused && (
-            <Paper
-              className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px]"
-              elevation={3}
-            >
-              <Box className="text-[24px] mb-5 font-bold">Default Lexicon Collection</Box>
-              <Box className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]">
-                {shuffledList.map((word, index) => {
-                  if (index < 5) {
-                    return (
-                      <Box key={word}>
-                        {index + 1}. {word}
-                      </Box>
-                    );
-                  } else if (index === 6) {
-                    return <Box key="ellipsisNoRepeat">...</Box>;
-                  } else {
-                    return null;
-                  }
-                })}
-              </Box>
-            </Paper>
-          )}
+          {!isRunning &&
+            !isPaused &&
+            !isManualRunning &&
+            lexiconCollection.map((item: LexiconCollection) => (
+              <Paper
+                key={item.title}
+                className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+                elevation={3}
+                onClick={() => handleSelectCollection(item.id)}
+                sx={{
+                  background:
+                    item.id === selectedCollectionId
+                      ? "lightblue"
+                      : "transparent",
+                }}
+              >
+                <Box className="text-[24px] mb-5 font-bold">{item.title}</Box>
+                <Box
+                  className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]"
+                  sx={{
+                    display: selectedCollectionId === item.id ? "flex" : "none",
+                  }}
+                >
+                  {shuffledList.map((word, index) => {
+                    if (index < 5) {
+                      return (
+                        <Box key={word}>
+                          {index + 1}. {word}
+                        </Box>
+                      );
+                    } else if (index === 6) {
+                      return <Box key="ellipsisNoRepeat">...</Box>;
+                    } else {
+                      return null;
+                    }
+                  })}
+                </Box>
+              </Paper>
+            ))}
           <Typography
             sx={{
               fontSize: getFontSize(shuffledList[currIdx]),
@@ -220,7 +287,8 @@ const LexiconPage = () => {
             color="text.primary"
             gutterBottom
           >
-            {(isRunning || isPaused) && shuffledList[currIdx]}
+            {(isRunning || isPaused || isManualRunning) &&
+              shuffledList[currIdx]}
           </Typography>
         </Box>
 
@@ -228,7 +296,7 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-start gap-4"
           sx={{ height: "30%" }}
         >
-          {!isRunning && !isPaused && (
+          {!isRunning && !isPaused && !isManualRunning && (
             <Button
               onClick={handleStart}
               variant="contained"
@@ -238,7 +306,17 @@ const LexiconPage = () => {
               Start
             </Button>
           )}
-          {isRunning && (
+          {!isRunning && !isPaused && !isManualRunning && (
+            <Button
+              onClick={handleManualStart}
+              variant="contained"
+              size="large"
+              startIcon={<Flag />}
+            >
+              Manual
+            </Button>
+          )}
+          {(isRunning || isManualRunning) && (
             <Button
               onClick={handleStop}
               variant="contained"
@@ -248,7 +326,29 @@ const LexiconPage = () => {
               Stop
             </Button>
           )}
-          {isRunning && !isPaused && (
+
+          {isManualRunning && (
+            <Button
+              onClick={handlePrevious}
+              variant="contained"
+              size="large"
+              startIcon={<ArrowBack />}
+            >
+              {" "}
+              Last
+            </Button>
+          )}
+          {isManualRunning && (
+            <Button
+              onClick={handleNext}
+              variant="contained"
+              size="large"
+              startIcon={<ArrowForward />}
+            >
+              Next
+            </Button>
+          )}
+          {isRunning && !isPaused && !isManualRunning && (
             <Button
               onClick={handlePause}
               variant="contained"
@@ -268,9 +368,9 @@ const LexiconPage = () => {
               Restore
             </Button>
           )}
-          {!isRunning && !isPaused && (
+          {!isRunning && !isPaused && !isManualRunning && (
             <Button
-              onClick={() => shuffleCard(lexiconList)}
+              onClick={() => shuffleCard(shuffledList)}
               variant="contained"
               startIcon={<Casino />}
               size="large"
@@ -278,9 +378,9 @@ const LexiconPage = () => {
               Shuffle
             </Button>
           )}
-          {isPaused && (
+          {isManualRunning && (
             <Button
-              onClick={handleReadingWord}
+              onClick={() => handleReadingWord(selectedCollectionType)}
               size="large"
               variant="contained"
               startIcon={<VolumeUp />}

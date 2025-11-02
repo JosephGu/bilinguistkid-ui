@@ -8,7 +8,7 @@ import Link from "next/link";
 
 function Navigation() {
   return (
-    <div className="navigation">
+    <div className="navigation p-2 pl-5 pr-5">
       <div className="logo">
         <Link href="/">
           <Image src="/logo2.svg" alt="image" width={200} height={50} />
@@ -32,9 +32,9 @@ function Navigation() {
         <Link color="inherit  " href="/about">
           <Button color="inherit">About</Button>
         </Link>
-        <Button color="inherit">
+        {/* <Button color="inherit">
           <Face4 />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
