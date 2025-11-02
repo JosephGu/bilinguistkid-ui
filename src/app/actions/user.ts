@@ -3,10 +3,10 @@
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { sendVerificationCode } from "./emailer";
-import cache from "@/app/lib/localCache";
+// import cache from "@/app/lib/localCache";
+import { redis } from "@/app/lib/redis";
 import { AUTH_COOKIE_NAME, createJWT } from "@/lib/jwt";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
   const email = formData.get("email") as string;
@@ -43,8 +43,8 @@ export async function login(formData: FormData) {
   }
 }
 
-const checkVCode = (email: string, vCode: string) => {
-  const cacheVCode = cache.get(email);
+const checkVCode = async (email: string, vCode: string) => {
+  const cacheVCode = await redis.get(email);
   console.log("check vcode, cachedVCode,  ", cacheVCode, "vCode:", vCode, "email:", email);
   if (!cacheVCode) {
     throw new Error("Please get verification code first");
@@ -107,8 +107,8 @@ export async function getVCode(formData: FormData) {
   }
   const vCode = crypto.randomInt(100000, 999999).toString();
   console.log("get vode:", vCode, email);
-  cache.set(email, vCode);
-  const cachedVCode = cache.get(email);
+  await redis.set(email, vCode);
+  const cachedVCode = await redis.get(email);
   console.log("get vcode, cachedVCode,  ", cachedVCode, "vCode:", vCode, "email:", email);
   const { success, msg } = await sendVerificationCode(email, vCode);
   if (!success) {
