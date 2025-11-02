@@ -44,12 +44,16 @@ function LoginModal() {
       alert("Passwords do not match");
       return;
     }
-;
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
     formData.append("vCode", code);
     const response = await register(formData);
+    if (response.success) {
+      redirect("/", RedirectType.replace);
+    } else {
+      alert(response.msg);
+    }
     console.log(response);
   };
 
@@ -79,7 +83,6 @@ function LoginModal() {
     const response = await getVCode(formData);
 
     console.log(response);
-
   };
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -101,97 +104,95 @@ function LoginModal() {
 
   return (
     <Dialog open fullWidth>
-        <Box sx={{ width: "100%" }}>
-          <Tabs onChange={handleChange} value={tabIndex}>
-            <Tab label="Sign In" value={0}></Tab>
-            <Tab label="Sign Up" value={1}></Tab>
-          </Tabs>
-        </Box>
+      <Box sx={{ width: "100%" }}>
+        <Tabs onChange={handleChange} value={tabIndex}>
+          <Tab label="Sign In" value={0}></Tab>
+          <Tab label="Sign Up" value={1}></Tab>
+        </Tabs>
+      </Box>
 
-        <Box
-          component="form"
-          sx={{ padding: "10px 30px" }}
-          hidden={tabIndex === 1}
-        >
-          <Box sx={{ paddingTop: "10px" }}>
-            <TextField
-              label="Email"
-              sx={{ width: "100%" }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Box>
-          <Box sx={{ paddingTop: "10px" }}>
-            <TextField
-              label="Password"
-              sx={{ width: "100%" }}
-              value={password}
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
+      <Box
+        component="form"
+        sx={{ padding: "10px 30px" }}
+        hidden={tabIndex === 1}
+      >
+        <Box sx={{ paddingTop: "10px" }}>
+          <TextField
+            label="Email"
+            sx={{ width: "100%" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Box>
+        <Box sx={{ paddingTop: "10px" }}>
+          <TextField
+            label="Password"
+            sx={{ width: "100%" }}
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Box>
+      </Box>
+      <Box
+        component="form"
+        sx={{ padding: "10px 30px", width: "100%" }}
+        hidden={tabIndex === 0}
+      >
+        <Box sx={{ paddingTop: "10px" }}>
+          <TextField
+            label="Email"
+            sx={{ width: "100%" }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Box>
         <Box
-          component="form"
-          sx={{ padding: "10px 30px", width: "100%" }}
-          hidden={tabIndex === 0}
+          sx={{ paddingTop: "10px", display: "flex", gap: 2, width: "100%" }}
         >
-          <Box sx={{ paddingTop: "10px" }}>
-            <TextField
-              label="Email"
-              sx={{ width: "100%" }}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Box>
-          <Box
-            sx={{ paddingTop: "10px", display: "flex", gap: 2, width: "100%" }}
+          <TextField
+            label="Verification Code"
+            sx={{ flex: 0.7 }}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            sx={{ flex: 0.3 }}
+            onClick={getVerificationCode}
+            disabled={codeButtonDisabled}
           >
-            <TextField
-              label="Verification Code"
-              sx={{ flex: 0.7 }}
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={{ flex: 0.3 }}
-              onClick={getVerificationCode}
-              disabled={codeButtonDisabled}
-            >
-              {codeButtonDisabled
-                ? `Resend after ${timer} seconds`
-                : "Send Code"}
-            </Button>
-          </Box>
-          <Box sx={{ paddingTop: "10px" }}>
-            <TextField
-              label="Password"
-              sx={{ width: "100%" }}
-              value={password}
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Box>
-          <Box sx={{ paddingTop: "10px" }}>
-            <TextField
-              label="Confirm Password"
-              sx={{ width: "100%" }}
-              value={confirmPassword}
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{ padding: "10px 0" }}
-          display={"flex"}
-          justifyContent={"center"}
-        >
-          <Button variant="contained" type="submit" onClick={confirmClick}>
-            {tabIndex === 0 ? "Sign In" : "Sign Up"}
+            {codeButtonDisabled ? `Resend after ${timer} seconds` : "Send Code"}
           </Button>
         </Box>
+        <Box sx={{ paddingTop: "10px" }}>
+          <TextField
+            label="Password"
+            sx={{ width: "100%" }}
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Box>
+        <Box sx={{ paddingTop: "10px" }}>
+          <TextField
+            label="Confirm Password"
+            sx={{ width: "100%" }}
+            value={confirmPassword}
+            type="password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </Box>
+      </Box>
+      <Box
+        sx={{ padding: "10px 0" }}
+        display={"flex"}
+        justifyContent={"center"}
+      >
+        <Button variant="contained" type="submit" onClick={confirmClick}>
+          {tabIndex === 0 ? "Sign In" : "Sign Up"}
+        </Button>
+      </Box>
     </Dialog>
   );
 }

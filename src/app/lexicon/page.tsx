@@ -92,7 +92,7 @@ const LexiconPage = () => {
   }, [isManualRunning, currIdx]);
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.code === "Space" || e.code === "ArrowRight") {
+    if (e.code === "ArrowRight") {
       if (isManualRunning) {
         handleNext();
       }

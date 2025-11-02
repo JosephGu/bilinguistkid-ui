@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { buildApiUrl, API_ENDPOINTS } from "@/app/utils/apiConfig";
 import { AUTH_COOKIE_NAME, verifyJWT } from "./lib/jwt";
 
-export async function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest, res: NextResponse) {
   const cookieStore = await cookies();
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   if (!token) {

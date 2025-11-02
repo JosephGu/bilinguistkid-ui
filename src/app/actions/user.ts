@@ -37,7 +37,7 @@ export async function login(formData: FormData) {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
-    redirect('/');
+    return { success: true, msg: "Login success" };
   } catch (error) {
     return { success: false, msg: `Failed to login: ${error}` };
   }
@@ -108,6 +108,8 @@ export async function getVCode(formData: FormData) {
   const vCode = crypto.randomInt(100000, 999999).toString();
   console.log("get vode:", vCode, email);
   cache.set(email, vCode);
+  const cachedVCode = cache.get(email);
+  console.log("get vcode, cachedVCode,  ", cachedVCode, "vCode:", vCode, "email:", email);
   const { success, msg } = await sendVerificationCode(email, vCode);
   if (!success) {
     throw new Error(msg || "Failed to send verification code");
