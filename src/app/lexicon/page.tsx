@@ -7,6 +7,8 @@ import {
   Container,
   Button,
   Paper,
+  Modal,
+  CircularProgress,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -18,9 +20,11 @@ import {
   Restore,
   ArrowBack,
   ArrowForward,
+  ClosedCaption,
 } from "@mui/icons-material";
 import "./page.scss";
 import { LexiconType, lexiconCollection } from "./list";
+import { getPinyin } from "@/app/actions/pinyin";
 
 type LexiconCollection = {
   title: string;
@@ -39,6 +43,9 @@ const LexiconPage = () => {
   const [isManualRunning, setIsManualRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedCollectionId, setSelectedCollectionId] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [pinyin, setPinyin] = useState("");
+  const [isLoadingPinyin, setIsLoadingPinyin] = useState(false);
 
   const getDefaultLexiconType = () => {
     for (const collection of lexiconCollection) {
@@ -162,6 +169,21 @@ const LexiconPage = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  const handleGetPinyin = async () => {
+    setModalOpen(true);
+    setIsLoadingPinyin(true);
+    try {
+      const word = shuffledList[currIdx];
+      if (!word) {
+        return;
+      }
+      const pinyinResult = await getPinyin(word);
+      setPinyin(pinyinResult);
+    } finally {
+      setIsLoadingPinyin(false);
+    }
+  };
+
   const handleManualStart = () => {
     if (selectedCollectionId === -1) {
       return;
@@ -238,9 +260,9 @@ const LexiconPage = () => {
                 elevation={3}
                 onClick={() => handleSelectCollection(item.id)}
                 sx={{
-                  background:
+                  outline:
                     item.id === selectedCollectionId
-                      ? "lightblue"
+                      ? "2px solid lightblue"
                       : "transparent",
                 }}
               >
@@ -366,18 +388,64 @@ const LexiconPage = () => {
               Shuffle
             </Button>
           )}
-          {isManualRunning && (
-            <Button
-              onClick={() => handleReadingWord(selectedCollectionType)}
-              size="large"
-              variant="contained"
-              startIcon={<VolumeUp />}
-            >
-              Read
-            </Button>
-          )}
+          {isManualRunning &&
+            selectedCollectionType === LexiconType.English && (
+              <Button
+                onClick={() => handleReadingWord(selectedCollectionType)}
+                size="large"
+                variant="contained"
+                startIcon={<VolumeUp />}
+              >
+                Read
+              </Button>
+            )}
+          {isManualRunning &&
+            selectedCollectionType === LexiconType.Chinese && (
+              <Button
+                onClick={() => handleGetPinyin()}
+                size="large"
+                variant="contained"
+                startIcon={<ClosedCaption />}
+              >
+                Pinyin
+              </Button>
+            )}
         </Box>
       </Box>
+      <Modal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setPinyin("");
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 200,
+            bgcolor: "white",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 4,
+            height: 200,
+          }}
+          className="text-center flex flex-col justify-center items-center"
+        >
+          {isLoadingPinyin ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Box>
+                <Typography className="text-[32px] font-bold">{pinyin}</Typography>
+              </Box>
+              <Box className="text-[48px] font-bold">{shuffledList[currIdx]}</Box>
+            </>
+          )}
+        </Box>
+      </Modal>
     </Container>
   );
 };

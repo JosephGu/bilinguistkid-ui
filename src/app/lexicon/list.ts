@@ -51,6 +51,12 @@ const lexiconList = [
   "draw a face",
   "a happy face",
   "I see a cute face.",
+  "family",
+  "me",
+  "mum",
+  "dad",
+  "sister",
+  "brother",
 ];
 
 const hanziList = [

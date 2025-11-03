@@ -26,9 +26,9 @@ function Navigation() {
         <Link color="inherit" href="/lexicon">
           <Button color="inherit">Lexicon Test</Button>
         </Link>
-        <Link color="inherit" href="/topicGen">
+        {/* <Link color="inherit" href="/topicGen">
           <Button color="inherit">Topic Generator</Button>
-        </Link>
+        </Link> */}
         <Link color="inherit  " href="/about">
           <Button color="inherit">About</Button>
         </Link>

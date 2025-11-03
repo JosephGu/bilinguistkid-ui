@@ -3,7 +3,6 @@
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import { sendVerificationCode } from "./emailer";
-// import cache from "@/app/lib/localCache";
 import { redis } from "@/app/lib/redis";
 import { AUTH_COOKIE_NAME, createJWT } from "@/lib/jwt";
 import { cookies } from "next/headers";
