@@ -21,10 +21,12 @@ import {
   ArrowBack,
   ArrowForward,
   ClosedCaption,
+  Add,
 } from "@mui/icons-material";
 import "./page.scss";
 import { LexiconType, lexiconCollection } from "./list";
 import { getPinyin } from "@/app/actions/pinyin";
+import { redirect } from "next/navigation";
 
 type LexiconCollection = {
   title: string;
@@ -145,6 +147,13 @@ const LexiconPage = () => {
   const handleRestore = () => {
     setIsRunning(true);
     setIsPaused(false);
+  };
+
+  const addNewCollection = () => {
+    // setSelectedCollectionId(-1);
+    // setSelectedCollectionType(getDefaultLexiconType());
+    // setModalOpen(true);
+    redirect("/lexiconEdit");
   };
 
   const handleSelectCollection = (id: number) => {
@@ -289,6 +298,22 @@ const LexiconPage = () => {
                 </Box>
               </Paper>
             ))}
+          {!isRunning && !isPaused && !isManualRunning && (
+            <Paper
+              key={-1}
+              className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+              elevation={3}
+              onClick={() => addNewCollection()}
+              sx={{
+                outline:
+                  -1 === selectedCollectionId
+                    ? "2px solid lightblue"
+                    : "transparent",
+              }}
+            >
+              <Add sx={{ fontSize: 48 }} />
+            </Paper>
+          )}
           <Typography
             sx={{
               fontSize: getFontSize(shuffledList[currIdx]),
@@ -425,12 +450,12 @@ const LexiconPage = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 200,
+            width: 500,
             bgcolor: "white",
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
-            height: 200,
+            height: 400,
           }}
           className="text-center flex flex-col justify-center items-center"
         >
@@ -439,9 +464,13 @@ const LexiconPage = () => {
           ) : (
             <>
               <Box>
-                <Typography className="text-[32px] font-bold">{pinyin}</Typography>
+                <Typography className="font-bold" sx={{fontSize: 56}}>
+                  {pinyin}
+                </Typography>
               </Box>
-              <Box className="text-[48px] font-bold">{shuffledList[currIdx]}</Box>
+              <Box className="font-bold" sx={{fontSize: 96}}>
+                {shuffledList[currIdx]}
+              </Box>
             </>
           )}
         </Box>

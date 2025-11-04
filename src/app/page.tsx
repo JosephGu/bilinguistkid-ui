@@ -60,13 +60,15 @@ function Home() {
         }}
         className="flex flex-col justify-center items-center"
       >
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1,}}>
           <Typography
             gutterBottom
-            color="text.primary"
             className="text-4xl font-bold align-middle"
+            sx={{
+              color: "white" ,fontSize: "2rem",fontWeight: "bold"
+            }}
           >
-            Explore, Learn, Grow In Two Languages!
+            Explore, Learn,<br /> Grow In Two Languages!
           </Typography>
         </Box>
         {/* <Box sx={{ flex: 1 }}>
@@ -101,7 +103,9 @@ function Home() {
           gap: "20px",
           flexDirection: "row",
           flexWrap: "wrap",
+          
         }}
+        className="mb-10"
       >
         {cardList.map((item) => (
           <Box sx={{ flex: 1 }} key={item.title}>
