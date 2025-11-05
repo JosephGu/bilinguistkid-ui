@@ -4,23 +4,45 @@ import {
   Box,
   Button,
   FormControlLabel,
-  Input,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { DeleteOutlined } from "@mui/icons-material";
-import { useState } from "react";
-import { LexiconType } from "../lexicon/list";
+import { useState, useEffect } from "react";
+import { LexiconType } from "@/generated/prisma/enums";
+import {
+  createLexicon,
+  loadLexicon,
+  updateLexicon,
+} from "@/app/actions/lexicon";
+import { useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const LexiconEdit = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(LexiconType.English);
-  const createNewLexicon = () => {};
+  const [selectedLanguage, setSelectedLanguage] = useState<LexiconType>(
+    LexiconType.English
+  );
   const [newLexicon, setNewLexicon] = useState("");
   const [lexiconList, setLexiconList] = useState<string[]>([]);
+  const [collectionName, setCollectionName] = useState("");
+  const searchParams = useSearchParams();
+  const editMode = searchParams.get("id") !== null;
+
+  useEffect(() => {
+    if (editMode) {
+      // fetch lexicon details
+      const getLexicon = async () => {
+        const lexicon = await loadLexicon(searchParams.get("id") as string);
+        setCollectionName(lexicon.title);
+        setSelectedLanguage(lexicon.type);
+        setLexiconList(lexicon.list);
+      };
+      getLexicon();
+    }
+  }, []);
+
   const addNexWord = () => {
     if (newLexicon === "") {
       return;
@@ -35,6 +57,23 @@ const LexiconEdit = () => {
     setLexiconList(lexiconList.filter((_, i) => i !== index));
   };
 
+  const handleLexiconSubmit = () => {
+    if (lexiconList.length === 0) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("type", selectedLanguage);
+    formData.append("title", collectionName);
+    formData.append("list", JSON.stringify(lexiconList));
+    if (editMode) {
+      // update lexicon
+      updateLexicon(searchParams.get("id") as string, formData);
+    } else {
+      // create lexicon    createLexicon(formData);
+      createLexicon(formData);
+    }
+  };
+
   return (
     <Box className="flex flex-col justify-center align-center p-10">
       <Box className="flex flex-row justify-center align-center p-10">
@@ -42,9 +81,15 @@ const LexiconEdit = () => {
           Create a new lexicon
         </Typography>
       </Box>
-      <Box className="flex flex-col justify-center items-center text-left" gap={2}>
+      <Box
+        className="flex flex-col justify-center items-center text-left"
+        gap={2}
+      >
         <Box className="flex flex-row justify-center items-center w-[500px]">
-          <Typography variant="body1" sx={{ fontWeight: "bold", marginRight:2}}>
+          <Typography
+            variant="body1"
+            sx={{ fontWeight: "bold", marginRight: 2 }}
+          >
             Select Language
           </Typography>
           <RadioGroup
@@ -65,7 +110,12 @@ const LexiconEdit = () => {
           </RadioGroup>
         </Box>
         <Box className="flex flex-col justify-center items-center w-[500px]">
-          <TextField placeholder="Enter lexicon name" className="w-full" />
+          <TextField
+            placeholder="Enter collection name"
+            className="w-full"
+            value={collectionName}
+            onChange={(e) => setCollectionName(e.target.value)}
+          />
         </Box>
 
         <Box className="flex flex-row justify-center items-center gap-2 w-[500px]">
@@ -122,8 +172,15 @@ const LexiconEdit = () => {
         </Box>
       </Box>
       <Box className="text-center mt-5">
-        <Button variant="contained" onClick={() => createNewLexicon()}>
-          Create
+        <Button
+          variant="contained"
+          onClick={() => handleLexiconSubmit()}
+          className="mr-10"
+        >
+          {editMode ? "Update" : "Create"}
+        </Button>
+        <Button variant="text" onClick={() => redirect("/lexicon")}>
+          Back
         </Button>
       </Box>
     </Box>

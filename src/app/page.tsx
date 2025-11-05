@@ -11,6 +11,7 @@ import {
   CardActions,
   Paper,
 } from "@mui/material";
+import Image from "next/image";
 
 function Home() {
   const cardList = [
@@ -34,68 +35,51 @@ function Home() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        maxWidth: "1280px",
+        margin: "0 auto",
         // margin: "20px",
       }}
     >
       <Box
         sx={{
           width: "100%",
-          // maxWidth: 1000,
-          // mx: "auto",
           fontSize: "2rem",
-          // my: 6,
           mb: 6,
           p: 4,
-          // borderRadius: 3,
           textAlign: "center",
-          height: "80vh",
-          // 柔和的绿色渐变背景色
-          // background: "linear-gradient(45deg, lightyellow 30%, lightblue 90%)",
-          // boxShadow: "0 8px 20px rgba(0, 0, 0, 0.06)", // 更柔和的阴影
-          backgroundImage: "url('/happy.png')",
-          backgroundSize: "contain",
-          // position: "relative",
+          // height: "80vh",
           overflow: "hidden",
           display: { xs: "none", md: "flex" },
+          position: "relative",
         }}
-        className="flex flex-col justify-center items-center"
+        className="flex flex-row justify-center items-center"
       >
-        <Box sx={{ flex: 1,}}>
+        <Box flex={1}>
           <Typography
             gutterBottom
             className="text-4xl font-bold align-middle"
             sx={{
-              color: "white" ,fontSize: "2rem",fontWeight: "bold"
+              color: "#FF8C00",
+              fontSize: "2rem",
+              fontWeight: "bold",
+              textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
             }}
           >
-            Explore, Learn,<br /> Grow In Two Languages!
+            Explore, Learn,
+            <br /> Grow In Two Languages!
           </Typography>
         </Box>
-        {/* <Box sx={{ flex: 1 }}>
-          <Typography
-            variant="body1"
-            paragraph
-            sx={{
-              maxWidth: 600,
-              mx: "auto",
-              mb: 3,
-            }}
-          >
-            This Website is for our beloved children who want to learn English.
-          </Typography>
-        </Box> */}
-        {/* <Link href="/funEarth">
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              color: "#FFFFFF", // 按钮文字保持白色
-            }}
-          >
-            {" "}
-            START EXPLORING NOW!
-          </Button>
-        </Link> */}
+        <Box flex={1} className="relative">
+          <Image
+            src="/great.png"
+            alt="Happy background image"
+            style={{ objectFit: "cover", border: "4px solid white" ,borderRadius: "50% / 30%"}}
+            priority={true}
+            className="w-full h-full"
+            width={1920}
+            height={1042}
+          />
+        </Box>
       </Box>
       <Box
         sx={{
@@ -103,101 +87,49 @@ function Home() {
           gap: "20px",
           flexDirection: "row",
           flexWrap: "wrap",
-          
         }}
         className="mb-10"
       >
         {cardList.map((item) => (
           <Box sx={{ flex: 1 }} key={item.title}>
             {/* <Paper> */}
-              <Card variant="elevation" sx={{ height: "100%" }}>
-                <CardMedia
-                  component="img"
-                  sx={{
-                    height: 100,
-                    width: 100,
-                    margin: "auto",
-                  }}
-                  image={item.image}
-                  alt={item.title}
-                />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    className="text-center"
-                  >
-                    {item.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "text.secondary", width: "300px" }}
-                    className="text-center"
-                  >
-                    {item.description}
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ justifyContent: "center" }}>
-                  <Link href={item.link}>
-                    <Button size="small">Explore</Button>
-                  </Link>
-                </CardActions>
-              </Card>
+            <Card variant="elevation" sx={{ height: "100%" }} elevation={3}>
+              <CardMedia
+                component="img"
+                sx={{
+                  height: 100,
+                  width: 100,
+                  margin: "auto",
+                }}
+                image={item.image}
+                alt={item.title}
+              />
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  className="text-center"
+                >
+                  {item.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "text.secondary", width: "300px" }}
+                  className="text-center"
+                >
+                  {item.description}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: "center" }}>
+                <Link href={item.link}>
+                  <Button size="small">Explore</Button>
+                </Link>
+              </CardActions>
+            </Card>
             {/* </Paper> */}
           </Box>
         ))}
-        {/* Fun Earth is a platform that helps children learn English with
-                fun facts from the globe.
-              </Typography>
-            </CardContent>
-            <CardActions sx={{ justifyContent: "center" }}>
-              <Link href="/funEarth">
-                <Button size="small">Explore</Button>
-              </Link>
-            </CardActions>
-          </Card>
-        </Box> */}
-        {/* <Box sx={{ flex: 1 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Topic Generator
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", width: "300px" }}
-              >
-                Topic Generator is a tool to generate new topic for 1 on 1 talk.
-              </Typography>
-            </CardContent>
-            <CardActions sx={{ justifyContent: "center" }}>
-              <Link href="/topicGen">
-                <Button size="small">Explore</Button>
-              </Link>
-            </CardActions>
-          </Card>
-        </Box> */}
-        {/* <Box sx={{ flex: 1 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lexicon Test
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "text.secondary", width: "300px" }}
-              >
-                  Lexicon Test is a tool to test children&apos;s vocabulary.
-              </Typography>
-            </CardContent>
-            <CardActions sx={{ justifyContent: "center" }}>
-              <Link href="/lexiconTest">
-                <Button size="small">Explore</Button>
-              </Link>
-            </CardActions>
-          </Card>
-        </Box> */}
       </Box>
     </Box>
   );

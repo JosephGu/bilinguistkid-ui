@@ -8,6 +8,11 @@ if (!secretKey) {
 
 const Algorithm = "HS256";
 
+export type JWT = {
+  email: string;
+  role: string;
+}
+
 export async function createJWT(email: string) {
   return new SignJWT({ email, role: "user" })
     .setProtectedHeader({ alg: Algorithm })
@@ -26,6 +31,12 @@ export async function verifyJWT(token: string) {
   } catch (error) {
     throw new Error("Invalid token", { cause: error });
   }
+}
+
+export async function getInfoFromJWT(token: string): Promise<JWT> {
+  const payload = await verifyJWT(token);
+  const { email, role } = payload as JWT;
+  return { email, role };
 }
 
 export const AUTH_COOKIE_NAME = "token";

@@ -1,6 +1,6 @@
 export enum LexiconType {
-  Chinese = "chinese",
-  English = "english",
+  Chinese = "Chinese",
+  English = "English",
 }
 
 const lexiconList = [

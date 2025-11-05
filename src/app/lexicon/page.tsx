@@ -22,32 +22,39 @@ import {
   ArrowForward,
   ClosedCaption,
   Add,
+  Delete,
+  Edit,
 } from "@mui/icons-material";
 import "./page.scss";
-import { LexiconType, lexiconCollection } from "./list";
+import { lexiconCollection } from "./list";
 import { getPinyin } from "@/app/actions/pinyin";
 import { redirect } from "next/navigation";
+import { loadLexiconCollection, deleteLexicon } from "@/app/actions/lexicon";
+import LoadingModal from "@/common/LoadingModal";
+import { LexiconType } from "@/generated/prisma/enums";
 
 type LexiconCollection = {
   title: string;
   list: string[];
-  id: number;
+  id: string;
   type: LexiconType;
 };
 
 const LexiconPage = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [currIdx, setCurrIdx] = useState(0);
-  const [shuffledList, setShuffledList] = useState<string[]>(
-    lexiconCollection[0].list
-  );
+  const [loadingCollection, setLoadingCollection] = useState(true);
+  const [shuffledList, setShuffledList] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [isManualRunning, setIsManualRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [selectedCollectionId, setSelectedCollectionId] = useState(0);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
   const [pinyin, setPinyin] = useState("");
   const [isLoadingPinyin, setIsLoadingPinyin] = useState(false);
+  const [lexiconCollection, setLexiconCollection] = useState<
+    LexiconCollection[]
+  >([]);
 
   const getDefaultLexiconType = () => {
     for (const collection of lexiconCollection) {
@@ -99,6 +106,17 @@ const LexiconPage = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isManualRunning, currIdx]);
+
+  useEffect(() => {
+    setLoadingCollection(true);
+    const initCollection = async () => {
+      const res = await loadLexiconCollection();
+      setLexiconCollection(res);
+      setLoadingCollection(false);
+      console.log(res);
+    };
+    initCollection();
+  }, []);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.code === "ArrowRight") {
@@ -156,7 +174,7 @@ const LexiconPage = () => {
     redirect("/lexiconEdit");
   };
 
-  const handleSelectCollection = (id: number) => {
+  const handleSelectCollection = (id: string) => {
     const selectedCollection = lexiconCollection.find((item) => item.id === id);
     if (selectedCollection) {
       setShuffledList(selectedCollection.list);
@@ -194,7 +212,7 @@ const LexiconPage = () => {
   };
 
   const handleManualStart = () => {
-    if (selectedCollectionId === -1) {
+    if (selectedCollectionId === "") {
       return;
     }
     setIsManualRunning(true);
@@ -221,6 +239,10 @@ const LexiconPage = () => {
   };
 
   const getFontSize = (word: string) => {
+    console.log("word: ", word);
+    if (!word) {
+      return initialFontSize;
+    }
     const size = word.length < 12 ? "large" : "small";
     switch (size) {
       case "large":
@@ -232,8 +254,27 @@ const LexiconPage = () => {
     }
   };
 
+  const handleDeleteCollection = async (id: string) => {
+    // await deleteLexicon(id);
+    try {
+      await deleteLexicon(id);
+      setLexiconCollection(lexiconCollection.filter((item) => item.id !== id));
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
+
+  const handleEditCollection = (item: LexiconCollection) => {
+    // setSelectedCollectionId(item.id);
+    // setSelectedCollectionType(item.type);
+    // setModalOpen(true);
+    redirect(`/lexiconEdit?id=${item.id}`);
+  };
+
   return (
     <Container sx={{ height: "100%", width: "100%", position: "relative" }}>
+      <LoadingModal open={loadingCollection}></LoadingModal>
+
       <Box className="w-full flex justify-center items-center h-full flex-col">
         <Box
           className="w-full flex justify-center items-center gap-4"
@@ -265,7 +306,7 @@ const LexiconPage = () => {
             lexiconCollection.map((item: LexiconCollection) => (
               <Paper
                 key={item.title}
-                className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+                className=" flex justify-between items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
                 elevation={3}
                 onClick={() => handleSelectCollection(item.id)}
                 sx={{
@@ -296,24 +337,41 @@ const LexiconPage = () => {
                     }
                   })}
                 </Box>
+                <Box
+                  sx={{
+                    display: selectedCollectionId === item.id ? "flex" : "none",
+                  }}
+                >
+                  <Button
+                    startIcon={<Delete />}
+                    onClick={() => handleDeleteCollection(item.id)}
+                  ></Button>
+                  <Button
+                    startIcon={<Edit />}
+                    onClick={() => handleEditCollection(item)}
+                  ></Button>
+                </Box>
               </Paper>
             ))}
-          {!isRunning && !isPaused && !isManualRunning && (
-            <Paper
-              key={-1}
-              className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
-              elevation={3}
-              onClick={() => addNewCollection()}
-              sx={{
-                outline:
-                  -1 === selectedCollectionId
-                    ? "2px solid lightblue"
-                    : "transparent",
-              }}
-            >
-              <Add sx={{ fontSize: 48 }} />
-            </Paper>
-          )}
+          {!isRunning &&
+            !isPaused &&
+            !isManualRunning &&
+            !loadingCollection && (
+              <Paper
+                key={-1}
+                className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+                elevation={3}
+                onClick={() => addNewCollection()}
+                sx={{
+                  outline:
+                    "" === selectedCollectionId
+                      ? "2px solid lightblue"
+                      : "transparent",
+                }}
+              >
+                <Add sx={{ fontSize: 48 }} />
+              </Paper>
+            )}
           <Typography
             sx={{
               fontSize: getFontSize(shuffledList[currIdx]),
@@ -464,11 +522,11 @@ const LexiconPage = () => {
           ) : (
             <>
               <Box>
-                <Typography className="font-bold" sx={{fontSize: 56}}>
+                <Typography className="font-bold" sx={{ fontSize: 56 }}>
                   {pinyin}
                 </Typography>
               </Box>
-              <Box className="font-bold" sx={{fontSize: 96}}>
+              <Box className="font-bold" sx={{ fontSize: 96 }}>
                 {shuffledList[currIdx]}
               </Box>
             </>
