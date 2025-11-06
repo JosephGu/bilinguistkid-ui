@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DeleteOutlined } from "@mui/icons-material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { LexiconType } from "@/generated/prisma/enums";
 import {
   createLexicon,
@@ -19,8 +19,9 @@ import {
 } from "@/app/actions/lexicon";
 import { useSearchParams } from "next/navigation";
 import { redirect } from "next/navigation";
+import LoadingModel from "@/common/LoadingModal";
 
-const LexiconEdit = () => {
+const LexiconEditComp = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<LexiconType>(
     LexiconType.English
   );
@@ -205,6 +206,14 @@ const LexiconEdit = () => {
         </Button>
       </Box>
     </Box>
+  );
+};
+
+const LexiconEdit = () => {
+  return (
+    <Suspense fallback={<LoadingModel open={true} />}>
+      <LexiconEditComp />
+    </Suspense>
   );
 };
 
