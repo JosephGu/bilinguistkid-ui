@@ -306,10 +306,11 @@ const LexiconPage = () => {
             lexiconCollection.map((item: LexiconCollection) => (
               <Paper
                 key={item.title}
-                className=" flex justify-between items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+                className="book-cover flex justify-between items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
                 elevation={3}
                 onClick={() => handleSelectCollection(item.id)}
                 sx={{
+                  background: "linear-gradient(135deg, #ff8c00, #fff)",
                   outline:
                     item.id === selectedCollectionId
                       ? "2px solid lightblue"
@@ -359,7 +360,7 @@ const LexiconPage = () => {
             !loadingCollection && (
               <Paper
                 key={-1}
-                className=" flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
+                className="book-cover flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
                 elevation={3}
                 onClick={() => addNewCollection()}
                 sx={{

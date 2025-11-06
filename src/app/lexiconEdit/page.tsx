@@ -43,21 +43,33 @@ const LexiconEdit = () => {
     }
   }, []);
 
-  const addNexWord = () => {
-    if (newLexicon === "") {
+  const addNewWord = () => {
+    const toBeAdded = newLexicon.trim();
+    if (toBeAdded === "") {
       return;
     }
-    if (lexiconList.includes(newLexicon)) {
+    if (lexiconList.includes(toBeAdded)) {
       return;
     }
-    setLexiconList([...lexiconList, newLexicon]);
+    if (toBeAdded.startsWith("[") && toBeAdded.endsWith("]")) {
+      try {
+        const toBeAddedList = toBeAdded.replace(/,\s*]/g, "]");
+        console.log("toBeAdded", toBeAdded);
+
+        setLexiconList([...lexiconList, ...JSON.parse(toBeAddedList)]);
+      } catch (e) {
+        console.error("Invalid JSON format", e);
+      }
+    } else {
+      setLexiconList([...lexiconList, toBeAdded]);
+    }
     setNewLexicon("");
   };
   const removeLexicon = (index: number) => {
     setLexiconList(lexiconList.filter((_, i) => i !== index));
   };
 
-  const handleLexiconSubmit = () => {
+  const handleLexiconSubmit = async () => {
     if (lexiconList.length === 0) {
       return;
     }
@@ -67,10 +79,19 @@ const LexiconEdit = () => {
     formData.append("list", JSON.stringify(lexiconList));
     if (editMode) {
       // update lexicon
-      updateLexicon(searchParams.get("id") as string, formData);
+      const res = await updateLexicon(
+        searchParams.get("id") as string,
+        formData
+      );
+      if (res?.success) {
+        redirect("/lexicon");
+      }
     } else {
       // create lexicon    createLexicon(formData);
-      createLexicon(formData);
+      const res = await createLexicon(formData);
+      if (res?.success) {
+        redirect("/lexicon");
+      }
     }
   };
 
@@ -127,7 +148,7 @@ const LexiconEdit = () => {
           />
           <Button
             variant="contained"
-            onClick={() => addNexWord()}
+            onClick={() => addNewWord()}
             disabled={newLexicon === ""}
             size="large"
           >
