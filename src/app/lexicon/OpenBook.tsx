@@ -10,6 +10,7 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  Alert,
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 
@@ -29,20 +30,26 @@ export default function OpenBook({
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [deleteName, setDeleteName] = React.useState("");
 
-  const handleClose = () => {
-    setDialogOpen(false);
+  const toggleDialogOpen = (open: boolean) => {
+    setDialogOpen(open);
   };
   const handleDelete = () => {
+    toggleDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    toggleDialogOpen(false);
+    setDeleteName("");
+  };
+
+  const handleDeleteConfirm = () => {
     if (deleteName !== name) {
       alert("Please Input Corrent Book Name");
       return;
     }
     onDelete(id);
-    handleClose();
+    toggleDialogOpen(false);
     setDeleteName("");
-  };
-  const handleEdit = () => {
-    console.log("编辑");
   };
 
   return (
@@ -58,10 +65,10 @@ export default function OpenBook({
       <Dialog open={dialogOpen} onClose={handleClose}>
         <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this book, input the book name to
-            confirm:
+          <DialogContentText sx={{ color: "text.primary" }}>
+            Are you sure you want to delete this book? confirm:
           </DialogContentText>
+
           <TextField
             autoFocus
             margin="dense"
@@ -73,10 +80,15 @@ export default function OpenBook({
             value={deleteName}
             onChange={(e) => setDeleteName(e.target.value)}
           />
+          <Typography variant="body2" sx={{ color: "text.primary" }}>
+            Please input <b>{name}</b> to confirm deletion.
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDelete} color="error">Delete</Button>
+          <Button onClick={handleDeleteConfirm} color="error">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
       <Box

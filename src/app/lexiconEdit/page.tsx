@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Alert,
   Box,
   Button,
   Chip,
@@ -11,7 +12,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { DeleteOutlined } from "@mui/icons-material";
 import { useState, useEffect, Suspense } from "react";
 import { LexiconType } from "@/generated/prisma/enums";
 import {
@@ -30,6 +30,8 @@ const LexiconEditComp = () => {
   const [newLexicon, setNewLexicon] = useState("");
   const [lexiconList, setLexiconList] = useState<string[]>([]);
   const [collectionName, setCollectionName] = useState("");
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [failedAlert, setFailedAlert] = useState(false);
   const searchParams = useSearchParams();
   const editMode = searchParams.get("id") !== null;
 
@@ -87,19 +89,32 @@ const LexiconEditComp = () => {
         formData
       );
       if (res?.success) {
-        redirect("/lexicon");
+        setSuccessAlert(true);
+        setTimeout(() => {
+          setSuccessAlert(false);
+          redirect("/lexicon");
+        }, 2000);
       }
     } else {
       // create lexicon    createLexicon(formData);
       const res = await createLexicon(formData);
       if (res?.success) {
-        redirect("/lexicon");
+        setSuccessAlert(true);
+        setTimeout(() => {
+          setSuccessAlert(false);
+          redirect("/lexicon");
+        }, 2000);
       }
     }
   };
 
   return (
     <Box className="flex flex-col justify-center align-center p-10">
+      {successAlert && (
+        <Alert severity="success" sx={{ width: "500px", position: "absolute", top: 0, left: 0 }}>
+          Lexicon {editMode ? "updated" : "created"} successfully!
+        </Alert>
+      )}
       <Box className="flex flex-row justify-center align-center p-10">
         <Typography variant="h4" sx={{ fontWeight: "bold" }}>
           Create a new lexicon
@@ -109,7 +124,7 @@ const LexiconEditComp = () => {
         className="flex flex-col justify-center items-center text-left"
         gap={2}
       >
-        <Box className="flex flex-row justify-center items-center w-[500px]">
+        <Box className="flex flex-row justify-center items-center sm:w-[300px] md:w-[500px] lg:w-[500px]">
           <Typography
             variant="body1"
             sx={{ fontWeight: "bold", marginRight: 2 }}
@@ -133,7 +148,7 @@ const LexiconEditComp = () => {
             />
           </RadioGroup>
         </Box>
-        <Box className="flex flex-col justify-center items-center w-[500px]">
+        <Box className="flex flex-col justify-center items-center sm:w-[300px] md:w-[500px] lg:w-[500px]">
           <TextField
             placeholder="Enter collection name"
             className="w-full"
@@ -142,7 +157,7 @@ const LexiconEditComp = () => {
           />
         </Box>
 
-        <Box className="flex flex-row justify-center items-center gap-2 w-[500px]">
+        <Box className="flex flex-row justify-center items-center gap-2 sm:w-[300px] md:w-[500px] lg:w-[500px]">
           <TextField
             placeholder="Enter lexicon"
             value={newLexicon}
@@ -161,38 +176,20 @@ const LexiconEditComp = () => {
         <Box className="flex flex-col justify-center align-center">
           <Typography
             variant="h5"
-            sx={{ fontWeight: "bold", textAlign: "center" }}
+            sx={{ fontWeight: "bold", textAlign: "center",marginBottom: 2 }}
           >
             Lexicon List
           </Typography>
           <Box className="flex flex-row justify-left align-center flex-wrap">
-            <Stack direction="row" alignItems="center" gap={2} maxWidth={1200} flexWrap="wrap" useFlexGap>
+            <Stack
+              direction="row"
+              alignItems="center"
+              gap={2}
+              maxWidth={1200}
+              flexWrap="wrap"
+              useFlexGap
+            >
               {lexiconList.map((item, index) => (
-                // <Box
-                //   key={item}
-                //   className="w-300px"
-                //   sx={{ display: "flex", alignItems: "center" }}
-                // >
-                //   <Typography
-                //     variant="body1"
-                //     sx={{
-                //       color: "text.secondary",
-                //       width: "240px",
-                //       textAlign: "left",
-                //       fontSize: "24px",
-                //     }}
-                //     className="text-center"
-                //   >
-                //     {index + 1}. {item}
-                //   </Typography>
-                //   <Button
-                //     variant="text"
-                //     onClick={() => removeLexicon(index)}
-                //     size="large"
-                //     startIcon={<DeleteOutlined />}
-                //   ></Button>
-                // </Box>
-
                 <Chip
                   label={item}
                   key={item}
@@ -205,7 +202,13 @@ const LexiconEditComp = () => {
           </Box>
         </Box>
       </Box>
-      <Box className="text-center mt-5">
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+        className="mt-5"
+      >
         <Button
           variant="contained"
           onClick={() => handleLexiconSubmit()}
@@ -213,10 +216,10 @@ const LexiconEditComp = () => {
         >
           {editMode ? "Update" : "Create"}
         </Button>
-        <Button variant="text" onClick={() => redirect("/lexicon")}>
+        <Button variant="outlined" onClick={() => redirect("/lexicon")}>
           Back
         </Button>
-      </Box>
+      </Stack>
     </Box>
   );
 };

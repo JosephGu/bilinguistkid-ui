@@ -63,9 +63,12 @@ const LexiconPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [pinyin, setPinyin] = useState("");
   const [isLoadingPinyin, setIsLoadingPinyin] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [lexiconCollection, setLexiconCollection] = useState<
     LexiconCollection[]
   >([]);
+  const [successAlert, setSuccessAlert] = useState(false);
 
   const getDefaultLexiconType = () => {
     for (const collection of lexiconCollection) {
@@ -75,8 +78,8 @@ const LexiconPage = () => {
     }
     return LexiconType.English;
   };
-  const [selectedCollectionType, setSelectedCollectionType] =
-    useState<LexiconType>(getDefaultLexiconType());
+  // const [selectedCollectionType, setSelectedCollectionType] =
+  //   useState<LexiconType>(getDefaultLexiconType());
 
   const listSize = shuffledList.length;
   const initialFontSize = 92;
@@ -141,6 +144,10 @@ const LexiconPage = () => {
   const collectionName = selectedCollectionId
     ? lexiconCollection.find((item) => item.id === selectedCollectionId)?.title
     : "";
+
+  const selectedCollectionType = lexiconCollection
+    ? lexiconCollection.find((item) => item.id === selectedCollectionId)?.type
+    : LexiconType.Chinese;
 
   useEffect(() => {
     setLoadingCollection(true);
@@ -217,7 +224,7 @@ const LexiconPage = () => {
       setIsRunning(false);
       setIsPaused(false);
       setSelectedCollectionId(id);
-      setSelectedCollectionType(selectedCollection.type);
+      // setSelectedCollectionType(selectedCollection.type);
     }
   };
 
@@ -290,27 +297,51 @@ const LexiconPage = () => {
   };
 
   const handleDeleteCollection = async (id: string) => {
-    // await deleteLexicon(id);
     try {
       await deleteLexicon(id);
       setLexiconCollection(lexiconCollection.filter((item) => item.id !== id));
+      setSuccessAlert(true);
+      setTimeout(() => {
+        setSuccessAlert(false);
+        handleBack();
+      }, 2000);
     } catch (err) {
       console.log("err: ", err);
     }
   };
 
   const handleEditCollection = (id: string) => {
-    // setSelectedCollectionId(item.id);
-    // setSelectedCollectionType(item.type);
-    // setModalOpen(true);
     redirect(`/lexiconEdit?id=${id}`);
+  };
+
+  const handleBack = () => {
+    setSelectedCollectionId("");
+    setShuffledList([]);
+    setCurrIdx(0);
+    setIsRunning(false);
+    setIsPaused(false);
+    setSelectedCollectionId("");
   };
 
   return (
     <Container sx={{ height: "100%", width: "100%", position: "relative" }}>
-      {/* <Book leftTitle="Left Page" rightTitle="Right Page" leftContent="Once upon a time, in a quiet village nestled among the hills..." rightContent="The villagers spoke of strange lights that appeared in the forest..." /> */}
+      {successAlert && (
+        <Alert
+          severity="success"
+          sx={{ width: "500px", position: "absolute", top: 0, left: 0 }}
+        >
+          Lexicon deleted!
+        </Alert>
+      )}
       <LoadingModal open={loadingCollection}></LoadingModal>
-
+      {showError && (
+        <Alert
+          severity="error"
+          sx={{ position: "absolute", top: 0, left: 0, width: "100%" }}
+        >
+          Server Error, please try again later.
+        </Alert>
+      )}
       <Box className="w-full flex justify-center items-center h-full flex-col">
         <Box
           className="w-full flex justify-center items-center gap-4"
@@ -355,56 +386,6 @@ const LexiconPage = () => {
                 onClick={(id) => handleSelectCollection(id)}
                 key={item.id}
               />
-              // <Paper
-              //   key={item.title}
-              //   className="book-cover flex justify-between items-center p-10  flex-col w-min-[400px] h-[300px] m-10 cursor-pointer"
-              //   elevation={3}
-              //   onClick={() => handleSelectCollection(item.id)}
-              //   sx={{
-              //     background: "linear-gradient(135deg, #fff, #f7f3e9)",
-              //     boxShadow: "0 6px 12px rgba(0,0,0,0.15)",
-              //     outline:
-              //       item.id === selectedCollectionId
-              //         ? "2px solid lightblue"
-              //         : "transparent",
-              //   }}
-              // >
-              //   <Box className="text-[24px] mb-5 font-bold">{item.title}</Box>
-              //   <Box
-              //     className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]"
-              //     sx={{
-              //       display: selectedCollectionId === item.id ? "flex" : "none",
-              //     }}
-              //   >
-              //     {shuffledList.map((word, index) => {
-              //       if (index < 5) {
-              //         return (
-              //           <Box key={word}>
-              //             {index + 1}. {word}
-              //           </Box>
-              //         );
-              //       } else if (index === 6) {
-              //         return <Box key="ellipsisNoRepeat">...</Box>;
-              //       } else {
-              //         return null;
-              //       }
-              //     })}
-              //   </Box>
-              //   <Box
-              //     sx={{
-              //       display: selectedCollectionId === item.id ? "flex" : "none",
-              //     }}
-              //   >
-              //     <Button
-              //       startIcon={<Delete />}
-              //       onClick={() => handleDeleteCollection(item.id)}
-              //     ></Button>
-              //     <Button
-              //       startIcon={<Edit />}
-              //       onClick={() => handleEditCollection(item)}
-              //     ></Button>
-              //   </Box>
-              // </Paper>
             ))}
           <Typography
             sx={{
@@ -425,22 +406,12 @@ const LexiconPage = () => {
         >
           {stage === Stage.SELECTED && (
             <Button
-              onClick={handleStart}
-              variant="contained"
-              size="large"
-              startIcon={<Flag />}
-            >
-              Start
-            </Button>
-          )}
-          {stage === Stage.SELECTED && (
-            <Button
               onClick={handleManualStart}
               variant="contained"
               size="large"
               startIcon={<Flag />}
             >
-              Manual
+              Start
             </Button>
           )}
           {stage === Stage.RUNNING && (
@@ -451,6 +422,16 @@ const LexiconPage = () => {
               startIcon={<Stop />}
             >
               Stop
+            </Button>
+          )}
+          {stage === Stage.SELECTED && (
+            <Button
+              onClick={handleBack}
+              variant="contained"
+              size="large"
+              startIcon={<Flag />}
+            >
+              Back
             </Button>
           )}
           {stage === Stage.UNSELECTED && (
