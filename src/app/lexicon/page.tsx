@@ -9,6 +9,7 @@ import {
   Paper,
   Modal,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -32,6 +33,16 @@ import { redirect } from "next/navigation";
 import { loadLexiconCollection, deleteLexicon } from "@/app/actions/lexicon";
 import LoadingModal from "@/common/LoadingModal";
 import { LexiconType } from "@/generated/prisma/enums";
+import OpenBook from "./OpenBook";
+import BookCover from "./BookCover";
+
+enum Stage {
+  UNSELECTED = "unselected",
+  SELECTED = "selected",
+  RUNNING = "running",
+  PAUSED = "paused",
+  FINISHED = "finished",
+}
 
 type LexiconCollection = {
   title: string;
@@ -72,6 +83,26 @@ const LexiconPage = () => {
 
   const isFinished = currIdx >= listSize;
 
+  const getCurrentStage = () => {
+    if (selectedCollectionId === "" && shuffledList.length === 0) {
+      console.log("unselected");
+      return Stage.UNSELECTED;
+    } else if (
+      selectedCollectionId !== "" &&
+      !isRunning &&
+      !isManualRunning &&
+      !isPaused
+    ) {
+      console.log("selected");
+      return Stage.SELECTED;
+    } else if (isRunning || isManualRunning || isPaused) {
+      console.log("running");
+      return Stage.RUNNING;
+    }
+  };
+
+  const stage = getCurrentStage();
+
   useEffect(() => {
     if (isRunning && !isFinished) {
       const word = shuffledList[currIdx] ? shuffledList[currIdx] : "";
@@ -106,6 +137,10 @@ const LexiconPage = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isManualRunning, currIdx]);
+
+  const collectionName = selectedCollectionId
+    ? lexiconCollection.find((item) => item.id === selectedCollectionId)?.title
+    : "";
 
   useEffect(() => {
     setLoadingCollection(true);
@@ -264,15 +299,16 @@ const LexiconPage = () => {
     }
   };
 
-  const handleEditCollection = (item: LexiconCollection) => {
+  const handleEditCollection = (id: string) => {
     // setSelectedCollectionId(item.id);
     // setSelectedCollectionType(item.type);
     // setModalOpen(true);
-    redirect(`/lexiconEdit?id=${item.id}`);
+    redirect(`/lexiconEdit?id=${id}`);
   };
 
   return (
     <Container sx={{ height: "100%", width: "100%", position: "relative" }}>
+      {/* <Book leftTitle="Left Page" rightTitle="Right Page" leftContent="Once upon a time, in a quiet village nestled among the hills..." rightContent="The villagers spoke of strange lights that appeared in the forest..." /> */}
       <LoadingModal open={loadingCollection}></LoadingModal>
 
       <Box className="w-full flex justify-center items-center h-full flex-col">
@@ -297,82 +333,79 @@ const LexiconPage = () => {
           )}
         </Box>
         <Box
-          className="w-full flex justify-center items-center h-full card-container"
+          className="w-full flex justify-center items-center h-full "
           sx={{ height: "60%" }}
         >
-          {!isRunning &&
-            !isPaused &&
-            !isManualRunning &&
+          {selectedCollectionId !== "" && !isManualRunning && !isRunning && (
+            <OpenBook
+              name={collectionName}
+              list={shuffledList}
+              id={selectedCollectionId}
+              onDelete={(id) => handleDeleteCollection(id)}
+              onEdit={(id) => {
+                handleEditCollection(id);
+              }}
+            />
+          )}
+          {stage === Stage.UNSELECTED &&
             lexiconCollection.map((item: LexiconCollection) => (
-              <Paper
-                key={item.title}
-                className="book-cover flex justify-between items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
-                elevation={3}
-                onClick={() => handleSelectCollection(item.id)}
-                sx={{
-                  background: "linear-gradient(135deg, #ff8c00, #fff)",
-                  outline:
-                    item.id === selectedCollectionId
-                      ? "2px solid lightblue"
-                      : "transparent",
-                }}
-              >
-                <Box className="text-[24px] mb-5 font-bold">{item.title}</Box>
-                <Box
-                  className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]"
-                  sx={{
-                    display: selectedCollectionId === item.id ? "flex" : "none",
-                  }}
-                >
-                  {shuffledList.map((word, index) => {
-                    if (index < 5) {
-                      return (
-                        <Box key={word}>
-                          {index + 1}. {word}
-                        </Box>
-                      );
-                    } else if (index === 6) {
-                      return <Box key="ellipsisNoRepeat">...</Box>;
-                    } else {
-                      return null;
-                    }
-                  })}
-                </Box>
-                <Box
-                  sx={{
-                    display: selectedCollectionId === item.id ? "flex" : "none",
-                  }}
-                >
-                  <Button
-                    startIcon={<Delete />}
-                    onClick={() => handleDeleteCollection(item.id)}
-                  ></Button>
-                  <Button
-                    startIcon={<Edit />}
-                    onClick={() => handleEditCollection(item)}
-                  ></Button>
-                </Box>
-              </Paper>
+              <BookCover
+                name={item.title}
+                id={item.id}
+                onClick={(id) => handleSelectCollection(id)}
+                key={item.id}
+              />
+              // <Paper
+              //   key={item.title}
+              //   className="book-cover flex justify-between items-center p-10  flex-col w-min-[400px] h-[300px] m-10 cursor-pointer"
+              //   elevation={3}
+              //   onClick={() => handleSelectCollection(item.id)}
+              //   sx={{
+              //     background: "linear-gradient(135deg, #fff, #f7f3e9)",
+              //     boxShadow: "0 6px 12px rgba(0,0,0,0.15)",
+              //     outline:
+              //       item.id === selectedCollectionId
+              //         ? "2px solid lightblue"
+              //         : "transparent",
+              //   }}
+              // >
+              //   <Box className="text-[24px] mb-5 font-bold">{item.title}</Box>
+              //   <Box
+              //     className="flex flex-col justify-center items-center gap-2 text-sm text-[16px]"
+              //     sx={{
+              //       display: selectedCollectionId === item.id ? "flex" : "none",
+              //     }}
+              //   >
+              //     {shuffledList.map((word, index) => {
+              //       if (index < 5) {
+              //         return (
+              //           <Box key={word}>
+              //             {index + 1}. {word}
+              //           </Box>
+              //         );
+              //       } else if (index === 6) {
+              //         return <Box key="ellipsisNoRepeat">...</Box>;
+              //       } else {
+              //         return null;
+              //       }
+              //     })}
+              //   </Box>
+              //   <Box
+              //     sx={{
+              //       display: selectedCollectionId === item.id ? "flex" : "none",
+              //     }}
+              //   >
+              //     <Button
+              //       startIcon={<Delete />}
+              //       onClick={() => handleDeleteCollection(item.id)}
+              //     ></Button>
+              //     <Button
+              //       startIcon={<Edit />}
+              //       onClick={() => handleEditCollection(item)}
+              //     ></Button>
+              //   </Box>
+              // </Paper>
             ))}
-          {!isRunning &&
-            !isPaused &&
-            !isManualRunning &&
-            !loadingCollection && (
-              <Paper
-                key={-1}
-                className="book-cover flex justify-center items-center p-10  flex-col w-[400px] h-[300px] m-10 cursor-pointer"
-                elevation={3}
-                onClick={() => addNewCollection()}
-                sx={{
-                  outline:
-                    "" === selectedCollectionId
-                      ? "2px solid lightblue"
-                      : "transparent",
-                }}
-              >
-                <Add sx={{ fontSize: 48 }} />
-              </Paper>
-            )}
           <Typography
             sx={{
               fontSize: getFontSize(shuffledList[currIdx]),
@@ -390,7 +423,7 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-start gap-4"
           sx={{ height: "30%" }}
         >
-          {!isRunning && !isPaused && !isManualRunning && (
+          {stage === Stage.SELECTED && (
             <Button
               onClick={handleStart}
               variant="contained"
@@ -400,7 +433,7 @@ const LexiconPage = () => {
               Start
             </Button>
           )}
-          {!isRunning && !isPaused && !isManualRunning && (
+          {stage === Stage.SELECTED && (
             <Button
               onClick={handleManualStart}
               variant="contained"
@@ -410,7 +443,7 @@ const LexiconPage = () => {
               Manual
             </Button>
           )}
-          {(isRunning || isManualRunning) && (
+          {stage === Stage.RUNNING && (
             <Button
               onClick={handleStop}
               variant="contained"
@@ -418,6 +451,16 @@ const LexiconPage = () => {
               startIcon={<Stop />}
             >
               Stop
+            </Button>
+          )}
+          {stage === Stage.UNSELECTED && (
+            <Button
+              onClick={addNewCollection}
+              variant="contained"
+              size="large"
+              startIcon={<Add />}
+            >
+              Add New Collection
             </Button>
           )}
 
@@ -462,7 +505,7 @@ const LexiconPage = () => {
               Restore
             </Button>
           )}
-          {!isRunning && !isPaused && !isManualRunning && (
+          {stage === Stage.SELECTED && (
             <Button
               onClick={() => shuffleCard(shuffledList)}
               variant="contained"

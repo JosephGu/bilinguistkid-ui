@@ -20,7 +20,7 @@ function Navigation() {
       >
         <Box className="logo">
           <Link href="/">
-            <Image src="/logo2.svg" alt="image" width={200} height={50} />
+            <Image src="/logo5.svg" alt="image" width={200} height={50} />
           </Link>
         </Box>
         <Box className="nav">

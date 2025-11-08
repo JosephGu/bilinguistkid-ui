@@ -3,9 +3,11 @@
 import {
   Box,
   Button,
+  Chip,
   FormControlLabel,
   Radio,
   RadioGroup,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -62,7 +64,7 @@ const LexiconEditComp = () => {
         console.error("Invalid JSON format", e);
       }
     } else {
-      setLexiconList([...lexiconList, toBeAdded]);
+      setLexiconList([toBeAdded, ...lexiconList]);
     }
     setNewLexicon("");
   };
@@ -122,12 +124,12 @@ const LexiconEditComp = () => {
             <FormControlLabel
               value={LexiconType.English}
               label="English"
-              control={<Radio />}
+              control={<Radio disabled={editMode} />}
             />
             <FormControlLabel
               value={LexiconType.Chinese}
               label="Chinese"
-              control={<Radio />}
+              control={<Radio disabled={editMode} />}
             />
           </RadioGroup>
         </Box>
@@ -164,32 +166,42 @@ const LexiconEditComp = () => {
             Lexicon List
           </Typography>
           <Box className="flex flex-row justify-left align-center flex-wrap">
-            {lexiconList.map((item, index) => (
-              <Box
-                key={item}
-                className="w-300px"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "text.secondary",
-                    width: "240px",
-                    textAlign: "left",
-                    fontSize: "24px",
-                  }}
-                  className="text-center"
-                >
-                  {index + 1}. {item}
-                </Typography>
-                <Button
-                  variant="text"
-                  onClick={() => removeLexicon(index)}
-                  size="large"
-                  startIcon={<DeleteOutlined />}
-                ></Button>
-              </Box>
-            ))}
+            <Stack direction="row" alignItems="center" gap={2} maxWidth={1200} flexWrap="wrap" useFlexGap>
+              {lexiconList.map((item, index) => (
+                // <Box
+                //   key={item}
+                //   className="w-300px"
+                //   sx={{ display: "flex", alignItems: "center" }}
+                // >
+                //   <Typography
+                //     variant="body1"
+                //     sx={{
+                //       color: "text.secondary",
+                //       width: "240px",
+                //       textAlign: "left",
+                //       fontSize: "24px",
+                //     }}
+                //     className="text-center"
+                //   >
+                //     {index + 1}. {item}
+                //   </Typography>
+                //   <Button
+                //     variant="text"
+                //     onClick={() => removeLexicon(index)}
+                //     size="large"
+                //     startIcon={<DeleteOutlined />}
+                //   ></Button>
+                // </Box>
+
+                <Chip
+                  label={item}
+                  key={item}
+                  color="primary"
+                  onDelete={() => removeLexicon(index)}
+                  className="mr-2"
+                />
+              ))}
+            </Stack>
           </Box>
         </Box>
       </Box>
