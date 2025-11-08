@@ -112,8 +112,8 @@ export default function OpenBook({
         <Paper
           elevation={4}
           sx={{
-            width: 300,
-            height: 400,
+            width: 250,
+            height: 300,
             padding: 3,
             background: "linear-gradient(135deg, #fffaf0, #f1e7d2)",
             borderRight: "1px solid #d4cbb7",
@@ -134,7 +134,7 @@ export default function OpenBook({
           {list &&
             list.map(
               (item, index) =>
-                index < 15 && (
+                index < 10 && (
                   <Box key={item}>
                     <Typography variant="body2">{item}</Typography>
                   </Box>
@@ -146,8 +146,8 @@ export default function OpenBook({
         <Paper
           elevation={4}
           sx={{
-            width: 300,
-            height: 400,
+            width: 250,
+            height: 300,
             padding: 3,
             background: "linear-gradient(135deg, #fffaf0, #f8eed8)",
             borderLeft: "1px solid #d4cbb7",
@@ -182,8 +182,8 @@ export default function OpenBook({
           {list &&
             list.map(
               (item, index) =>
-                index >= 15 &&
-                index < 30 && (
+                index >= 10 &&
+                index < 20 && (
                   <Box key={item}>
                     <Typography variant="body2">{item}</Typography>
                   </Box>
