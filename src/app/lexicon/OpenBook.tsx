@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Dialog,
-  Paper,
-  Typography,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-  Alert,
-} from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
+import { Box, Paper, Typography } from "@mui/material";
 
 export default function OpenBook({
   name,
@@ -27,31 +14,6 @@ export default function OpenBook({
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
 }) {
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [deleteName, setDeleteName] = React.useState("");
-
-  const toggleDialogOpen = (open: boolean) => {
-    setDialogOpen(open);
-  };
-  const handleDelete = () => {
-    toggleDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    toggleDialogOpen(false);
-    setDeleteName("");
-  };
-
-  const handleDeleteConfirm = () => {
-    if (deleteName !== name) {
-      alert("Please Input Corrent Book Name");
-      return;
-    }
-    onDelete(id);
-    toggleDialogOpen(false);
-    setDeleteName("");
-  };
-
   return (
     <Box
       sx={{
@@ -62,35 +24,6 @@ export default function OpenBook({
         padding: "60px 0",
       }}
     >
-      <Dialog open={dialogOpen} onClose={handleClose}>
-        <DialogTitle>Delete Confirmation</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ color: "text.primary" }}>
-            Are you sure you want to delete this book? confirm:
-          </DialogContentText>
-
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Book Name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={deleteName}
-            onChange={(e) => setDeleteName(e.target.value)}
-          />
-          <Typography variant="body2" sx={{ color: "text.primary" }}>
-            Please input <b>{name}</b> to confirm deletion.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeleteConfirm} color="error">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Box
         sx={{
           display: "flex",
@@ -108,6 +41,7 @@ export default function OpenBook({
             background: "linear-gradient(to bottom, #b7a48b, #d3c4a8)",
             zIndex: 2,
           }}
+          className="hidden md:block"
         />
         <Paper
           elevation={4}
@@ -160,13 +94,14 @@ export default function OpenBook({
             fontFamily: "'Merriweather', serif",
             lineHeight: 1.8,
           }}
+          className="hidden md:block"
         >
           <Typography
             variant="h6"
             gutterBottom
             sx={{ fontWeight: "bold", textAlign: "right" }}
           >
-            <Button
+            {/* <Button
               startIcon={<Delete />}
               onClick={() => {
                 handleDelete();
@@ -177,7 +112,7 @@ export default function OpenBook({
               onClick={() => {
                 onEdit(id);
               }}
-            ></Button>
+            ></Button> */}
           </Typography>
           {list &&
             list.map(

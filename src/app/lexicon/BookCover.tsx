@@ -16,15 +16,13 @@ export default function BookCover({ name, onClick, id }: BookCoverProps) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        // height: "100vh",
         cursor: "pointer",
-        // background: "linear-gradient(180deg, #f5f3ef, #eae6df)",
       }}
       onClick={() => onClick?.(id)}
     >
       <Box
         sx={{
-          perspective: "1000px",
+          perspective: "1800px",
         }}
       >
         <Paper

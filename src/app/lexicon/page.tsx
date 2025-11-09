@@ -1,15 +1,20 @@
 "use client";
 
 import {
-  LinearProgress,
   Typography,
   Box,
   Container,
   Button,
-  Paper,
   Modal,
   CircularProgress,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  IconButton,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -25,6 +30,12 @@ import {
   Add,
   Delete,
   Edit,
+  Camera,
+  VideocamOff,
+  Sort,
+  Videocam,
+  Analytics,
+  SelfImprovement,
 } from "@mui/icons-material";
 import "./page.scss";
 import { lexiconCollection } from "./list";
@@ -35,6 +46,7 @@ import LoadingModal from "@/common/LoadingModal";
 import { LexiconType } from "@/generated/prisma/enums";
 import OpenBook from "./OpenBook";
 import BookCover from "./BookCover";
+import Progress from "./Progress";
 
 enum Stage {
   UNSELECTED = "unselected",
@@ -68,18 +80,15 @@ const LexiconPage = () => {
   const [lexiconCollection, setLexiconCollection] = useState<
     LexiconCollection[]
   >([]);
-  const [successAlert, setSuccessAlert] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteName, setDeleteName] = useState("");
+  const [isSort, setIsSort] = useState(false);
+  const [cameraOn, setCameraOn] = useState(false);
 
-  const getDefaultLexiconType = () => {
-    for (const collection of lexiconCollection) {
-      if (collection.type === LexiconType.Chinese) {
-        return LexiconType.Chinese;
-      }
-    }
-    return LexiconType.English;
-  };
-  // const [selectedCollectionType, setSelectedCollectionType] =
-  //   useState<LexiconType>(getDefaultLexiconType());
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [isAnalytics, setIsAnalytics] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   const listSize = shuffledList.length;
   const initialFontSize = 92;
@@ -141,6 +150,54 @@ const LexiconPage = () => {
     };
   }, [isManualRunning, currIdx]);
 
+  useEffect(() => {
+    async function initCamera() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Camera not supported");
+        return;
+      }
+      if (cameraOn) {
+        const video = videoRef.current;
+        if (!video) {
+          return;
+        }
+        streamRef.current = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        video.srcObject = streamRef.current;
+        await video.play();
+      } else {
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach((track) => track.stop());
+          streamRef.current = null;
+        }
+        const video = videoRef.current;
+        if (video && video.srcObject) {
+          (video.srcObject as MediaStream)
+            .getTracks()
+            .forEach((track) => track.stop());
+          video.srcObject = null;
+        }
+      }
+    }
+    initCamera();
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+      const video = videoRef.current;
+      if (video && video.srcObject) {
+        const oldStream = video.srcObject as MediaStream;
+        if (oldStream) {
+          oldStream.getTracks().forEach((track) => track.stop());
+        }
+        streamRef.current = null;
+        video.srcObject = null;
+      }
+    };
+  }, [cameraOn]);
+
   const collectionName = selectedCollectionId
     ? lexiconCollection.find((item) => item.id === selectedCollectionId)?.title
     : "";
@@ -171,6 +228,27 @@ const LexiconPage = () => {
       }
     }
   };
+  const toggleDialogOpen = (open: boolean) => {
+    setDialogOpen(open);
+  };
+  const handleDelete = () => {
+    toggleDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    toggleDialogOpen(false);
+    setDeleteName("");
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteName !== collectionName) {
+      alert("Please Input Corrent Book Name");
+      return;
+    }
+    handleDeleteCollection(selectedCollectionId);
+    toggleDialogOpen(false);
+    setDeleteName("");
+  };
 
   const shuffleCard = (list: string[]) => {
     const tobeShuffled = [...list];
@@ -178,9 +256,7 @@ const LexiconPage = () => {
       const j = Math.floor(Math.random() * (i + 1));
       [tobeShuffled[i], tobeShuffled[j]] = [tobeShuffled[j], tobeShuffled[i]];
     }
-    setShuffledList(tobeShuffled);
-    setCurrIdx(0);
-    setIsPaused(false);
+    return tobeShuffled;
   };
 
   const handleStart = () => {
@@ -210,9 +286,6 @@ const LexiconPage = () => {
   };
 
   const addNewCollection = () => {
-    // setSelectedCollectionId(-1);
-    // setSelectedCollectionType(getDefaultLexiconType());
-    // setModalOpen(true);
     redirect("/lexiconEdit");
   };
 
@@ -224,7 +297,6 @@ const LexiconPage = () => {
       setIsRunning(false);
       setIsPaused(false);
       setSelectedCollectionId(id);
-      // setSelectedCollectionType(selectedCollection.type);
     }
   };
 
@@ -256,6 +328,13 @@ const LexiconPage = () => {
   const handleManualStart = () => {
     if (selectedCollectionId === "") {
       return;
+    }
+    if (shuffledList.length === 0) {
+      return;
+    } else {
+      if (!isSort) {
+        setShuffledList(shuffleCard(shuffledList));
+      }
     }
     setIsManualRunning(true);
     setCurrIdx(0);
@@ -325,15 +404,55 @@ const LexiconPage = () => {
 
   return (
     <Container sx={{ height: "100%", width: "100%", position: "relative" }}>
+      <video
+        ref={videoRef}
+        autoPlay
+        style={{
+          position: "absolute",
+          top: "10%",
+          left: 0,
+          width: "20%",
+          height: "20%",
+        }}
+      ></video>
       {successAlert && (
         <Alert
           severity="success"
-          sx={{ width: "500px", position: "absolute", top: 0, left: 0 }}
+          sx={{ width: "500px", position: "absolute", top: "10%", left: 0 }}
         >
           Lexicon deleted!
         </Alert>
       )}
       <LoadingModal open={loadingCollection}></LoadingModal>
+      <Dialog open={dialogOpen} onClose={handleClose}>
+        <DialogTitle>Delete Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ color: "text.primary" }}>
+            Are you sure you want to delete this book? confirm:
+          </DialogContentText>
+
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Book Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={deleteName}
+            onChange={(e) => setDeleteName(e.target.value)}
+          />
+          <Typography variant="body2" sx={{ color: "text.primary" }}>
+            Please input <b>{collectionName}</b> to confirm deletion.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDeleteConfirm} color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       {showError && (
         <Alert
           severity="error"
@@ -347,25 +466,62 @@ const LexiconPage = () => {
           className="w-full flex justify-center items-center gap-4"
           sx={{ height: "10%" }}
         >
-          {(isRunning || isPaused || isManualRunning) && (
-            <Box className="w-full flex justify-center items-center gap-4">
-              <Box className="flex-1"></Box>
-              <Box className="flex-[8]">
-                <LinearProgress
-                  sx={{ width: "100%", height: 10 }}
-                  variant="determinate"
-                  value={((currIdx + 1) / listSize) * 100}
-                />
+          {stage === Stage.RUNNING && (
+            <Progress currIdx={currIdx} total={listSize} />
+          )}
+
+          {stage === Stage.SELECTED && (
+            <Box className="flex flex-row justify-center items-center gap-4 w-full">
+              <Box className="flex-[2]"></Box>
+              <Box className="flex-[6]">
+                <IconButton
+                  color="primary"
+                  onClick={() => setCameraOn(!cameraOn)}
+                >
+                  {!cameraOn ? <VideocamOff /> : <Videocam />}
+                </IconButton>
+                <IconButton color="primary" onClick={() => setIsSort(!isSort)}>
+                  {!isSort ? <Casino /> : <Sort />}
+                </IconButton>
+                <IconButton
+                  color="primary"
+                  onClick={() => setIsAnalytics(!isAnalytics)}
+                >
+                  {isAnalytics ? <Analytics /> : <SelfImprovement />}
+                </IconButton>
               </Box>
-              <Box className="flex-1">
-                {currIdx + 1}/{listSize}
+              <Box className="flex-[2] flex justify-end items-center gap-4">
+                <IconButton onClick={handleDelete} color="error">
+                  <Delete />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleEditCollection(selectedCollectionId)}
+                  color="primary"
+                >
+                  <Edit />
+                </IconButton>
               </Box>
+            </Box>
+          )}
+
+          {stage === Stage.UNSELECTED && (
+            <Box className="flex flex-row justify-center items-center gap-4 w-full">
+              <Button
+                onClick={addNewCollection}
+                variant="outlined"
+                size="large"
+                startIcon={<Add />}
+              >
+                Add New Book
+              </Button>
             </Box>
           )}
         </Box>
         <Box
-          className="w-full flex justify-center items-center h-full "
-          sx={{ height: "60%" }}
+          className="w-full flex justify-center items-center h-full flex-wrap"
+          sx={{
+            height: "60%",
+          }}
         >
           {selectedCollectionId !== "" && !isManualRunning && !isRunning && (
             <OpenBook
@@ -421,7 +577,7 @@ const LexiconPage = () => {
               size="large"
               startIcon={<Stop />}
             >
-              Stop
+              Exit
             </Button>
           )}
           {stage === Stage.SELECTED && (
@@ -434,7 +590,7 @@ const LexiconPage = () => {
               Back
             </Button>
           )}
-          {stage === Stage.UNSELECTED && (
+          {/* {stage === Stage.UNSELECTED && (
             <Button
               onClick={addNewCollection}
               variant="contained"
@@ -443,7 +599,7 @@ const LexiconPage = () => {
             >
               Add New Collection
             </Button>
-          )}
+          )} */}
 
           {isManualRunning && (
             <Button
@@ -486,16 +642,16 @@ const LexiconPage = () => {
               Restore
             </Button>
           )}
-          {stage === Stage.SELECTED && (
+          {/* {stage === Stage.SELECTED && (
             <Button
-              onClick={() => shuffleCard(shuffledList)}
+              onClick={() => handleShuffleCard(shuffledList)}
               variant="contained"
               startIcon={<Casino />}
               size="large"
             >
               Shuffle
             </Button>
-          )}
+          )} */}
           {isManualRunning &&
             selectedCollectionType === LexiconType.English && (
               <Button

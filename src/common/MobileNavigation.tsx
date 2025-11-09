@@ -38,8 +38,13 @@ const MobileMenu = () => {
             onClick={toggleDrawer}
           >
             <MenuIcon />
-            <Image src="/logo3.svg" alt="image" width={120} height={30} />
           </IconButton>
+          <Image
+            src="/logo6.svg"
+            alt="image"
+            width={160}
+            height={40}
+          />
         </Toolbar>
         <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
           <List component="nav">
