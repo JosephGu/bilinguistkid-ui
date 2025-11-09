@@ -512,7 +512,7 @@ const LexiconPage = () => {
                 size="large"
                 startIcon={<Add />}
               >
-                Add New Book
+                Add New Collection
               </Button>
             </Box>
           )}
