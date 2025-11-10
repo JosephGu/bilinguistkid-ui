@@ -5,6 +5,7 @@ function LoginPage() {
   return (
     <>
       <Image
+        priority
         src="/bg2160.webp"
         alt="image"
         width={1920}

@@ -36,6 +36,8 @@ import {
   Videocam,
   Analytics,
   SelfImprovement,
+  Fullscreen,
+  FullscreenExit,
 } from "@mui/icons-material";
 import "./page.scss";
 import { lexiconCollection } from "./list";
@@ -47,6 +49,7 @@ import { LexiconType } from "@/generated/prisma/enums";
 import OpenBook from "./OpenBook";
 import BookCover from "./BookCover";
 import Progress from "./Progress";
+import LexiconReport from "./LexiconReport";
 
 enum Stage {
   UNSELECTED = "unselected",
@@ -84,11 +87,14 @@ const LexiconPage = () => {
   const [deleteName, setDeleteName] = useState("");
   const [isSort, setIsSort] = useState(false);
   const [cameraOn, setCameraOn] = useState(false);
+  const [reportOpen, setReportOpen] = useState(false);
+  const [fullScreen, setFullScreen] = useState(false);
 
   const [successAlert, setSuccessAlert] = useState(false);
   const [isAnalytics, setIsAnalytics] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const [reportList, setReportList] = useState<string[] | []>([]);
 
   const listSize = shuffledList.length;
   const initialFontSize = 92;
@@ -114,6 +120,14 @@ const LexiconPage = () => {
   };
 
   const stage = getCurrentStage();
+
+  useEffect(() => {
+    if (fullScreen) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, [fullScreen]);
 
   useEffect(() => {
     if (isRunning && !isFinished) {
@@ -209,10 +223,20 @@ const LexiconPage = () => {
   useEffect(() => {
     setLoadingCollection(true);
     const initCollection = async () => {
-      const res = await loadLexiconCollection();
-      setLexiconCollection(res);
-      setLoadingCollection(false);
-      console.log(res);
+      try {
+        const res = await loadLexiconCollection();
+        setLexiconCollection(res);
+      } catch (err) {
+        if (err instanceof Error) {
+          if (err.message === "NO_TOKEN" || err.message === "NO_EMAIL") {
+            redirect("/login");
+          } else {
+            setShowError(true);
+          }
+        }
+      } finally {
+        setLoadingCollection(false);
+      }
     };
     initCollection();
   }, []);
@@ -268,6 +292,15 @@ const LexiconPage = () => {
     setIsPaused(false);
   };
 
+  const handleReportOpen = () => {
+    setReportOpen(true);
+  };
+
+  const handelReportClose = () => {
+    setReportList([]);
+    setReportOpen(false);
+  };
+
   const handleStop = () => {
     setIsRunning(false);
     setIsManualRunning(false);
@@ -319,6 +352,7 @@ const LexiconPage = () => {
         return;
       }
       const pinyinResult = await getPinyin(word);
+      setReportList([...reportList, word]);
       setPinyin(pinyinResult);
     } finally {
       setIsLoadingPinyin(false);
@@ -346,6 +380,9 @@ const LexiconPage = () => {
         const nextIdx = prevIdx + 1;
         if (nextIdx >= listSize) {
           setIsManualRunning(false);
+          if (isAnalytics) {
+            handleReportOpen();
+          }
           return prevIdx;
         }
         return nextIdx;
@@ -424,6 +461,15 @@ const LexiconPage = () => {
         </Alert>
       )}
       <LoadingModal open={loadingCollection}></LoadingModal>
+      <Dialog open={reportOpen} onClose={handelReportClose}>
+        <DialogTitle> Lexicon Report</DialogTitle>
+        <DialogContent>
+          <LexiconReport helpedList={reportList} originalList={shuffledList} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handelReportClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
       <Dialog open={dialogOpen} onClose={handleClose}>
         <DialogTitle>Delete Confirmation</DialogTitle>
         <DialogContent>
@@ -480,6 +526,12 @@ const LexiconPage = () => {
                 >
                   {!cameraOn ? <VideocamOff /> : <Videocam />}
                 </IconButton>
+                {document.fullscreenEnabled && <IconButton
+                  color="primary"
+                  onClick={() => setFullScreen(!fullScreen)}
+                >
+                  {!fullScreen ? <Fullscreen /> : <FullscreenExit />}
+                </IconButton>}
                 <IconButton color="primary" onClick={() => setIsSort(!isSort)}>
                   {!isSort ? <Casino /> : <Sort />}
                 </IconButton>
@@ -491,7 +543,7 @@ const LexiconPage = () => {
                 </IconButton>
               </Box>
               <Box className="flex-[2] flex justify-end items-center gap-4">
-                <IconButton onClick={handleDelete} color="error">
+                <IconButton onClick={handleDelete} color="primary">
                   <Delete />
                 </IconButton>
                 <IconButton
@@ -504,7 +556,7 @@ const LexiconPage = () => {
             </Box>
           )}
 
-          {stage === Stage.UNSELECTED && (
+          {stage === Stage.UNSELECTED && !loadingCollection && (
             <Box className="flex flex-row justify-center items-center gap-4 w-full">
               <Button
                 onClick={addNewCollection}
@@ -590,17 +642,6 @@ const LexiconPage = () => {
               Back
             </Button>
           )}
-          {/* {stage === Stage.UNSELECTED && (
-            <Button
-              onClick={addNewCollection}
-              variant="contained"
-              size="large"
-              startIcon={<Add />}
-            >
-              Add New Collection
-            </Button>
-          )} */}
-
           {isManualRunning && (
             <Button
               onClick={handlePrevious}
@@ -608,7 +649,6 @@ const LexiconPage = () => {
               size="large"
               startIcon={<ArrowBack />}
             >
-              {" "}
               Last
             </Button>
           )}
@@ -619,7 +659,7 @@ const LexiconPage = () => {
               size="large"
               startIcon={<ArrowForward />}
             >
-              Next
+              {currIdx === shuffledList.length - 1 ? "Finish" : "Next"}
             </Button>
           )}
           {isRunning && !isPaused && !isManualRunning && (
@@ -642,16 +682,6 @@ const LexiconPage = () => {
               Restore
             </Button>
           )}
-          {/* {stage === Stage.SELECTED && (
-            <Button
-              onClick={() => handleShuffleCard(shuffledList)}
-              variant="contained"
-              startIcon={<Casino />}
-              size="large"
-            >
-              Shuffle
-            </Button>
-          )} */}
           {isManualRunning &&
             selectedCollectionType === LexiconType.English && (
               <Button
@@ -671,7 +701,7 @@ const LexiconPage = () => {
                 variant="contained"
                 startIcon={<ClosedCaption />}
               >
-                Pinyin
+                Help
               </Button>
             )}
         </Box>
@@ -689,25 +719,24 @@ const LexiconPage = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 500,
             bgcolor: "white",
             border: "2px solid #000",
             boxShadow: 24,
             p: 4,
-            height: 400,
           }}
-          className="text-center flex flex-col justify-center items-center"
+          className="text-center flex flex-col justify-center items-center w-[300px] sm:w-[400px] md:w-[500px] lg:w-[500px]
+          h-[300px] sm:!h-[400px] md:h-[500px] lg:h-[500px]"
         >
           {isLoadingPinyin ? (
             <CircularProgress />
           ) : (
             <>
               <Box>
-                <Typography className="font-bold" sx={{ fontSize: 56 }}>
+                <Typography className="font-bold text-[32px] sm:!text-[32px] md:!text-[48px] lg:!text-[56px]">
                   {pinyin}
                 </Typography>
               </Box>
-              <Box className="font-bold" sx={{ fontSize: 96 }}>
+              <Box className="font-bold text-[72px] sm:text-[72px] md:text-[88px] lg:text-[96px]">
                 {shuffledList[currIdx]}
               </Box>
             </>

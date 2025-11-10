@@ -14,12 +14,12 @@ const createLexicon = async (formData: FormData) => {
   const cookieStore = await cookies();
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   if (!token) {
-    throw new Error("No token found");
+    throw new Error("NO_TOKEN");
   }
   const { email } = await getInfoFromJWT(token);
   console.log("email: ", email);
   if (!email) {
-    throw new Error("No email found");
+    throw new Error("NO_EMAIL");
   }
   try {
     const res = await prisma.lexiconCollection.create({
@@ -34,13 +34,6 @@ const createLexicon = async (formData: FormData) => {
   } catch (err) {
     console.log("err: ", err);
   }
-
-  //   return await prisma.lexiconCollection.create({
-  //     data: {
-  //       title,
-  //       list: JSON.parse(list),
-  //     },
-  //   });
 };
 
 const loadLexiconCollection = async () => {
@@ -48,12 +41,12 @@ const loadLexiconCollection = async () => {
   const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   console.log("token: ", token, !token);
   if (!token) {
-    throw new Error("No token found");
+    throw new Error("NO_TOKEN");
   }
   const { email } = await getInfoFromJWT(token);
   console.log("email: ", email);
   if (!email) {
-    throw new Error("No email found");
+    throw new Error("NO_EMAIL");
   }
   const res: LexiconCollection[] = await prisma.lexiconCollection.findMany({
     where: {
