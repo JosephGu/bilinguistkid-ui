@@ -122,11 +122,20 @@ const LexiconPage = () => {
   const stage = getCurrentStage();
 
   useEffect(() => {
-    if (fullScreen) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
+    const fullScreenHandler = async () => {
+      if (fullScreen) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        if (document.fullscreenElement) {
+          try {
+            await document.exitFullscreen();
+          } catch (err) {
+            console.error("Exit fullscreen failed:", err);
+          }
+        }
+      }
+    };
+    fullScreenHandler();
   }, [fullScreen]);
 
   useEffect(() => {
@@ -526,12 +535,14 @@ const LexiconPage = () => {
                 >
                   {!cameraOn ? <VideocamOff /> : <Videocam />}
                 </IconButton>
-                {document.fullscreenEnabled && <IconButton
-                  color="primary"
-                  onClick={() => setFullScreen(!fullScreen)}
-                >
-                  {!fullScreen ? <Fullscreen /> : <FullscreenExit />}
-                </IconButton>}
+                {document.fullscreenEnabled && (
+                  <IconButton
+                    color="primary"
+                    onClick={() => setFullScreen(!fullScreen)}
+                  >
+                    {!fullScreen ? <Fullscreen /> : <FullscreenExit />}
+                  </IconButton>
+                )}
                 <IconButton color="primary" onClick={() => setIsSort(!isSort)}>
                   {!isSort ? <Casino /> : <Sort />}
                 </IconButton>
