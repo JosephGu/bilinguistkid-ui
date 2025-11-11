@@ -743,7 +743,7 @@ const LexiconPage = () => {
           ) : (
             <>
               <Box>
-                <Typography className="font-bold text-[32px] sm:!text-[32px] md:!text-[48px] lg:!text-[56px]">
+                <Typography className="font-bold !text-[32px] sm:!text-[32px] md:!text-[48px] lg:!text-[56px]">
                   {pinyin}
                 </Typography>
               </Box>
