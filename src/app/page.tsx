@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
-
 function Home() {
   const cardList = [
     {
@@ -72,8 +71,8 @@ function Home() {
                 textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
               }}
             >
-              Explore, Learn,
-              <br /> Grow In Two Languages!
+              Language is a skill <br />
+              to acquire and express.
             </Typography>
           </Box>
           <Box flex={1} className="relative">
@@ -143,7 +142,7 @@ function Home() {
           ))}
         </Box>
       </Box>
-      <footer >
+      <footer>
         <Typography
           sx={{
             color: "#ccc",
