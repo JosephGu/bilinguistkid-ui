@@ -35,7 +35,6 @@ const RotatingEarth = () => {
 
       const funFactRes = await getFunFact(countryName, age, gender);
       setFunFact(funFactRes.data.message);
-      // setFunFactAudio(funFactRes.data.audio);
       if(funFactRes.data.message){
        const funFactAudioRes = await getFunFactAudio(funFactRes.data.message);
        setFunFactAudio(funFactAudioRes.data.audio);

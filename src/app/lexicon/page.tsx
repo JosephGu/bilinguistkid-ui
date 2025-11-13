@@ -30,7 +30,6 @@ import {
   Add,
   Delete,
   Edit,
-  Camera,
   VideocamOff,
   Sort,
   Videocam,
@@ -38,6 +37,7 @@ import {
   SelfImprovement,
   Fullscreen,
   FullscreenExit,
+  VoiceChat,
 } from "@mui/icons-material";
 import "./page.scss";
 import { lexiconCollection } from "./list";
@@ -292,6 +292,10 @@ const LexiconPage = () => {
     return tobeShuffled;
   };
 
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const supportSpeechRecognition = SpeechRecognition !== undefined;
+
   const handleStart = () => {
     if (isRunning) {
       return;
@@ -325,6 +329,40 @@ const LexiconPage = () => {
   const handleRestore = () => {
     setIsRunning(true);
     setIsPaused(false);
+  };
+
+  const handleVoice = () => {
+    console.log("handleVoice");
+    if (!supportSpeechRecognition) {
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang =
+      selectedCollectionType === LexiconType.Chinese ? "zh-CN" : "en-US";
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.onstart = () => {
+      console.log("start recognition");
+    };
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[0][0].transcript.toLowerCase();
+      const confidence = event.results[0][0].confidence;
+
+      console.log("recognition result:", transcript);
+      console.log("confidence:", confidence);
+
+      if (transcript.includes("abc is efg")) {
+        console.log("✅ recognition result includes 'abc is efg'");
+        alert("recognition result includes 'abc is efg'");
+      } else {
+        console.log("❌ recognition result does not include 'abc is efg'");
+      }
+    };
+
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.log("recognition error:", event.error);
+    };
+    recognition.start();
   };
 
   const addNewCollection = () => {
@@ -704,6 +742,17 @@ const LexiconPage = () => {
                 Read
               </Button>
             )}
+          {isManualRunning && supportSpeechRecognition && (
+            <Button
+              onMouseDown={() => handleVoice()}
+              onTouchStart={() => handleVoice()}
+              size="large"
+              variant="contained"
+              startIcon={<VoiceChat />}
+            >
+              Read
+            </Button>
+          )}
           {isManualRunning &&
             selectedCollectionType === LexiconType.Chinese && (
               <Button

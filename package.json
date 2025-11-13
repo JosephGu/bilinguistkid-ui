@@ -25,6 +25,7 @@
     "@types/d3-selection": "^3.0.11",
     "@types/d3-timer": "^3.0.2",
     "@types/d3-zoom": "^3.0.8",
+    "@types/dom-speech-recognition": "^0.0.7",
     "bcryptjs": "^3.0.2",
     "crypto": "^1.0.1",
     "d3-drag": "^3.0.0",
