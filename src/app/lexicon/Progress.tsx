@@ -1,9 +1,20 @@
-import { Box, LinearProgress } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { Box, IconButton, LinearProgress } from "@mui/material";
 
-const Progress = ({ currIdx, total }: { currIdx: number; total: number }) => {
+const Progress = ({
+  currIdx,
+  total,
+  onExitTest,
+}: {
+  currIdx: number;
+  total: number;
+  onExitTest: () => void;
+}) => {
   return (
     <Box className="w-full flex justify-center items-center gap-4">
-      <Box className="flex-1"></Box>
+      <Box className="flex-1">
+        {currIdx + 1}/{total}
+      </Box>
       <Box className="flex-[8]">
         <LinearProgress
           sx={{ width: "100%", height: 10 }}
@@ -12,7 +23,9 @@ const Progress = ({ currIdx, total }: { currIdx: number; total: number }) => {
         />
       </Box>
       <Box className="flex-1">
-        {currIdx + 1}/{total}
+        <IconButton onClick={() => onExitTest()}>
+          <Close />
+        </IconButton>
       </Box>
     </Box>
   );

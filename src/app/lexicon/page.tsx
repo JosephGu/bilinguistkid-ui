@@ -331,40 +331,6 @@ const LexiconPage = () => {
     setIsPaused(false);
   };
 
-  const handleVoice = () => {
-    console.log("handleVoice");
-    if (!supportSpeechRecognition) {
-      return;
-    }
-    const recognition = new SpeechRecognition();
-    recognition.lang =
-      selectedCollectionType === LexiconType.Chinese ? "zh-CN" : "en-US";
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.onstart = () => {
-      console.log("start recognition");
-    };
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const transcript = event.results[0][0].transcript.toLowerCase();
-      const confidence = event.results[0][0].confidence;
-
-      console.log("recognition result:", transcript);
-      console.log("confidence:", confidence);
-
-      if (transcript.includes("abc is efg")) {
-        console.log("✅ recognition result includes 'abc is efg'");
-        alert("recognition result includes 'abc is efg'");
-      } else {
-        console.log("❌ recognition result does not include 'abc is efg'");
-      }
-    };
-
-    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-      console.log("recognition error:", event.error);
-    };
-    recognition.start();
-  };
-
   const addNewCollection = () => {
     redirect("/lexiconEdit");
   };
@@ -560,7 +526,11 @@ const LexiconPage = () => {
           sx={{ height: "10%" }}
         >
           {stage === Stage.RUNNING && (
-            <Progress currIdx={currIdx} total={listSize} />
+            <Progress
+              currIdx={currIdx}
+              total={listSize}
+              onExitTest={() => handleStop()}
+            />
           )}
 
           {stage === Stage.SELECTED && (
@@ -629,10 +599,7 @@ const LexiconPage = () => {
               name={collectionName}
               list={shuffledList}
               id={selectedCollectionId}
-              onDelete={(id) => handleDeleteCollection(id)}
-              onEdit={(id) => {
-                handleEditCollection(id);
-              }}
+              onCloseBook={() => handleBack()}
             />
           )}
           {stage === Stage.UNSELECTED &&
@@ -671,7 +638,7 @@ const LexiconPage = () => {
               Start
             </Button>
           )}
-          {stage === Stage.RUNNING && (
+          {/* {stage === Stage.RUNNING && (
             <Button
               onClick={handleStop}
               variant="contained"
@@ -680,8 +647,8 @@ const LexiconPage = () => {
             >
               Exit
             </Button>
-          )}
-          {stage === Stage.SELECTED && (
+          )} */}
+          {/* {stage === Stage.SELECTED && (
             <Button
               onClick={handleBack}
               variant="contained"
@@ -690,7 +657,7 @@ const LexiconPage = () => {
             >
               Back
             </Button>
-          )}
+          )} */}
           {isManualRunning && (
             <Button
               onClick={handlePrevious}
@@ -701,6 +668,28 @@ const LexiconPage = () => {
               Last
             </Button>
           )}
+          {isManualRunning &&
+            selectedCollectionType === LexiconType.English && (
+              <Button
+                onClick={() => handleReadingWord(selectedCollectionType)}
+                size="large"
+                variant="contained"
+                startIcon={<VolumeUp />}
+              >
+                Read
+              </Button>
+            )}
+          {isManualRunning &&
+            selectedCollectionType === LexiconType.Chinese && (
+              <Button
+                onClick={() => handleGetPinyin()}
+                size="large"
+                variant="contained"
+                startIcon={<ClosedCaption />}
+              >
+                Help
+              </Button>
+            )}
           {isManualRunning && (
             <Button
               onClick={handleNext}
@@ -731,39 +720,6 @@ const LexiconPage = () => {
               Restore
             </Button>
           )}
-          {isManualRunning &&
-            selectedCollectionType === LexiconType.English && (
-              <Button
-                onClick={() => handleReadingWord(selectedCollectionType)}
-                size="large"
-                variant="contained"
-                startIcon={<VolumeUp />}
-              >
-                Read
-              </Button>
-            )}
-          {isManualRunning && supportSpeechRecognition && (
-            <Button
-              onMouseDown={() => handleVoice()}
-              onTouchStart={() => handleVoice()}
-              size="large"
-              variant="contained"
-              startIcon={<VoiceChat />}
-            >
-              Read
-            </Button>
-          )}
-          {isManualRunning &&
-            selectedCollectionType === LexiconType.Chinese && (
-              <Button
-                onClick={() => handleGetPinyin()}
-                size="large"
-                variant="contained"
-                startIcon={<ClosedCaption />}
-              >
-                Help
-              </Button>
-            )}
         </Box>
       </Box>
       <Modal

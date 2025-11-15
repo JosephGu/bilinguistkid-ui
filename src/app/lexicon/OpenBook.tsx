@@ -1,18 +1,17 @@
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, IconButton, Paper, Typography } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 export default function OpenBook({
   name,
   list,
-  onDelete,
-  onEdit,
   id,
+  onCloseBook,
 }: {
   name: string | undefined;
   list: string[];
   id: string;
-  onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
+  onCloseBook: () => void;
 }) {
   return (
     <Box
@@ -106,13 +105,19 @@ export default function OpenBook({
               onClick={() => {
                 handleDelete();
               }}
-            ></Button>
-            <Button
-              startIcon={<Edit />}
-              onClick={() => {
-                onEdit(id);
-              }}
             ></Button> */}
+            <IconButton
+              sx={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+              }}
+              onClick={() => {
+                onCloseBook();
+              }}
+            >
+              <Close />
+            </IconButton>
           </Typography>
           {list &&
             list.map(
