@@ -4,8 +4,10 @@ import { Box, TextField, Dialog, Tab, Tabs, Button } from "@mui/material";
 import { useState } from "react";
 import { redirect, RedirectType } from "next/navigation";
 import { login, register, getVCode } from "@/app/actions/user";
+import {useTranslations} from 'next-intl';
 
 function LoginModal() {
+   const t = useTranslations('LoginModal');
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -106,8 +108,8 @@ function LoginModal() {
     <Dialog open fullWidth>
       <Box sx={{ width: "100%" }}>
         <Tabs onChange={handleChange} value={tabIndex}>
-          <Tab label="Sign In" value={0}></Tab>
-          <Tab label="Sign Up" value={1}></Tab>
+          <Tab label={t('SignIn')} value={0}></Tab>
+          <Tab label={t('SignUp')} value={1}></Tab>
         </Tabs>
       </Box>
 

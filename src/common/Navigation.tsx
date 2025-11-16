@@ -1,11 +1,13 @@
 "use client";
 
-import { Button, Box } from "@mui/material";
+import { Button, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import Image from "next/image";
 import "./navigation.scss";
 import Link from "next/link";
+import { AccountCircle, Translate } from "@mui/icons-material";
 
 function Navigation() {
+
   return (
     <Box className="navigation p-2 pl-5 pr-5">
       <Box
@@ -35,16 +37,15 @@ function Navigation() {
           <Link color="inherit" href="/lexicon">
             <Button color="inherit">Lexicon Test</Button>
           </Link>
-          {/* <Link color="inherit" href="/topicGen">
-          <Button color="inherit">Topic Generator</Button>
-        </Link> */}
           <Link color="inherit  " href="/about">
             <Button color="inherit">About</Button>
           </Link>
+          <Link color="inherit  " href="/about">
+            <IconButton color="inherit">
+              <AccountCircle />
+            </IconButton>           
+          </Link>
         </Box>
-        {/* <Button color="inherit">
-          <Face4 />
-        </Button> */}
       </Box>
     </Box>
   );

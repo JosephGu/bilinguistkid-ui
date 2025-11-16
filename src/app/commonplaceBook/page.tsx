@@ -25,7 +25,7 @@ interface Quote {
 }
 
 export default function CommonplaceBook() {
-  const [quote, setQuote] = useState<JSONContent>({});
+//   const [quote, setQuote] = useState<JSONContent>({});
   const [quotes, setQuotes] = useState<Quote[]>([]);
 
   const addQuote = () => {
@@ -35,7 +35,8 @@ export default function CommonplaceBook() {
     console.log("rich text content:", content);
     const newQuote = { id: Date.now(), text: content };
     setQuotes([newQuote, ...quotes]);
-    setQuote({});
+    // setQuote({});
+    rteRef.current?.editor?.chain().focus().clearContent().run();
   };
   const rteRef = useRef<RichTextEditorRef>(null);
 
@@ -57,18 +58,10 @@ export default function CommonplaceBook() {
       {/* Input Section */}
       <Card className="w-full max-w-xl p-4 mb-6 rounded-2xl shadow-lg">
         <CardContent className="flex flex-col gap-4">
-          {/* <TextField
-            label="Write a beautiful sentence..."
-            variant="outlined"
-            value={quote}
-            onChange={(e) => setQuote(e.target.value)}
-            className="bg-white rounded-xl"
-          /> */}
           <RichTextEditor
             ref={rteRef}
             extensions={[StarterKit]} // Or any Tiptap extensions you wish!
             content="" // Initial content for the editor
-            // Optionally include `renderControls` for a menu-bar atop the editor:
             immediatelyRender={false}
             renderControls={() => (
               <MenuControlsContainer>
@@ -76,7 +69,6 @@ export default function CommonplaceBook() {
                 <MenuDivider />
                 <MenuButtonBold />
                 <MenuButtonItalic />
-                {/* Add more controls of your choosing here */}
               </MenuControlsContainer>
             )}
           />

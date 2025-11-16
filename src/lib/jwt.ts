@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
+import { cookies } from "next/headers";
 
 const secretKey = process.env.NEXTAUTH_SECRET;
 
@@ -11,7 +12,7 @@ const Algorithm = "HS256";
 export type JWT = {
   email: string;
   role: string;
-}
+};
 
 export async function createJWT(email: string) {
   return new SignJWT({ email, role: "user" })
@@ -33,9 +34,18 @@ export async function verifyJWT(token: string) {
   }
 }
 
-export async function getInfoFromJWT(token: string): Promise<JWT> {
+export async function getInfoFromJWT(): Promise<JWT> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
+  if (!token) {
+    throw new Error("NO_TOKEN");
+  }
   const payload = await verifyJWT(token);
   const { email, role } = payload as JWT;
+  console.log("email: ", email);
+  if (!email) {
+    throw new Error("NO_EMAIL");
+  }
   return { email, role };
 }
 

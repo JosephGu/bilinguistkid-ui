@@ -46,6 +46,7 @@
     "mongodb": "^6.20.0",
     "mui-tiptap": "^1.28.1",
     "next-auth": "^4.24.13",
+    "next-intl": "^4.5.3",
     "nodemailer": "^7.0.10",
     "npm": "^11.5.2",
     "path": "^0.12.7",

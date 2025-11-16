@@ -292,10 +292,6 @@ const LexiconPage = () => {
     return tobeShuffled;
   };
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const supportSpeechRecognition = SpeechRecognition !== undefined;
-
   const handleStart = () => {
     if (isRunning) {
       return;

@@ -5,8 +5,7 @@ import { CssBaseline } from "@mui/material";
 import MobileMenu from "@/common/MobileNavigation";
 import Navigation from "@/common/Navigation";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-// import { buildApiUrl, API_ENDPOINTS } from "./utils/apiConfig";
-// import { cookies } from "next/headers";
+import { NextIntlClientProvider } from "next-intl";
 import StoreProvider from "./StoreProvider";
 import Script from "next/script";
 
@@ -30,41 +29,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const cookieStore = await cookies();
-  // const token = cookieStore.get("token")?.value;
   const profile: ProfileState = {
     nickname: "",
     age: 7,
     gender: "",
   };
-  // try {
-  //   const res = await fetch(buildApiUrl(API_ENDPOINTS.PROFILE.RETRIEVE), {
-  //     method: "GET",
-  //     cache: "no-cache",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Cookie: `token=${token}`,
-  //     },
-  //   });
 
-  //   const data = await res.json();
-  //   if (data?.profile) {
-  //     console.log(data);
-  //     const { nickname, birthday, gender } = data?.profile;
-  //     let newAge = 7;
-  //     if (birthday) {
-  //       newAge = new Date().getFullYear() - new Date(birthday).getFullYear();
-  //     }
-  //     console.log(birthday);
-  //     profile = {
-  //       nickname,
-  //       age: newAge,
-  //       gender,
-  //     };
-  //   }
-  // } catch (error) {
-  //   console.error("Error retrieving profile:", error);
-  // }
   const companySchema = {
     "@context": "http://schema.org",
     "@type": "Organization",
@@ -91,7 +61,7 @@ export default async function RootLayout({
             <Navigation />
             <MobileMenu />
             <main className="flex-1 flex-grow" style={{ flexGrow: 1 }}>
-              {children}
+              <NextIntlClientProvider>{children}</NextIntlClientProvider>
             </main>
           </AppRouterCacheProvider>
         </StoreProvider>

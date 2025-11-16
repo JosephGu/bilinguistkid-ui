@@ -1,9 +1,8 @@
 "use server";
 
 import { LexiconCollection } from "@/generated/prisma/client";
-import { AUTH_COOKIE_NAME, getInfoFromJWT } from "@/lib/jwt";
+import { getInfoFromJWT } from "@/lib/jwt";
 import { prisma } from "@/lib/prisma";
-import { cookies } from "next/headers";
 import { LexiconType } from "@/generated/prisma/enums";
 
 const createLexicon = async (formData: FormData) => {
@@ -11,16 +10,8 @@ const createLexicon = async (formData: FormData) => {
   const list = JSON.parse(formData.get("list") as string) as string[];
   const type = formData.get("type") as LexiconType;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  if (!token) {
-    throw new Error("NO_TOKEN");
-  }
-  const { email } = await getInfoFromJWT(token);
-  console.log("email: ", email);
-  if (!email) {
-    throw new Error("NO_EMAIL");
-  }
+  const { email } = await getInfoFromJWT();
+
   try {
     const res = await prisma.lexiconCollection.create({
       data: {
@@ -37,13 +28,7 @@ const createLexicon = async (formData: FormData) => {
 };
 
 const loadLexiconCollection = async () => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  console.log("token: ", token, !token);
-  if (!token) {
-    throw new Error("NO_TOKEN");
-  }
-  const { email } = await getInfoFromJWT(token);
+  const { email } = await getInfoFromJWT();
   console.log("email: ", email);
   if (!email) {
     throw new Error("NO_EMAIL");
@@ -61,13 +46,7 @@ const loadLexiconCollection = async () => {
 };
 
 const loadLexicon = async (id: string) => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  console.log("token: ", token, !token);
-  if (!token) {
-    throw new Error("No token found");
-  }
-  const { email } = await getInfoFromJWT(token);
+  const { email } = await getInfoFromJWT();
   console.log("email: ", email);
   if (!email) {
     throw new Error("No email found");
@@ -94,12 +73,7 @@ const updateLexicon = async (id: string, formData: FormData) => {
   const list = JSON.parse(formData.get("list") as string) as string[];
   const type = formData.get("type") as LexiconType;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  if (!token) {
-    throw new Error("No token found");
-  }
-  const { email } = await getInfoFromJWT(token);
+  const { email } = await getInfoFromJWT();
   console.log("email: ", email);
   if (!email) {
     throw new Error("No email found");
@@ -125,12 +99,7 @@ const updateLexicon = async (id: string, formData: FormData) => {
   }
 };
 const deleteLexicon = async (id: string) => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(AUTH_COOKIE_NAME)?.value;
-  if (!token) {
-    throw new Error("No token found");
-  }
-  const { email } = await getInfoFromJWT(token);
+  const { email } = await getInfoFromJWT();
   console.log("email: ", email);
   if (!email) {
     throw new Error("No email found");
