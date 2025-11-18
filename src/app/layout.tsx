@@ -57,12 +57,14 @@ export default async function RootLayout({
       >
         <StoreProvider profile={profile}>
           <AppRouterCacheProvider>
-            <CssBaseline />
-            <Navigation />
-            <MobileMenu />
-            <main className="flex-1 flex-grow" style={{ flexGrow: 1 }}>
-              <NextIntlClientProvider>{children}</NextIntlClientProvider>
-            </main>
+            <NextIntlClientProvider>
+              <CssBaseline />
+              <Navigation />
+              <MobileMenu />
+              <main className="flex-1 flex-grow" style={{ flexGrow: 1 }}>
+                {children}
+              </main>
+            </NextIntlClientProvider>
           </AppRouterCacheProvider>
         </StoreProvider>
       </body>

@@ -1,6 +1,20 @@
 {
   "LoginModal": {
     "SignIn": "Sign In",
-    "SignUp": "Sign Up"
+    "SignUp": "Sign Up",
+    "Email": "Email",
+    "Password": "Password",
+    "VerificationCode": "Verification Code",
+    "ConfirmPassword": "Confirm Password",
+    "SendCode": "Send Code",
+    "ResendCode": "Resend Code"
+
+  },
+  "Navigation":{
+    "Home": "Home",
+    "FunEarth": "Earth",
+    "LexiconTest": "Lexicon",
+    "About": "About",
+    "Literature": "Literature"
   }
 }

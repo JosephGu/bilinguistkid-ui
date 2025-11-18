@@ -5,8 +5,10 @@ import Image from "next/image";
 import "./navigation.scss";
 import Link from "next/link";
 import { AccountCircle, Translate } from "@mui/icons-material";
+import { useTranslations } from "next-intl";
 
 function Navigation() {
+  const t = useTranslations("Navigation");
 
   return (
     <Box className="navigation p-2 pl-5 pr-5">
@@ -28,22 +30,25 @@ function Navigation() {
         <Box className="nav">
           <Link color="inherit" href="/">
             <Button sx={{}} color="inherit">
-              Home
+              {t("Home")}
             </Button>
           </Link>
           <Link color="inherit" href="/funEarth">
-            <Button color="inherit">Fun Earth</Button>
+            <Button color="inherit">{t("FunEarth")}</Button>
           </Link>
           <Link color="inherit" href="/lexicon">
-            <Button color="inherit">Lexicon Test</Button>
+            <Button color="inherit">{t("LexiconTest")}</Button>
+          </Link>
+          <Link color="inherit" href="/literature">
+            <Button color="inherit">{t("Literature")}</Button>
           </Link>
           <Link color="inherit  " href="/about">
-            <Button color="inherit">About</Button>
+            <Button color="inherit">{t("About")}</Button>
           </Link>
           <Link color="inherit  " href="/about">
             <IconButton color="inherit">
               <AccountCircle />
-            </IconButton>           
+            </IconButton>
           </Link>
         </Box>
       </Box>

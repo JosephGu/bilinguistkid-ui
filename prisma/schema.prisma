@@ -37,10 +37,10 @@ model LexiconCollection{
   @@map("lexicon_collection")
 }
 
-model CommonplaceBook{
+model Literature{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   date DateTime @default(now())
   content Json
   userId String?
-  @@map("commonplace_book")
+  @@map("literature")
 }

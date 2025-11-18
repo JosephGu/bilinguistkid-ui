@@ -1,7 +1,5 @@
 import nodemailer from "nodemailer";
 
-
-console.log("process.env.EMAILER_PASSWORD: ", process.env.EMAILER_PASSWORD);
 const transporter = nodemailer.createTransport({
   host: "smtp.163.com",
   port: 465,

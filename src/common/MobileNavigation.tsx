@@ -9,14 +9,17 @@ import {
   ListItemText,
   Toolbar,
   Button,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./navigation.scss";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const MobileMenu = () => {
+  const t = useTranslations("Navigation");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -39,44 +42,51 @@ const MobileMenu = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Image
-            src="/logo6.svg"
-            alt="image"
-            width={160}
-            height={40}
-          />
+          <Image src="/logo6.svg" alt="image" width={160} height={40} />
         </Toolbar>
         <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
           <List component="nav">
             <ListItem onClick={toggleDrawer}>
               <Link href="/">
                 <Button>
-                  <ListItemText primary="Home" />
+                  <Typography className="!font-medium">{t("Home")}</Typography>
                 </Button>
               </Link>
             </ListItem>
             <ListItem onClick={toggleDrawer}>
               <Link href="/funEarth">
                 <Button>
-                  <ListItemText primary="Fun Earth" />
+                  <Typography className="!font-medium">
+                    {t("FunEarth")}
+                  </Typography>
                 </Button>
               </Link>
             </ListItem>
             <ListItem onClick={toggleDrawer}>
               <Link href="/lexicon">
                 <Button>
-                  <ListItemText primary="Lexicon Test" />
+                  <Typography className="!font-medium">
+                    {t("LexiconTest")}
+                  </Typography>
+                </Button>
+              </Link>
+            </ListItem>
+            <ListItem onClick={toggleDrawer}>
+              <Link href="/literature">
+                <Button>
+                  <Typography className="!font-medium">
+                    {t("Literature")}
+                  </Typography>
                 </Button>
               </Link>
             </ListItem>
             <ListItem onClick={toggleDrawer}>
               <Link href="/about">
                 <Button>
-                  <ListItemText primary="About" />
+                  <Typography className="!font-medium">{t("About")}</Typography>
                 </Button>
               </Link>
             </ListItem>
-            {/* 可以继续添加更多菜单项 */}
           </List>
         </Drawer>
       </AppBar>

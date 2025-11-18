@@ -120,7 +120,7 @@ function LoginModal() {
       >
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="Email"
+            label={t('Email')}
             sx={{ width: "100%" }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -128,7 +128,7 @@ function LoginModal() {
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="Password"
+            label={t('Password')}
             sx={{ width: "100%" }}
             value={password}
             type="password"
@@ -143,7 +143,7 @@ function LoginModal() {
       >
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="Email"
+            label={t('Email')}
             sx={{ width: "100%" }}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -153,7 +153,7 @@ function LoginModal() {
           sx={{ paddingTop: "10px", display: "flex", gap: 2, width: "100%" }}
         >
           <TextField
-            label="Verification Code"
+            label={t('VerificationCode')}
             sx={{ flex: 0.7 }}
             value={code}
             onChange={(e) => setCode(e.target.value)}
@@ -164,12 +164,12 @@ function LoginModal() {
             onClick={getVerificationCode}
             disabled={codeButtonDisabled}
           >
-            {codeButtonDisabled ? `Resend after ${timer} seconds` : "Send Code"}
+            {codeButtonDisabled ? `${t('ResendCode')} after ${timer} seconds` : t('SendCode')}
           </Button>
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="Password"
+            label={t('Password')}
             sx={{ width: "100%" }}
             value={password}
             type="password"
@@ -178,7 +178,7 @@ function LoginModal() {
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <TextField
-            label="Confirm Password"
+            label={t('ConfirmPassword')}
             sx={{ width: "100%" }}
             value={confirmPassword}
             type="password"
@@ -192,7 +192,7 @@ function LoginModal() {
         justifyContent={"center"}
       >
         <Button variant="contained" type="submit" onClick={confirmClick}>
-          {tabIndex === 0 ? "Sign In" : "Sign Up"}
+          {tabIndex === 0 ? t('SignIn') : t('SignUp')}
         </Button>
       </Box>
     </Dialog>

@@ -6,12 +6,12 @@ export default function OpenBook({
   name,
   list,
   id,
-  onCloseBook,
+  // onCloseBook,
 }: {
   name: string | undefined;
   list: string[];
   id: string;
-  onCloseBook: () => void;
+  // onCloseBook: () => void;
 }) {
   return (
     <Box
@@ -74,8 +74,6 @@ export default function OpenBook({
                 )
             )}
         </Paper>
-
-        {/* 右页 */}
         <Paper
           elevation={4}
           sx={{
@@ -99,25 +97,8 @@ export default function OpenBook({
             variant="h6"
             gutterBottom
             sx={{ fontWeight: "bold", textAlign: "right" }}
-          >
-            {/* <Button
-              startIcon={<Delete />}
-              onClick={() => {
-                handleDelete();
-              }}
-            ></Button> */}
-            <IconButton
-              sx={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-              }}
-              onClick={() => {
-                onCloseBook();
-              }}
-            >
-              <Close />
-            </IconButton>
+          >       
+           
           </Typography>
           {list &&
             list.map(

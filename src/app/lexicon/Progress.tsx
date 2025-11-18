@@ -23,7 +23,7 @@ const Progress = ({
         />
       </Box>
       <Box className="flex-1">
-        <IconButton onClick={() => onExitTest()}>
+        <IconButton onClick={() => onExitTest()} color="primary">
           <Close />
         </IconButton>
       </Box>

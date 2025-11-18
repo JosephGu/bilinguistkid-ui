@@ -25,6 +25,13 @@ function Home() {
       link: "/lexicon",
       image: "/lexicon-logo.png",
     },
+    {
+      title: "Literature",
+      description:
+        "Literature is a commonplace book to record interesting contents",
+      link: "/literature",
+      image: "/literature-logo.png",
+    },
   ];
   return (
     <Box className="flex flex-col justify-center items-center relative">
@@ -101,7 +108,7 @@ function Home() {
           className="mb-10"
         >
           {cardList.map((item) => (
-            <Box sx={{ flex: 1 }} key={item.title}>
+            <Box sx={{ flex: "1 0 30%" }} key={item.title}>
               {/* <Paper> */}
               <Card variant="elevation" sx={{ height: "100%" }} elevation={3}>
                 <CardMedia

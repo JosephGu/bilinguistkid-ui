@@ -22,7 +22,6 @@ function CreateProfile() {
   const [gender, setGender] = useState("");
 
   const updateProfile = async () => {
-    // 为一位数的月份和日期添加前导0
     const formattedMonth =
       month && month.toString().length === 1 ? `0${month}` : month;
     const formattedDate =

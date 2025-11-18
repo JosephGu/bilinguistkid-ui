@@ -38,6 +38,7 @@ import {
   Fullscreen,
   FullscreenExit,
   VoiceChat,
+  Close,
 } from "@mui/icons-material";
 import "./page.scss";
 import { lexiconCollection } from "./list";
@@ -531,7 +532,17 @@ const LexiconPage = () => {
 
           {stage === Stage.SELECTED && (
             <Box className="flex flex-row justify-center items-center gap-4 w-full">
-              <Box className="flex-[2]"></Box>
+              <Box className="flex-[2]">
+                <IconButton onClick={handleDelete} color="primary">
+                  <Delete />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleEditCollection(selectedCollectionId)}
+                  color="primary"
+                >
+                  <Edit />
+                </IconButton>
+              </Box>
               <Box className="flex-[6]">
                 <IconButton
                   color="primary"
@@ -558,14 +569,13 @@ const LexiconPage = () => {
                 </IconButton>
               </Box>
               <Box className="flex-[2] flex justify-end items-center gap-4">
-                <IconButton onClick={handleDelete} color="primary">
-                  <Delete />
-                </IconButton>
                 <IconButton
-                  onClick={() => handleEditCollection(selectedCollectionId)}
                   color="primary"
+                  onClick={() => {
+                    handleBack();
+                  }}
                 >
-                  <Edit />
+                  <Close />
                 </IconButton>
               </Box>
             </Box>
@@ -595,7 +605,6 @@ const LexiconPage = () => {
               name={collectionName}
               list={shuffledList}
               id={selectedCollectionId}
-              onCloseBook={() => handleBack()}
             />
           )}
           {stage === Stage.UNSELECTED &&
@@ -628,58 +637,65 @@ const LexiconPage = () => {
             <Button
               onClick={handleManualStart}
               variant="contained"
-              size="large"
-              startIcon={<Flag />}
+              sx={{
+                fontSize: "1.5rem",
+                padding: "16px 32px",
+                minWidth: "200px",
+                minHeight: "72px",
+              }}
+              startIcon={<Flag sx={{ fontSize: "3rem" }} />}
             >
               Start
             </Button>
           )}
-          {/* {stage === Stage.RUNNING && (
-            <Button
-              onClick={handleStop}
-              variant="contained"
-              size="large"
-              startIcon={<Stop />}
-            >
-              Exit
-            </Button>
-          )} */}
-          {/* {stage === Stage.SELECTED && (
-            <Button
-              onClick={handleBack}
-              variant="contained"
-              size="large"
-              startIcon={<Flag />}
-            >
-              Back
-            </Button>
-          )} */}
           {isManualRunning && (
             <Button
               onClick={handlePrevious}
               variant="contained"
-              size="large"
+              sx={{
+                fontSize: "1.5rem",
+                padding: "16px 32px",
+                minWidth: "200px",
+                minHeight: "72px",
+                "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                  fontSize: "2rem",
+                },
+              }}
               startIcon={<ArrowBack />}
-            >
-              Last
-            </Button>
+            ></Button>
           )}
           {isManualRunning &&
             selectedCollectionType === LexiconType.English && (
               <Button
                 onClick={() => handleReadingWord(selectedCollectionType)}
-                size="large"
+                sx={{
+                  fontSize: "1.5rem",
+                  padding: "16px 32px",
+                  minWidth: "200px",
+                  minHeight: "72px",
+                  "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                    fontSize: "2rem",
+                  },
+                }}
                 variant="contained"
                 startIcon={<VolumeUp />}
               >
                 Read
               </Button>
-            )}
+            )}{" "}
           {isManualRunning &&
             selectedCollectionType === LexiconType.Chinese && (
               <Button
                 onClick={() => handleGetPinyin()}
-                size="large"
+                sx={{
+                  fontSize: "1.5rem",
+                  padding: "16px 32px",
+                  minWidth: "200px",
+                  minHeight: "72px",
+                  "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                    fontSize: "2rem",
+                  },
+                }}
                 variant="contained"
                 startIcon={<ClosedCaption />}
               >
@@ -690,17 +706,31 @@ const LexiconPage = () => {
             <Button
               onClick={handleNext}
               variant="contained"
-              size="large"
+              sx={{
+                fontSize: "1.5rem",
+                padding: "16px 32px",
+                minWidth: "200px",
+                minHeight: "72px",
+                "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                  fontSize: "2rem",
+                },
+              }}
               startIcon={<ArrowForward />}
-            >
-              {currIdx === shuffledList.length - 1 ? "Finish" : "Next"}
-            </Button>
+            ></Button>
           )}
           {isRunning && !isPaused && !isManualRunning && (
             <Button
               onClick={handlePause}
               variant="contained"
-              size="large"
+              sx={{
+                fontSize: "1.5rem",
+                padding: "16px 32px",
+                minWidth: "200px",
+                minHeight: "72px",
+                "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                  fontSize: "2rem",
+                },
+              }}
               startIcon={<Pause />}
             >
               Pause
@@ -710,8 +740,16 @@ const LexiconPage = () => {
             <Button
               onClick={handleRestore}
               variant="contained"
+              sx={{
+                fontSize: "1.5rem",
+                padding: "16px 32px",
+                minWidth: "200px",
+                minHeight: "72px",
+                "& .MuiButton-startIcon>*:nth-of-type(1)": {
+                  fontSize: "2rem",
+                },
+              }}
               startIcon={<Restore />}
-              size="large"
             >
               Restore
             </Button>

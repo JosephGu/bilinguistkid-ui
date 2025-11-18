@@ -20,6 +20,7 @@
     "@mui/x-date-pickers": "^8.10.2",
     "@prisma/client": "^6.18.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "@tiptap/extension-text-align": "^3.10.7",
     "@tiptap/starter-kit": "^3.10.7",
     "@types/d3-drag": "^3.0.7",
     "@types/d3-ease": "^3.0.2",

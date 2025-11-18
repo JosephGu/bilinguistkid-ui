@@ -8,8 +8,8 @@ interface BookCoverProps {
 }
 
 export default function BookCover({ name, onClick, id }: BookCoverProps) {
-  const color = "#f4e3c1"; // 封面主色
-  const accentColor = "#b08b56"; // 书脊颜色
+  const color = "#f4e3c1";
+  const accentColor = "#b08b56";
   return (
     <Box
       sx={{
@@ -34,20 +34,19 @@ export default function BookCover({ name, onClick, id }: BookCoverProps) {
             height: 300,
             borderRadius: "4px",
             background: `linear-gradient(145deg, ${color}, #fff8e8)`,
-            transform: "rotateY(-15deg)",
             transformStyle: "preserve-3d",
-            boxShadow: `
-              -10px 6px 15px rgba(0,0,0,0.15),
-              inset -3px 0 4px rgba(0,0,0,0.1)
-            `,
-            transition: "transform 0.4s ease",
-            "&:hover": {
-              transform: "rotateY(-5deg) translateY(-4px)",
-            },
             fontFamily: "'Playfair Display', serif",
+            backdropFilter: "blur(10px) saturate(180%)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+            transform: "scale(1)",
+            transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
+            "&:hover": {
+              transform: "scale(1.05)", 
+              boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45)",
+            },
           }}
         >
-          {/* 书脊 */}
           <Box
             sx={{
               position: "absolute",
@@ -62,7 +61,6 @@ export default function BookCover({ name, onClick, id }: BookCoverProps) {
             }}
           />
 
-          {/* 封面内容 */}
           <Box
             sx={{
               position: "absolute",
@@ -89,9 +87,6 @@ export default function BookCover({ name, onClick, id }: BookCoverProps) {
             >
               {name}
             </Typography>
-            {/* <Typography variant="subtitle1" sx={{ opacity: 0.8 }}>
-              {author}
-            </Typography> */}
           </Box>
         </Paper>
       </Box>

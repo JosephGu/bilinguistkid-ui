@@ -1,6 +1,19 @@
 {
   "LoginModal": {
     "SignIn": "登录",
-    "SignUp": "注册"
+    "SignUp": "注册",
+    "Email": "邮箱",
+    "Password": "密码",
+    "VerificationCode": "验证码",
+    "ConfirmPassword": "确认密码",
+    "SendCode": "发送验证码",
+    "ResendCode": "重新发送验证码"
+  },
+  "Navigation":{
+    "Home": "首页",
+    "FunEarth": "趣味地球",
+    "LexiconTest": "词汇",
+    "About": "关于",
+    "Literature": "文学"
   }
 }
