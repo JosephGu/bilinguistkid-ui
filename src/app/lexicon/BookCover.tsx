@@ -38,12 +38,12 @@ export default function BookCover({ name, onClick, id }: BookCoverProps) {
             fontFamily: "'Playfair Display', serif",
             backdropFilter: "blur(10px) saturate(180%)",
             border: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+            boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
             transform: "scale(1)",
             transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)",
             "&:hover": {
               transform: "scale(1.05)", 
-              boxShadow: "0 12px 40px 0 rgba(0, 0, 0, 0.45)",
+              boxShadow: "0 2px 8px 0 rgba(0, 0, 0, 0.45)",
             },
           }}
         >

@@ -18,6 +18,8 @@ import StarterKit from "@tiptap/starter-kit";
 import {
   MenuButtonBold,
   MenuButtonItalic,
+  MenuButtonRedo,
+  MenuButtonUndo,
   MenuControlsContainer,
   MenuDivider,
   MenuSelectHeading,
@@ -202,6 +204,8 @@ export default function Literature() {
                 <MenuDivider />
                 <MenuButtonBold />
                 <MenuButtonItalic />
+                <MenuButtonUndo />
+                <MenuButtonRedo />
               </MenuControlsContainer>
             )}
           />
@@ -218,7 +222,12 @@ export default function Literature() {
 
       {/* Quotes List */}
       <Box className="w-full max-w-xl flex flex-col gap-4">
-        <ToggleButtonGroup value={timeRange} onChange={(e, value) => setTimeRange(value)} size="small" exclusive>
+        <ToggleButtonGroup
+          value={timeRange}
+          onChange={(e, value) => setTimeRange(value)}
+          size="small"
+          exclusive
+        >
           <ToggleButton
             value={TimeRange.All}
             selected={timeRange === TimeRange.All}
@@ -249,7 +258,6 @@ export default function Literature() {
           >
             Today
           </ToggleButton>
-          
         </ToggleButtonGroup>
         {quotes.length === 0 && (
           <p className="text-center text-gray-700">
@@ -312,6 +320,8 @@ export default function Literature() {
                             <MenuDivider />
                             <MenuButtonBold />
                             <MenuButtonItalic />
+                            <MenuButtonUndo />
+                            <MenuButtonRedo />
                           </MenuControlsContainer>
                         )}
                       />
