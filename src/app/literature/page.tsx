@@ -1,7 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Card, CardContent, IconButton } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  ToggleButtonGroup,
+  ToggleButton,
+} from "@mui/material";
 import { TextAlign } from "@tiptap/extension-text-align";
 
 import { motion } from "framer-motion";
@@ -20,11 +28,12 @@ import type { JSONContent } from "@tiptap/core";
 import { useRef } from "react";
 import {
   createLiterature,
-  deleteQuote,
+  deleteLiterature,
   updateLiterature,
   getLiteratureByDate,
 } from "@/app/actions/literature";
 import { redirect } from "next/navigation";
+import { TimeRange } from "@/app/shared/TimeRange";
 
 interface Quote {
   id: string;
@@ -42,6 +51,7 @@ export default function Literature() {
   const [editingContent, setEditingContent] = useState<JSONContent | null>(
     null
   );
+  const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.ThisWeek);
 
   const addQuote = async () => {
     const content = rteRef.current?.editor?.getJSON();
@@ -72,7 +82,7 @@ export default function Literature() {
   useEffect(() => {
     const fetchQuates = async () => {
       try {
-        const res = await getLiteratureByDate();
+        const res = await getLiteratureByDate(timeRange);
 
         if (!res.success) return;
         console.log(res.data);
@@ -138,7 +148,7 @@ export default function Literature() {
 
   const handleDeleteQuote = async (id: string) => {
     try {
-      const res = await deleteQuote(id);
+      const res = await deleteLiterature(id);
       if (res && res.success) {
         setQuotes(quotes.filter((q) => q.id !== id));
       }
@@ -208,6 +218,39 @@ export default function Literature() {
 
       {/* Quotes List */}
       <Box className="w-full max-w-xl flex flex-col gap-4">
+        <ToggleButtonGroup value={timeRange} onChange={(e, value) => setTimeRange(value)} size="small" exclusive>
+          <ToggleButton
+            value={TimeRange.All}
+            selected={timeRange === TimeRange.All}
+          >
+            All
+          </ToggleButton>
+          <ToggleButton
+            value={TimeRange.ThisMonth}
+            selected={timeRange === TimeRange.ThisMonth}
+          >
+            This Month
+          </ToggleButton>
+          <ToggleButton
+            value={TimeRange.ThisWeek}
+            selected={timeRange === TimeRange.ThisWeek}
+          >
+            This Week
+          </ToggleButton>
+          <ToggleButton
+            value={TimeRange.Last7Days}
+            selected={timeRange === TimeRange.Last7Days}
+          >
+            Last 7 Days
+          </ToggleButton>
+          <ToggleButton
+            value={TimeRange.Today}
+            selected={timeRange === TimeRange.Today}
+          >
+            Today
+          </ToggleButton>
+          
+        </ToggleButtonGroup>
         {quotes.length === 0 && (
           <p className="text-center text-gray-700">
             No quotes yet. Start adding!
@@ -223,7 +266,7 @@ export default function Literature() {
             >
               <Card className="rounded-2xl shadow-md ">
                 <CardContent className="text-[12px] text-right">
-                  <Box className="w-full flex flex-row items-center justify-between h-[24px]">
+                  <Box className="w-full flex flex-row items-center justify-between h-[24px] pl-[12px]">
                     {new Date(q.date).toLocaleString("zh-CN", {
                       hour12: false,
                     })}
