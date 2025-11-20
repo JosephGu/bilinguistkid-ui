@@ -9,11 +9,19 @@ import {
   IconButton,
   ToggleButtonGroup,
   ToggleButton,
+  Drawer,
 } from "@mui/material";
 import { TextAlign } from "@tiptap/extension-text-align";
 
 import { motion } from "framer-motion";
-import { Delete, Edit } from "@mui/icons-material";
+import {
+  Delete,
+  DeleteForever,
+  Edit,
+  Filter,
+  FilterAlt,
+  Restore,
+} from "@mui/icons-material";
 import StarterKit from "@tiptap/starter-kit";
 import {
   MenuButtonBold,
@@ -24,6 +32,7 @@ import {
   MenuDivider,
   MenuSelectHeading,
   RichTextEditor,
+  MenuButtonTextColor,
   type RichTextEditorRef,
 } from "mui-tiptap";
 import type { JSONContent } from "@tiptap/core";
@@ -33,14 +42,20 @@ import {
   deleteLiterature,
   updateLiterature,
   getLiteratureByDate,
+  softDeleteLiterature,
+  restoreLiterature,
 } from "@/app/actions/literature";
 import { redirect } from "next/navigation";
 import { TimeRange } from "@/app/shared/TimeRange";
+import { RestoreFromTrash, FolderOpen } from "@mui/icons-material";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
 
 interface Quote {
   id: string;
   content: JSONContent;
   date: Date;
+  deleted: boolean;
 }
 
 export default function Literature() {
@@ -54,6 +69,8 @@ export default function Literature() {
     null
   );
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.ThisWeek);
+  const [showDeleted, setShowDeleted] = useState<boolean>(false);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
 
   const addQuote = async () => {
     const content = rteRef.current?.editor?.getJSON();
@@ -68,12 +85,13 @@ export default function Literature() {
       const newQuote = res.data;
       if (newQuote) {
         setQuotes([
-          ...quotes,
           {
             id: newQuote.id,
             content: newQuote.content as JSONContent,
             date: newQuote.date,
+            deleted: false,
           },
+          ...quotes,
         ]);
       }
     }
@@ -93,6 +111,7 @@ export default function Literature() {
             id: item.id,
             content: item.content as JSONContent,
             date: item.date,
+            deleted: item.deleted,
           }))
         );
       } catch (err) {
@@ -148,11 +167,37 @@ export default function Literature() {
     }
   };
 
-  const handleDeleteQuote = async (id: string) => {
+  const handleHardDeleteQuote = async (id: string) => {
     try {
       const res = await deleteLiterature(id);
       if (res && res.success) {
         setQuotes(quotes.filter((q) => q.id !== id));
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
+
+  const handleSoftDeleteQuote = async (id: string) => {
+    try {
+      const res = await softDeleteLiterature(id);
+      if (res && res.success) {
+        setQuotes(
+          quotes.map((q) => (q.id === id ? { ...q, deleted: true } : q))
+        );
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
+
+  const handleRestoreQuote = async (id: string) => {
+    try {
+      const res = await restoreLiterature(id);
+      if (res && res.success) {
+        setQuotes(
+          quotes.map((q) => (q.id === id ? { ...q, deleted: false } : q))
+        );
       }
     } catch (err) {
       console.log("err: ", err);
@@ -185,6 +230,8 @@ export default function Literature() {
             ref={rteRef}
             extensions={[
               StarterKit,
+              TextStyle,
+              Color,
               TextAlign.configure({
                 types: [
                   "paragraph",
@@ -204,6 +251,7 @@ export default function Literature() {
                 <MenuDivider />
                 <MenuButtonBold />
                 <MenuButtonItalic />
+                <MenuButtonTextColor />
                 <MenuButtonUndo />
                 <MenuButtonRedo />
               </MenuControlsContainer>
@@ -222,157 +270,206 @@ export default function Literature() {
 
       {/* Quotes List */}
       <Box className="w-full max-w-xl flex flex-col gap-4">
-        <ToggleButtonGroup
-          value={timeRange}
-          onChange={(e, value) => setTimeRange(value)}
-          size="small"
-          exclusive
-        >
-          <ToggleButton
-            value={TimeRange.All}
-            selected={timeRange === TimeRange.All}
-          >
-            All
-          </ToggleButton>
-          <ToggleButton
-            value={TimeRange.ThisMonth}
-            selected={timeRange === TimeRange.ThisMonth}
-          >
-            This Month
-          </ToggleButton>
-          <ToggleButton
-            value={TimeRange.ThisWeek}
-            selected={timeRange === TimeRange.ThisWeek}
-          >
-            This Week
-          </ToggleButton>
-          <ToggleButton
-            value={TimeRange.Last7Days}
-            selected={timeRange === TimeRange.Last7Days}
-          >
-            Last 7 Days
-          </ToggleButton>
-          <ToggleButton
-            value={TimeRange.Today}
-            selected={timeRange === TimeRange.Today}
-          >
-            Today
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <Box className="w-full text-right">
+          <IconButton onClick={() => setShowFilter(!showFilter)}>
+            <FilterAlt />
+          </IconButton>
+          <IconButton onClick={() => setShowDeleted(!showDeleted)}>
+            {!showDeleted ? <RestoreFromTrash /> : <FolderOpen />}
+          </IconButton>
+        </Box>
+
         {quotes.length === 0 && (
-          <p className="text-center text-gray-700">
-            No quotes yet. Start adding!
+          <p className="text-center text-gray-700 p-2">
+            {showDeleted
+              ? "No deleted quotes yet."
+              : "No quotes yet. Start adding!"}
           </p>
         )}
 
         {quotes.length > 0 &&
-          quotes.map((q, index) => (
-            <motion.div
-              key={q.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <Card className="rounded-2xl shadow-md ">
-                <CardContent className="text-[12px] text-right">
-                  <Box className="w-full flex flex-row items-center justify-between h-[24px] pl-[12px]">
-                    {new Date(q.date).toLocaleString("zh-CN", {
-                      hour12: false,
-                    })}
-                    <Box>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleEditQuote(q.id, q.content)}
-                      >
-                        <Edit />
-                      </IconButton>
+          quotes
+            .filter((q) => (showDeleted ? q.deleted : !q.deleted))
+            .map((q, index) => (
+              <motion.div
+                key={q.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <Card className="rounded-2xl shadow-md ">
+                  <CardContent className="text-[12px] text-right">
+                    <Box className="w-full flex flex-row items-center justify-between h-[24px] pl-[12px]">
+                      {new Date(q.date).toLocaleString("zh-CN", {
+                        hour12: false,
+                      })}
+                      {!q.deleted ? (
+                        <Box>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleEditQuote(q.id, q.content)}
+                          >
+                            <Edit />
+                          </IconButton>
 
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteQuote(q.id)}
-                      >
-                        <Delete />
-                      </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleSoftDeleteQuote(q.id)}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </Box>
+                      ) : (
+                        <Box>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleRestoreQuote(q.id)}
+                          >
+                            <Restore />
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() => handleHardDeleteQuote(q.id)}
+                          >
+                            <DeleteForever />
+                          </IconButton>
+                        </Box>
+                      )}
                     </Box>
-                  </Box>
-                  <Box className="w-full ">
-                    {q.id === editingId ? (
-                      <RichTextEditor
-                        ref={rteEditRef}
-                        extensions={[
-                          StarterKit,
-                          TextAlign.configure({
-                            types: [
-                              "paragraph",
-                              "heading",
-                              "listItem",
-                              "tableRow",
-                              "tableCell",
-                            ],
-                            defaultAlignment: "left",
-                          }),
-                        ]}
-                        content={editingContent}
-                        immediatelyRender={false}
-                        sx={{ minHeight: "200px" }}
-                        renderControls={() => (
-                          <MenuControlsContainer>
-                            <MenuSelectHeading />
-                            <MenuDivider />
-                            <MenuButtonBold />
-                            <MenuButtonItalic />
-                            <MenuButtonUndo />
-                            <MenuButtonRedo />
-                          </MenuControlsContainer>
-                        )}
-                      />
-                    ) : (
-                      <RichTextEditor
-                        content={q.content}
-                        extensions={[
-                          StarterKit,
-                          TextAlign.configure({
-                            types: [
-                              "paragraph",
-                              "heading",
-                              "listItem",
-                              "tableRow",
-                              "tableCell",
-                            ],
-                            defaultAlignment: "left",
-                          }),
-                        ]}
-                        editable={false}
-                        immediatelyRender={true}
-                        sx={{
-                          borderRadius: 0,
-                          padding: 0,
-                          border: 0,
-                          "& .MuiTiptap-FieldContainer-notchedOutline": {
-                            border: "none",
-                          },
-                        }}
-                      />
-                    )}
-                    {q.id === editingId && (
-                      <Box>
-                        <Button
-                          size="small"
-                          onClick={() => handleUpdateQuote()}
-                        >
-                          Update
-                        </Button>
+                    <Box className="w-full ">
+                      {q.id === editingId ? (
+                        <RichTextEditor
+                          ref={rteEditRef}
+                          extensions={[
+                            StarterKit,
+                            TextAlign.configure({
+                              types: [
+                                "paragraph",
+                                "heading",
+                                "listItem",
+                                "tableRow",
+                                "tableCell",
+                              ],
+                              defaultAlignment: "left",
+                            }),
+                          ]}
+                          content={editingContent}
+                          immediatelyRender={false}
+                          sx={{ minHeight: "200px" }}
+                          renderControls={() => (
+                            <MenuControlsContainer>
+                              <MenuSelectHeading />
+                              <MenuDivider />
+                              <MenuButtonBold />
+                              <MenuButtonItalic />
+                              <MenuButtonTextColor />
+                              <MenuButtonUndo />
+                              <MenuButtonRedo />
+                            </MenuControlsContainer>
+                          )}
+                        />
+                      ) : (
+                        <RichTextEditor
+                          content={q.content}
+                          extensions={[
+                            StarterKit,
+                            TextStyle,
+                            Color,
+                            TextAlign.configure({
+                              types: [
+                                "paragraph",
+                                "heading",
+                                "listItem",
+                                "tableRow",
+                                "tableCell",
+                              ],
+                              defaultAlignment: "left",
+                            }),
+                          ]}
+                          editable={false}
+                          immediatelyRender={true}
+                          sx={{
+                            borderRadius: 0,
+                            padding: 0,
+                            border: 0,
+                            "& .MuiTiptap-FieldContainer-notchedOutline": {
+                              border: "none",
+                            },
+                          }}
+                        />
+                      )}
+                      {q.id === editingId && (
+                        <Box>
+                          <Button
+                            size="small"
+                            onClick={() => handleUpdateQuote()}
+                          >
+                            Update
+                          </Button>
 
-                        <Button size="small" onClick={() => handleCancelEdit()}>
-                          Cancel
-                        </Button>
-                      </Box>
-                    )}
-                  </Box>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                          <Button
+                            size="small"
+                            onClick={() => handleCancelEdit()}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      )}
+                    </Box>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
       </Box>
+      <Drawer
+        anchor="bottom"
+        open={showFilter}
+        onClose={() => setShowFilter(false)}
+      >
+        <Box
+          sx={{
+            maxWidth: 1200,
+            margin: "24px auto",
+          }}
+        >
+          <ToggleButtonGroup
+            value={timeRange}
+            onChange={(e, value) => setTimeRange(value)}
+            size="small"
+            exclusive
+          >
+            <ToggleButton
+              value={TimeRange.All}
+              selected={timeRange === TimeRange.All}
+            >
+              All
+            </ToggleButton>
+            <ToggleButton
+              value={TimeRange.ThisMonth}
+              selected={timeRange === TimeRange.ThisMonth}
+            >
+              This Month
+            </ToggleButton>
+            <ToggleButton
+              value={TimeRange.ThisWeek}
+              selected={timeRange === TimeRange.ThisWeek}
+            >
+              This Week
+            </ToggleButton>
+            <ToggleButton
+              value={TimeRange.Last7Days}
+              selected={timeRange === TimeRange.Last7Days}
+            >
+              Last 7 Days
+            </ToggleButton>
+            <ToggleButton
+              value={TimeRange.Today}
+              selected={timeRange === TimeRange.Today}
+            >
+              Today
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+      </Drawer>
     </Box>
   );
 }

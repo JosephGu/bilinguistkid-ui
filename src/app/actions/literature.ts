@@ -90,6 +90,7 @@ const getLiteratureByDate = async (timeRange: TimeRange) => {
     const literature = await prisma.literature.findMany({
       where: {
         userId: email,
+        deleted: false,
         date: {
           gte: range.start,
           lt: range.end,
@@ -104,6 +105,7 @@ const getLiteratureByDate = async (timeRange: TimeRange) => {
       id: item.id,
       date: item.date,
       content: item.content as JSONContent,
+      deleted: item.deleted || false,
     }));
 
     return {
@@ -116,6 +118,30 @@ const getLiteratureByDate = async (timeRange: TimeRange) => {
   }
 };
 
+const restoreLiterature = async (id: string) => {
+  const { email } = await getInfoFromJWT();
+  try {
+    const res = await prisma.literature.update({
+      where: {
+        id: id,
+        userId: email,
+        deleted: true,
+      },
+      data: {
+        deleted: false,
+      },
+    });
+    if (res) {
+      return {
+        success: true,
+        msg: "Quote restored successfully",
+      };
+    }
+  } catch (err) {
+    console.log("err: ", err);
+  }
+};
+
 const deleteLiterature = async (id: string) => {
   const { email } = await getInfoFromJWT();
   try {
@@ -123,6 +149,31 @@ const deleteLiterature = async (id: string) => {
       where: {
         id: id,
         userId: email,
+        deleted: true,
+      },
+    });
+    if (res) {
+      return {
+        success: true,
+        msg: "Quote deleted successfully",
+      };
+    }
+  } catch (err) {
+    console.log("err: ", err);
+  }
+};
+
+const softDeleteLiterature = async (id: string) => {
+  const { email } = await getInfoFromJWT();
+  try {
+    const res = await prisma.literature.update({
+      where: {
+        id: id,
+        userId: email,
+        deleted: false,
+      },
+      data: {
+        deleted: true,
       },
     });
     if (res) {
@@ -162,6 +213,8 @@ const updateLiterature = async (id: string, content: JSONContent) => {
 export {
   createLiterature,
   getLiteratureByDate,
-  deleteLiterature,
+  softDeleteLiterature,
   updateLiterature,
+  restoreLiterature,
+  deleteLiterature,
 };

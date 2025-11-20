@@ -42,5 +42,6 @@ model Literature{
   date DateTime @default(now())
   content Json
   userId String?
+  deleted Boolean @default(false)
   @@map("literature")
 }
