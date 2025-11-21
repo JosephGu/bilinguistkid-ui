@@ -269,7 +269,7 @@ export default function Literature() {
       </Card>
 
       {/* Quotes List */}
-      <Box className="w-full max-w-xl flex flex-col gap-4">
+      <Box className="w-full max-w-xl flex flex-col">
         <Box className="w-full text-right">
           <IconButton onClick={() => setShowFilter(!showFilter)}>
             <FilterAlt />
