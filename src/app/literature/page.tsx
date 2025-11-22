@@ -71,6 +71,7 @@ export default function Literature() {
   const [timeRange, setTimeRange] = useState<TimeRange>(TimeRange.ThisWeek);
   const [showDeleted, setShowDeleted] = useState<boolean>(false);
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [ascSort, setAscSort] = useState<boolean>(false);
 
   const addQuote = async () => {
     const content = rteRef.current?.editor?.getJSON();
@@ -211,9 +212,9 @@ export default function Literature() {
 
   return (
     <Box
-      className="min-h-screen w-full flex flex-col items-center p-6 "
+      className="w-full flex flex-col justify-center items-center p-6 justify-self-center"
       sx={{
-        backgroundColor: "#FFFBE0",
+        maxWidth: "1200px",
       }}
     >
       <motion.h1
@@ -224,7 +225,7 @@ export default function Literature() {
         Literature
       </motion.h1>
 
-      <Card className="w-full max-w-xl p-4 mb-6 rounded-2xl shadow-lg">
+      <Card className="w-full p-4 mb-6 rounded-2xl shadow-lg">
         <CardContent className="flex flex-col gap-4">
           <RichTextEditor
             ref={rteRef}
@@ -269,14 +270,14 @@ export default function Literature() {
       </Card>
 
       {/* Quotes List */}
-      <Box className="w-full max-w-xl flex flex-col">
+      <Box className="w-full flex flex-col">
         <Box className="w-full text-right">
           <IconButton onClick={() => setShowFilter(!showFilter)}>
             <FilterAlt />
           </IconButton>
-          <IconButton onClick={() => setShowDeleted(!showDeleted)}>
+          {/* <IconButton onClick={() => setShowDeleted(!showDeleted)}>
             {!showDeleted ? <RestoreFromTrash /> : <FolderOpen />}
-          </IconButton>
+          </IconButton> */}
         </Box>
 
         {quotes.length === 0 && (
@@ -431,43 +432,75 @@ export default function Literature() {
             margin: "24px auto",
           }}
         >
-          <ToggleButtonGroup
-            value={timeRange}
-            onChange={(e, value) => setTimeRange(value)}
-            size="small"
-            exclusive
-          >
-            <ToggleButton
-              value={TimeRange.All}
-              selected={timeRange === TimeRange.All}
+          <Box className="m-2">
+            <ToggleButtonGroup
+              value={timeRange}
+              onChange={(e, value) => setTimeRange(value)}
+              size="small"
+              exclusive
             >
-              All
-            </ToggleButton>
-            <ToggleButton
-              value={TimeRange.ThisMonth}
-              selected={timeRange === TimeRange.ThisMonth}
+              <ToggleButton
+                value={TimeRange.All}
+                selected={timeRange === TimeRange.All}
+              >
+                All
+              </ToggleButton>
+              <ToggleButton
+                value={TimeRange.ThisMonth}
+                selected={timeRange === TimeRange.ThisMonth}
+              >
+                This Month
+              </ToggleButton>
+              <ToggleButton
+                value={TimeRange.ThisWeek}
+                selected={timeRange === TimeRange.ThisWeek}
+              >
+                This Week
+              </ToggleButton>
+              <ToggleButton
+                value={TimeRange.Last7Days}
+                selected={timeRange === TimeRange.Last7Days}
+              >
+                Last 7 Days
+              </ToggleButton>
+              <ToggleButton
+                value={TimeRange.Today}
+                selected={timeRange === TimeRange.Today}
+              >
+                Today
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+          <Box className="m-2">
+            <ToggleButtonGroup
+              value={ascSort}
+              onChange={(e, value) => setAscSort(value)}
+              size="small"
+              exclusive
             >
-              This Month
-            </ToggleButton>
-            <ToggleButton
-              value={TimeRange.ThisWeek}
-              selected={timeRange === TimeRange.ThisWeek}
+              <ToggleButton value={false} selected={!ascSort}>
+                Descend
+              </ToggleButton>
+              <ToggleButton value={true} selected={ascSort}>
+                Ascend
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+          <Box className="m-2">
+            <ToggleButtonGroup
+              value={showDeleted}
+              onChange={(e, value) => setShowDeleted(value)}
+              size="small"
+              exclusive
             >
-              This Week
-            </ToggleButton>
-            <ToggleButton
-              value={TimeRange.Last7Days}
-              selected={timeRange === TimeRange.Last7Days}
-            >
-              Last 7 Days
-            </ToggleButton>
-            <ToggleButton
-              value={TimeRange.Today}
-              selected={timeRange === TimeRange.Today}
-            >
-              Today
-            </ToggleButton>
-          </ToggleButtonGroup>
+              <ToggleButton value={false} selected={!showDeleted}>
+                Show All
+              </ToggleButton>
+              <ToggleButton value={true} selected={showDeleted}>
+                Show Deleted
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
         </Box>
       </Drawer>
     </Box>
