@@ -297,7 +297,7 @@ export default function Literature() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <Card className="rounded-2xl shadow-md ">
+                <Card className="rounded-2xl shadow-md mt-6">
                   <CardContent className="text-[12px] text-right">
                     <Box className="w-full flex flex-row items-center justify-between h-[24px] pl-[12px]">
                       {new Date(q.date).toLocaleString("zh-CN", {

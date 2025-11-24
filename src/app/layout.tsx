@@ -61,7 +61,7 @@ export default async function RootLayout({
               <CssBaseline />
               <Navigation />
               <MobileMenu />
-              <main className="flex-1 flex-grow" style={{ flexGrow: 1 }}>
+              <main className="flex-1 flex-grow" style={{ flexGrow: 1, backgroundColor: "#FFFBE0" }}>
                 {children}
               </main>
             </NextIntlClientProvider>

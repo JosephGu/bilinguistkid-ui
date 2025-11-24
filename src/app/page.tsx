@@ -36,18 +36,6 @@ function Home() {
   return (
     <Box className="flex flex-col justify-center items-center relative">
       <Box
-        sx={{
-          width: "100%",
-          height: "500px",
-          // backgroundColor: "#FFFBE0",
-          background: " #FFFBE0",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: -1,
-        }}
-      ></Box>
-      <Box
         className="flex flex-col justify-center items-center mt-10"
         sx={{
           maxWidth: "1280px",
