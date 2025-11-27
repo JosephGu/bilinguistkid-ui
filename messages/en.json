@@ -16,5 +16,15 @@
     "LexiconTest": "Lexicon",
     "About": "About",
     "Literature": "Literature"
+  },
+  "Account":{
+    "Nickname": "Nickname",
+    "BirthYear": "Birth Year",
+    "BirthMonth": "Birth Month",
+    "BirthDate": "Birth Date",
+    "Gender": "Gender",
+    "Boy": "Boy",
+    "Girl": "Girl",
+    "ConfirmUpdate": "Confirm Update"
   }
 }

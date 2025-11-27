@@ -45,7 +45,7 @@ function Navigation() {
           <Link color="inherit  " href="/about">
             <Button color="inherit">{t("About")}</Button>
           </Link>
-          <Link color="inherit  " href="/about">
+          <Link color="inherit  " href="/account">
             <IconButton color="inherit">
               <AccountCircle />
             </IconButton>

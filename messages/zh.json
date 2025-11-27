@@ -15,5 +15,15 @@
     "LexiconTest": "词汇",
     "About": "关于",
     "Literature": "文学"
+  },
+  "Account":{
+    "Nickname": "昵称",
+    "BirthYear": "出生年份",
+    "BirthMonth": "出生月份",
+    "BirthDate": "出生日期",
+    "Gender": "性别",
+    "Boy": "男孩",
+    "Girl": "女孩",
+    "ConfirmUpdate": "确认更新"
   }
 }

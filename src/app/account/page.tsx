@@ -12,6 +12,7 @@ import {
   InputLabel
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const Account = () => {
   const [nickname, setnickname] = useState("");
@@ -19,6 +20,7 @@ const Account = () => {
   const [month, setMonth] = useState("");
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("");
+  const t = useTranslations("Account");
 
   const updateProfile = async () => {
     // 为一位数的月份和日期添加前导0
@@ -49,7 +51,7 @@ const Account = () => {
       <Box component="form" sx={{ padding: "10px 30px", maxWidth: "1200px",justifySelf:"center" }} className="flex flex-col">
         <Box sx={{ paddingTop: "10px", width: "400px" }}>
           <TextField
-            label="宝宝昵称"
+            label={t("Nickname")}
             sx={{ width: "100%" }}
             value={nickname}
             onChange={(e) => setnickname(e.target.value)}
@@ -57,13 +59,13 @@ const Account = () => {
         </Box>
         <Box sx={{ paddingTop: "10px", display: "flex", gap: "5px" }}>
           <FormControl sx={{ flex: 1 }} variant="outlined">
-            <InputLabel id="year-label">出生年份</InputLabel>
+            <InputLabel id="year-label">{t("BirthYear")}</InputLabel>
             <Select
               labelId="year-label"
               id="year-select"
               value={year}
               onChange={(e) => setYear(e.target.value)}
-              label="出生年份"
+              label={t("BirthYear")}
             >
               {[...Array(15).keys()].map((i) => (
                 <MenuItem key={i} value={2010 + i}>
@@ -73,13 +75,13 @@ const Account = () => {
             </Select>
           </FormControl>
           <FormControl sx={{ flex: 1 }} variant="outlined">
-            <InputLabel id="month-label">出生月份</InputLabel>
+            <InputLabel id="month-label">{t("BirthMonth")}</InputLabel>
             <Select
               labelId="month-label"
               id="month-select"
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              label="出生月份"
+              label={t("BirthMonth")}
             >
               {[...Array(12).keys()].map((i) => (
                 <MenuItem key={i} value={i + 1}>
@@ -89,13 +91,13 @@ const Account = () => {
             </Select>
           </FormControl>
           <FormControl sx={{ flex: 1 }} variant="outlined">
-            <InputLabel id="date-label">出生日期</InputLabel>
+            <InputLabel id="date-label">{t("BirthDate")}</InputLabel>
             <Select
               labelId="date-label"
               id="date-select"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              label="出生日期"
+              label={t("BirthDate")}
             >
               {[...Array(31).keys()].map((i) => (
                 <MenuItem key={i} value={i + 1}>
@@ -107,22 +109,22 @@ const Account = () => {
         </Box>
         <Box sx={{ paddingTop: "10px" }}>
           <FormControl fullWidth variant="outlined">
-            <InputLabel id="gender-label">宝宝性别</InputLabel>
+            <InputLabel id="gender-label">{t("Gender")}</InputLabel>
             <Select
               labelId="gender-label"
               id="gender-select"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
-              label="宝宝性别"
+              label={t("Gender")}
             >
-              <MenuItem value="Male">男</MenuItem>
-              <MenuItem value="Female">女</MenuItem>
+              <MenuItem value="Male">{t("Boy")}</MenuItem>
+              <MenuItem value="Female">{t("Girl")}</MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Box sx={{ paddingTop: "15px", paddingBottom: "10px", textAlign: "center" }}>
           <Button variant="contained" onClick={updateProfile}>
-            确认更新
+            {t("ConfirmUpdate")}
           </Button>
         </Box>
       </Box>
