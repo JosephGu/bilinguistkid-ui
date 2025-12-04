@@ -39,6 +39,7 @@ import {
   FullscreenExit,
   VoiceChat,
   Close,
+  PictureAsPdf,
 } from "@mui/icons-material";
 import "./page.scss";
 import { lexiconCollection } from "./list";
@@ -561,6 +562,9 @@ const LexiconPage = () => {
                 <IconButton color="primary" onClick={() => setIsSort(!isSort)}>
                   {!isSort ? <Casino /> : <Sort />}
                 </IconButton>
+                {/* <IconButton color="primary" >
+                  <PictureAsPdf />
+                </IconButton> */}
                 <IconButton
                   color="primary"
                   onClick={() => setIsAnalytics(!isAnalytics)}

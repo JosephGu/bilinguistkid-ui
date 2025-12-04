@@ -11,7 +11,7 @@ import AudioPlayer from "./AudioPlayer";
 import LoadingModal from "./LoadingModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/lib/store";
-import { getFunFact, getFunFactAudio } from "@/app/actions/earth";
+import { getFunFact } from "@/app/actions/earth";
 
 const RotatingEarth = () => {
   // const router = useRouter();
@@ -35,9 +35,8 @@ const RotatingEarth = () => {
 
       const funFactRes = await getFunFact(countryName, age, gender);
       setFunFact(funFactRes.data.message);
-      if(funFactRes.data.message){
-       const funFactAudioRes = await getFunFactAudio(funFactRes.data.message);
-       setFunFactAudio(funFactAudioRes.data.audio);
+      if(funFactRes.audio){
+       setFunFactAudio(funFactRes.audio);
       }
     } catch (error) {
       console.error("Failed to retrieve fun fact:", error);
