@@ -272,12 +272,14 @@ export default function Literature() {
       {/* Quotes List */}
       <Box className="w-full flex flex-col">
         <Box className="w-full text-right">
-          <IconButton onClick={() => setShowFilter(!showFilter)}>
-            <FilterAlt />
-          </IconButton>
-          {/* <IconButton onClick={() => setShowDeleted(!showDeleted)}>
+          {!showDeleted && (
+            <IconButton onClick={() => setShowFilter(!showFilter)}>
+              <FilterAlt />
+            </IconButton>
+          )}
+          <IconButton onClick={() => setShowDeleted(!showDeleted)}>
             {!showDeleted ? <RestoreFromTrash /> : <FolderOpen />}
-          </IconButton> */}
+          </IconButton>
         </Box>
 
         {quotes.length === 0 && (
@@ -486,7 +488,7 @@ export default function Literature() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <Box className="m-2">
+          {/* <Box className="m-2">
             <ToggleButtonGroup
               value={showDeleted}
               onChange={(e, value) => setShowDeleted(value)}
@@ -500,7 +502,7 @@ export default function Literature() {
                 Show Deleted
               </ToggleButton>
             </ToggleButtonGroup>
-          </Box>
+          </Box> */}
         </Box>
       </Drawer>
     </Box>
