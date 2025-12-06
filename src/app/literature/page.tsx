@@ -15,12 +15,16 @@ import { TextAlign } from "@tiptap/extension-text-align";
 
 import { motion } from "framer-motion";
 import {
+  ArrowUpward,
   Delete,
   DeleteForever,
   Edit,
   Filter,
   FilterAlt,
   Restore,
+  SortByAlpha,
+  ArrowDownward,
+  Mic,
 } from "@mui/icons-material";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -100,35 +104,40 @@ export default function Literature() {
     rteRef.current?.editor?.chain().focus().clearContent().run();
   };
 
-  useEffect(() => {
-    const fetchQuates = async () => {
-      try {
-        const res = await getLiteratureByDate(timeRange);
+  const fetchQuates = async () => {
+    try {
+      const res = await getLiteratureByDate(timeRange);
 
-        if (!res.success) return;
-        console.log(res.data);
-        setQuotes(
-          res.data?.map((item) => ({
-            id: item.id,
-            content: item.content as JSONContent,
-            date: item.date,
-            deleted: item.deleted,
-          }))
-        );
-      } catch (err) {
-        if (err instanceof Error) {
-          if (err.message === "NO_TOKEN" || err.message === "NO_EMAIL") {
-            redirect("/login");
-          } else {
-            setLoading(false);
-          }
+      if (!res.success) return;
+      console.log(res.data);
+      setQuotes(
+        res.data?.map((item) => ({
+          id: item.id,
+          content: item.content as JSONContent,
+          date: item.date,
+          deleted: item.deleted,
+        }))
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        if (err.message === "NO_TOKEN" || err.message === "NO_EMAIL") {
+          redirect("/login");
+        } else {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchQuates();
   }, []);
+
+  useEffect(() => {
+    fetchQuates();
+  }, [timeRange]);
 
   useEffect(() => {
     if (editingContent) {
@@ -280,6 +289,9 @@ export default function Literature() {
           <IconButton onClick={() => setShowDeleted(!showDeleted)}>
             {!showDeleted ? <RestoreFromTrash /> : <FolderOpen />}
           </IconButton>
+          <IconButton onClick={() => setAscSort(!ascSort)}>
+            {ascSort ? <ArrowUpward /> : <ArrowDownward />}
+          </IconButton>
         </Box>
 
         {quotes.length === 0 && (
@@ -293,6 +305,11 @@ export default function Literature() {
         {quotes.length > 0 &&
           quotes
             .filter((q) => (showDeleted ? q.deleted : !q.deleted))
+            .sort((a, b) =>
+              ascSort
+                ? new Date(a.date).getTime() - new Date(b.date).getTime()
+                : new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
             .map((q, index) => (
               <motion.div
                 key={q.id}

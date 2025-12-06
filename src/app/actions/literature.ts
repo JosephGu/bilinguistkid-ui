@@ -36,8 +36,16 @@ function thisMonthRange() {
 
 function thisWeekRange() {
   const now = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
-  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 7);
+  const start = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - now.getDay()
+  );
+  const end = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - now.getDay() + 7
+  );
   return { start, end };
 }
 
