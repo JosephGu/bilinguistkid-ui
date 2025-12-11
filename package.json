@@ -8,6 +8,7 @@
     "turbo": "next build --turbopack",
     "turboBuild": "next build --turbopack && tar -czf deploy.tgz .next node_modules",
     "build": "NODE_OPTIONS=--max-old-space-size=768 next build",
+    "build2": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -18,7 +19,7 @@
     "@mui/material": "^7.3.1",
     "@mui/material-nextjs": "^7.3.0",
     "@mui/x-date-pickers": "^8.10.2",
-    "@prisma/client": "^6.18.0",
+    "@prisma/client": "^7.1.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@tiptap/extension-color": "^3.11.0",
     "@tiptap/extension-text-align": "^3.10.7",
@@ -55,8 +56,8 @@
     "path": "^0.12.7",
     "pinyin": "^4.0.0",
     "prisma": "^7.1.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-redux": "^9.2.0",
     "sass": "^1.90.0"
   },
@@ -67,17 +68,17 @@
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.3",
-    "@types/react": "^19",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
-    "eslint-config-next": "15.4.6",
+    "eslint-config-next": "^16.0.8",
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
-    "next": "^15.2.6",
+    "next": "^16.0.8",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }
