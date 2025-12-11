@@ -1,7 +1,7 @@
 export async function getAudio(content: string) {
   try {
     const audio = await fetch(
-      `http://localhost:19020/getAudio?content=${content}`
+      `http://127.0.0.1:19020/getAudio?content=${content}`
     );
     if (!audio.ok) {
       throw new Error(

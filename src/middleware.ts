@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { buildApiUrl, API_ENDPOINTS } from "@/app/utils/apiConfig";
 import { AUTH_COOKIE_NAME, verifyJWT } from "./lib/jwt";
 
 export async function middleware(req: NextRequest, res: NextResponse) {

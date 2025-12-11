@@ -5,7 +5,7 @@ import { getAudio } from "./common";
 export async function getFunFact(country: string, age: number, gender: string) {
   try {
     const funFact = await fetch(
-      `http://localhost:19020/getFact?country=${country}&age=${age}&gender=${gender}`
+      `http://127.0.0.1:19020/getFact?country=${country}&age=${age}&gender=${gender}`
     );
     if (!funFact.ok) {
       throw new Error(`Failed to get fun fact: ${funFact.statusText}`);

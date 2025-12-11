@@ -145,7 +145,7 @@ function Home() {
             fontWeight: "bold",
           }}
         >
-          © 2023 BilinguistKid. All rights reserved.
+          © 2025 BilinguistKid. All rights reserved.
         </Typography>
       </footer>
     </Box>
