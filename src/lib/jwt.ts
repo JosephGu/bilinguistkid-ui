@@ -30,7 +30,7 @@ export async function verifyJWT(token: string) {
     );
     return payload;
   } catch (error) {
-    throw new Error("Invalid token", { cause: error });
+    throw new Error("INVALID_TOKEN", { cause: error });
   }
 }
 

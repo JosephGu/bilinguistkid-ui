@@ -239,7 +239,7 @@ const LexiconPage = () => {
         setLexiconCollection(res);
       } catch (err) {
         if (err instanceof Error) {
-          if (err.message === "NO_TOKEN" || err.message === "NO_EMAIL") {
+          if (err.message === "NO_TOKEN" || err.message === "NO_EMAIL" || err.message === "INVALID_TOKEN") {
             redirect("/login");
           } else {
             setShowError(true);
