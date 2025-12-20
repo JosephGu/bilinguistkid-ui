@@ -490,7 +490,7 @@ export default function Literature() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <Box className="m-2">
+          {/* <Box className="m-2">
             <ToggleButtonGroup
               value={ascSort}
               onChange={(e, value) => setAscSort(value)}
@@ -504,7 +504,7 @@ export default function Literature() {
                 Ascend
               </ToggleButton>
             </ToggleButtonGroup>
-          </Box>
+          </Box> */}
           {/* <Box className="m-2">
             <ToggleButtonGroup
               value={showDeleted}
