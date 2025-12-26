@@ -4,8 +4,16 @@ import { useEffect, useRef, useState } from "react";
 
 import { Peer } from "peerjs";
 
-import { Dialog, Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Dialog,
+  Box,
+  Button,
+  TextField,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import { useSearchParams, redirect } from "next/navigation";
+import { Mic, MicOff, Videocam, VideocamOff } from "@mui/icons-material";
 
 function ClassroomPage() {
   const searchParams = useSearchParams();
@@ -18,6 +26,10 @@ function ClassroomPage() {
   const peerRef = useRef<Peer | null>(null);
 
   const [classIdToJoin, setClassIdToJoin] = useState(classIdParam || "");
+
+  const [micOn, setMicOn] = useState(false);
+  const [videoOn, setVideoOn] = useState(false);
+
   console.log(classIdParam);
   // const [classCode, setClassCode] = useState("");
   // if (classCodeParam && classCodeParam !== "") {
@@ -55,7 +67,8 @@ function ClassroomPage() {
         }
 
         // 呼叫远程用户
-        if (peerRef.current && classIdParam && classIdParam !== "uua8") { // 避免呼叫自己
+        if (peerRef.current && classIdParam && classIdParam !== "uua8") {
+          // 避免呼叫自己
           const call = peerRef.current.call(classIdParam, stream);
           call.on("stream", (remoteStream) => {
             console.log("remoteStream", remoteStream);
@@ -74,28 +87,28 @@ function ClassroomPage() {
   const joinClass = () => {
     if (peerRef.current) {
       peerRef.current.on("call", (call) => {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((stream) => {
-          // 在本地播放自己的视频
-          if (selfScreenRef.current) {
-            selfScreenRef.current.srcObject = stream;
-          }
-          
-          call.answer(stream); // Answer the call with an A/V stream.
-          call.on("stream", (remoteStream) => {
-            // 播放远程视频
-            if (remote1ScreenRef.current) {
-              remote1ScreenRef.current.srcObject = remoteStream;
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            // 在本地播放自己的视频
+            if (selfScreenRef.current) {
+              selfScreenRef.current.srcObject = stream;
             }
+
+            call.answer(stream); // Answer the call with an A/V stream.
+            call.on("stream", (remoteStream) => {
+              // 播放远程视频
+              if (remote1ScreenRef.current) {
+                remote1ScreenRef.current.srcObject = remoteStream;
+              }
+            });
+          })
+          .catch((err) => {
+            console.error("Failed to get local stream", err);
           });
-        })
-        .catch((err) => {
-          console.error("Failed to get local stream", err);
-        });
-    });
-  }
-};
+      });
+    }
+  };
 
   const handleJoinClassClick = () => {
     redirect(`/classroom?classId=${classIdToJoin}`);
@@ -120,6 +133,14 @@ function ClassroomPage() {
             ></TextField>
           </Box>
           <Box className="flex flex-row items-center justify-center">
+            <IconButton onClick={() => setVideoOn(!videoOn)}>
+              {videoOn ? <Videocam color="primary" /> : <VideocamOff />}
+            </IconButton>
+            <IconButton onClick={() => setMicOn(!micOn)}>
+              {micOn ? <Mic color="primary" /> : <MicOff />}
+            </IconButton>
+          </Box>
+          <Box className="flex flex-row items-center justify-center">
             <Button onClick={handleLaunchClassClick}>Launch Class</Button>
             <Button onClick={handleJoinClassClick}>Join Class</Button>
           </Box>
@@ -134,7 +155,7 @@ function ClassroomPage() {
           </Box>
           <Box className="flex flex-row items-center justify-center">
             <video ref={selfScreenRef} autoPlay playsInline></video>
-            <video ref={remote1ScreenRef} autoPlay playsInline></video>   
+            <video ref={remote1ScreenRef} autoPlay playsInline></video>
           </Box>
         </Box>
       )}
