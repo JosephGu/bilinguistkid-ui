@@ -31,10 +31,6 @@ function ClassroomPage() {
   const [videoOn, setVideoOn] = useState(false);
 
   console.log(classIdParam);
-  // const [classCode, setClassCode] = useState("");
-  // if (classCodeParam && classCodeParam !== "") {
-  //   setClassCode(classCodeParam);
-  // }
 
   useEffect(() => {
     // 初始化Peer实例
@@ -59,7 +55,7 @@ function ClassroomPage() {
   const launchClass = () => {
     // 获取stream
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({ video: videoOn, audio: micOn })
       .then((stream) => {
         // 在本地播放自己的视频
         if (selfScreenRef.current) {
@@ -88,7 +84,7 @@ function ClassroomPage() {
     if (peerRef.current) {
       peerRef.current.on("call", (call) => {
         navigator.mediaDevices
-          .getUserMedia({ video: true, audio: true })
+          .getUserMedia({ video: videoOn, audio: micOn })
           .then((stream) => {
             // 在本地播放自己的视频
             if (selfScreenRef.current) {
