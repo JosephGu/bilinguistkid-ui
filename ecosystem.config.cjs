@@ -23,6 +23,14 @@ module.exports = {
     wait_ready: true,
     // 前置启动命令（编译 TypeScript）
     pre_start: 'npm run build'
+  },{
+    name:'peerjs',
+    script:'peerjs',
+    args:'--port 9000 --path /peer',
+    env:{
+      NODE_ENV:'production',
+      PORT: 9000,
+    }
   }]
 };
     
