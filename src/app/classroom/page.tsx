@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useSearchParams, redirect } from "next/navigation";
 import { Mic, MicOff, Videocam, VideocamOff } from "@mui/icons-material";
-import { setVoiceConfig, setVideoConfig } from "./mediaConfig";
+import { setVoiceConfig, setVideoConfig, getMediaConfig } from "./mediaConfig";
 
 function ClassroomPage() {
   const searchParams = useSearchParams();
@@ -28,20 +28,20 @@ function ClassroomPage() {
 
   const [classIdToJoin, setClassIdToJoin] = useState(classIdParam || "");
 
-  const [micOn, setMicOn] = useState(false);
-  const [videoOn, setVideoOn] = useState(false);
+  const [audioOn, setAudioOn] = useState(getMediaConfig().audio);
+  const [videoOn, setVideoOn] = useState(getMediaConfig().video);
 
   console.log(classIdParam);
 
   useEffect(() => {
-    setVoiceConfig(micOn);
+    setVoiceConfig(audioOn);
     setVideoConfig(videoOn);
-  }, [micOn, videoOn]);
+  }, [audioOn, videoOn]);
 
   const launchClass = () => {
     // 获取stream
     navigator.mediaDevices
-      .getUserMedia({ video: videoOn, audio: micOn })
+      .getUserMedia({ video: videoOn, audio: audioOn })
       .then((stream) => {
         // 在本地播放自己的视频
         if (selfScreenRef.current) {
@@ -90,8 +90,8 @@ function ClassroomPage() {
         <IconButton onClick={() => setVideoOn(!videoOn)}>
           {videoOn ? <Videocam color="primary" /> : <VideocamOff />}
         </IconButton>
-        <IconButton onClick={() => setMicOn(!micOn)}>
-          {micOn ? <Mic color="primary" /> : <MicOff />}
+        <IconButton onClick={() => setAudioOn(!audioOn)}>
+          {audioOn ? <Mic color="primary" /> : <MicOff />}
         </IconButton>
       </Box>
       <Box className="flex flex-row items-center justify-center">

@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Peer from 'peerjs'
-import { getMediaConfig } from '../mediaConfig'
+import { getMediaConfig, setVoiceConfig, setVideoConfig } from '../mediaConfig'
+import { IconButton } from '@mui/material'
+import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material'
 
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>()
@@ -12,7 +14,8 @@ export default function RoomPage() {
   const peerRef = useRef<Peer | null>(null)
   const localStreamRef = useRef<MediaStream | null>(null)
   const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null)
-  const { audio, video } = getMediaConfig()
+  const [audioOn, setAudioOn] = useState(getMediaConfig().audio)
+  const [videoOn, setVideoOn] = useState(getMediaConfig().video)
 
   useEffect(() => {
     if (!roomId) return
@@ -22,8 +25,8 @@ export default function RoomPage() {
     async function init() {
       // 1️⃣ 获取本地音视频
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: video,
-        audio: audio
+        video: videoOn,
+        audio: audioOn
       })
       localStreamRef.current = stream
       addVideo(stream, true)
@@ -116,6 +119,18 @@ export default function RoomPage() {
     videoContainerRef.current?.appendChild(video)
   }
 
+  function resetAudio(audioOn: boolean) {
+    setAudioOn(audioOn);
+    setVoiceConfig(audioOn);
+    localStreamRef.current?.getAudioTracks().forEach(t => t.enabled = audioOn)
+  }
+
+  function resetVideo(videoOn: boolean) {
+    setVideoOn(videoOn)
+    setVideoConfig(videoOn);
+    localStreamRef.current?.getVideoTracks().forEach(t => t.enabled = videoOn)
+  }
+
   return (
     <div>
       <h2>Room: {roomId}</h2>
@@ -127,6 +142,15 @@ export default function RoomPage() {
           gap: 12
         }}
       />
+      <IconButton onClick={() => resetAudio(!audioOn)}>
+        {audioOn ? <Mic color="primary" /> : <MicOff />}
+      </IconButton>
+      <IconButton onClick={() => resetVideo(!videoOn)}>
+        {videoOn ? <Videocam color="primary" /> : <VideocamOff />}
+      </IconButton>
+      {peerRef.current?.id && (
+        <p>Your Peer ID: {peerRef.current?.id}</p>
+      )}
     </div>
   )
 }
