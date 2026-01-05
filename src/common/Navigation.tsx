@@ -24,7 +24,14 @@ function Navigation() {
       >
         <Box className="logo">
           <Link href="/">
-            <Image src="/logo5.svg" alt="image" width={200} height={50} />
+            <Image
+              src="/logo5.svg"
+              alt="image"
+              width={0}
+              height={0}
+              loading="eager"
+              style={{ width: "200px", height: "50px" }}
+            />
           </Link>
         </Box>
         <Box className="nav">
