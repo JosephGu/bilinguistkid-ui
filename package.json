@@ -8,6 +8,7 @@
     "turbo": "next build --turbopack",
     "turboBuild": "next build --turbopack && tar -czf deploy.tgz .next node_modules",
     "build": "NODE_OPTIONS=--max-old-space-size=768 next build",
+    "peerjs": "peerjs --port 9000 --path /peer",
     "build2": "next build",
     "start": "next start",
     "lint": "next lint"

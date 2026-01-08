@@ -7,6 +7,8 @@ import { getMediaConfig, setVoiceConfig, setVideoConfig } from '../mediaConfig'
 import { IconButton } from '@mui/material'
 import { Mic, MicOff, Videocam, VideocamOff } from '@mui/icons-material'
 
+
+
 export default function RoomPage() {
   const { roomId } = useParams<{ roomId: string }>()
   const videoContainerRef = useRef<HTMLDivElement>(null)
@@ -16,6 +18,7 @@ export default function RoomPage() {
   const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null)
   const [audioOn, setAudioOn] = useState(getMediaConfig().audio)
   const [videoOn, setVideoOn] = useState(getMediaConfig().video)
+  const [peerId, setPeerId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!roomId) return
@@ -50,8 +53,11 @@ export default function RoomPage() {
       })
 
       // 4️⃣ Peer ready 后加入会议
-      peer.on('open', async peerId => {
+      peer.on('open', async peerId => { 
         if (destroyed) return
+        
+        // 存储peerId到状态中
+        setPeerId(peerId)
 
         const res = await fetch('/api/meeting/join', {
           method: 'POST',
@@ -77,8 +83,14 @@ export default function RoomPage() {
         // 6️⃣ 启动心跳
         startHeartbeat(peerId)
       })
-    }
 
+      // 7️⃣ 监听 Peer 错误
+      peer.on('error', error => {
+        console.error('PeerJS Error:', error)
+      })
+
+      
+    }
     init()
 
     return () => {
@@ -148,8 +160,9 @@ export default function RoomPage() {
       <IconButton onClick={() => resetVideo(!videoOn)}>
         {videoOn ? <Videocam color="primary" /> : <VideocamOff />}
       </IconButton>
-      {peerRef.current?.id && (
-        <p>Your Peer ID: {peerRef.current?.id}</p>
+      {/* 避免渲染包含循环引用的对象，只显示peerId */}
+      {peerId && (
+        <p>Your Peer ID: {peerId}</p>
       )}
     </div>
   )
