@@ -1,29 +1,43 @@
-"use client";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
-import React from 'react';
-import Highcharts from 'highcharts';
-import HighChartsReact from 'highcharts-react-official';
+import { getUserList } from "@/app/actions/admin";
 
-const options = {
-    title:{
-        text: "User Login Per Day"
-    },
-    series: [{
-        type: 'line',
-        name: 'User Login',
-        data: [1, 2, 3, 4, 5, 6, 7]
-    }],
-    xAxis:{
-        categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    }
-}
-
-const AdminPage = () => {
+const AdminPage = async () => {
+  const userList = await getUserList();
   return (
-    <div>
-      <h1>Admin Page</h1>
-      <HighChartsReact highcharts={Highcharts} options={options} />
-    </div>
+    <Box sx={{ width: "100%", maxWidth: "1200px", margin: "0 auto" }}>
+      <Box sx={{ margin: "20px", display: "flex", justifyContent: "flex-end" }}>
+        <Button variant="contained" color="primary">
+          Add User
+        </Button>
+      </Box>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Email</TableCell>
+            <TableCell>Nickname</TableCell>
+            <TableCell>Birthday</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {userList.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.nickname}</TableCell>
+              <TableCell>{user.birthday?.toLocaleDateString()}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Box>
   );
 };
 
