@@ -31,8 +31,8 @@ const AdminPage = async () => {
           {userList.map((user) => (
             <TableRow key={user.id}>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{user.nickname}</TableCell>
-              <TableCell>{user.birthday?.toLocaleDateString()}</TableCell>
+              <TableCell>{user.nickname || "-"}</TableCell>
+              <TableCell>{user.birthday?.toLocaleDateString() || "-"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
