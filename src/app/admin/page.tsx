@@ -25,6 +25,8 @@ const AdminPage = async () => {
             <TableCell>Email</TableCell>
             <TableCell>Nickname</TableCell>
             <TableCell>Birthday</TableCell>
+            <TableCell>Created At</TableCell>
+            <TableCell>Updated At</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -33,6 +35,8 @@ const AdminPage = async () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>{user.nickname || "-"}</TableCell>
               <TableCell>{user.birthday?.toLocaleDateString() || "-"}</TableCell>
+              <TableCell>{user.createdAt?.toLocaleDateString() || "-"}</TableCell>
+              <TableCell>{user.updatedAt?.toLocaleDateString() || "-"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
